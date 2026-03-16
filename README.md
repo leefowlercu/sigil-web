@@ -33,12 +33,17 @@ Siĝil app-server when it runs in WebSocket mode.
 - `pnpm format:check`: verify Prettier formatting
 - `pnpm check`: run non-mutating formatting and lint verification
 
-## Route Bootstrap
+## Route Contract
 
-- `/connect`: session bootstrap, compatibility, and reconnect shell
-- `/runs`: run index, cursor paging affordance, and empty-state pattern
-- `/runs/new`: inline YAML composer bootstrap
-- `/runs/$runId`: run summary, node tree, timeline, artifact, and terminal-state workspace
+- `/`: redirect to `/agents`
+- `/agents`: command hub for connection posture, fleet visibility,
+  selected-agent detail, selected-agent runs, and new-run dialog flows
+- `/runs/$runId`: run summary, node tree, timeline, artifact, and
+  terminal-state workspace
+
+The current implementation scaffold may lag the latest governance docs while
+route refactors are in progress. Treat the PRDs, acceptance feature, and design
+manifest as the normative route contract.
 
 ## Workflow
 

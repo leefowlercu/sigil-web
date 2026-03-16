@@ -9,45 +9,35 @@ width = 1440
 height = 1024
 
 [[route]]
-id = "connect"
-path = "/connect"
-description = "Session bootstrap, compatibility, and reconnect workflow."
-
-[[route]]
-id = "runs-index"
-path = "/runs"
-description = "Operator shell and run list workflow."
+id = "agents-hub"
+path = "/agents"
+description = "Command, control, and fleet workspace with connection state, agent selection, and new-run dialog flows."
 
 [[route]]
 id = "run-detail"
 path = "/runs/$runId"
 description = "Run summary, drill-in, live orchestration, and stop workflow."
 
-[[route]]
-id = "run-new"
-path = "/runs/new"
-description = "Inline YAML authoring workflow."
-
 [[scenario]]
 prd = "PRD-0100"
 scenario_id = "SCN-0000"
-title = "Connects to a compatible app-server and enters ready operator state"
-route_id = "connect"
+title = "Connects to a compatible app-server and enters a ready agents hub state"
+route_id = "agents-hub"
 state_id = "ready"
-fixtures = ["compatible-session"]
+fixtures = ["compatible-session-ready"]
 required_test_ids = [
   "connection-status",
   "connection-instance-name",
   "connection-protocol-version",
-  "runs-nav-link",
+  "agent-fleet-list",
 ]
-paper_artboards = { desktop = "PRD-0100--SCN-0000--connect--ready--desktop" }
+paper_artboards = { desktop = "PRD-0100--SCN-0000--agents-hub--ready--desktop" }
 
 [[scenario]]
 prd = "PRD-0100"
 scenario_id = "SCN-0001"
-title = "Blocks the workspace with an incompatible-server state when protocol negotiation fails"
-route_id = "connect"
+title = "Blocks the agents hub with an incompatible-server state when protocol negotiation fails"
+route_id = "agents-hub"
 state_id = "incompatible"
 fixtures = ["incompatible-session"]
 required_test_ids = [
@@ -55,13 +45,13 @@ required_test_ids = [
   "connection-error-code",
   "retry-connection-button",
 ]
-paper_artboards = { desktop = "PRD-0100--SCN-0001--connect--incompatible--desktop" }
+paper_artboards = { desktop = "PRD-0100--SCN-0001--agents-hub--incompatible--desktop" }
 
 [[scenario]]
 prd = "PRD-0100"
 scenario_id = "SCN-0002"
-title = "Marks the session degraded and begins reconnecting after a missed heartbeat"
-route_id = "connect"
+title = "Marks the session degraded and begins reconnecting without discarding current agent selection intent"
+route_id = "agents-hub"
 state_id = "reconnecting"
 fixtures = ["degraded-session"]
 required_test_ids = [
@@ -69,59 +59,58 @@ required_test_ids = [
   "reconnect-banner",
   "resume-last-route-button",
 ]
-paper_artboards = { desktop = "PRD-0100--SCN-0002--connect--reconnecting--desktop" }
+paper_artboards = { desktop = "PRD-0100--SCN-0002--agents-hub--reconnecting--desktop" }
 
 [[scenario]]
 prd = "PRD-0200"
 scenario_id = "SCN-0000"
-title = "Lists persisted runs after session initialization"
-route_id = "runs-index"
-state_id = "listed"
-fixtures = ["persisted-runs-page-1"]
+title = "Lists connected agents in the command hub after session initialization"
+route_id = "agents-hub"
+state_id = "fleet-listed"
+fixtures = ["connected-agents-fleet"]
 required_test_ids = [
   "connection-status",
-  "run-list",
-  "run-list-item",
-  "run-count",
+  "agent-fleet-list",
+  "agent-fleet-item",
 ]
-paper_artboards = { desktop = "PRD-0200--SCN-0000--runs-index--listed--desktop" }
+paper_artboards = { desktop = "PRD-0200--SCN-0000--agents-hub--fleet-listed--desktop" }
 
 [[scenario]]
 prd = "PRD-0200"
 scenario_id = "SCN-0001"
-title = "Paginates the run list without losing current connection context"
-route_id = "runs-index"
-state_id = "paged"
-fixtures = ["persisted-runs-page-2"]
+title = "Deep-links the selected agent in the agents hub and shows its details plus runs"
+route_id = "agents-hub"
+state_id = "agent-selected"
+fixtures = ["connected-agents-selected"]
 required_test_ids = [
-  "connection-status",
-  "run-list",
-  "run-list-next-page",
-  "run-list-cursor",
+  "agent-fleet-list",
+  "selected-agent-panel",
+  "selected-agent-name",
+  "agent-run-list",
+  "new-run-button",
 ]
-paper_artboards = { desktop = "PRD-0200--SCN-0001--runs-index--paged--desktop" }
+paper_artboards = { desktop = "PRD-0200--SCN-0001--agents-hub--agent-selected--desktop" }
 
 [[scenario]]
 prd = "PRD-0200"
 scenario_id = "SCN-0002"
-title = "Shows an empty-state call to action when the run corpus has no runs"
-route_id = "runs-index"
-state_id = "empty"
-fixtures = ["empty-run-corpus"]
+title = "Shows a fleet empty state when no agents are connected to the app-server"
+route_id = "agents-hub"
+state_id = "fleet-empty"
+fixtures = ["empty-agent-fleet"]
 required_test_ids = [
   "connection-status",
-  "run-list-empty-state",
-  "new-run-button",
+  "agent-fleet-empty-state",
 ]
-paper_artboards = { desktop = "PRD-0200--SCN-0002--runs-index--empty--desktop" }
+paper_artboards = { desktop = "PRD-0200--SCN-0002--agents-hub--fleet-empty--desktop" }
 
 [[scenario]]
 prd = "PRD-0300"
 scenario_id = "SCN-0000"
-title = "Opens a run detail workspace with summary tree and timeline panes"
+title = "Opens a run detail workspace from the agents hub with summary tree and timeline panes"
 route_id = "run-detail"
 state_id = "inspection-base"
-fixtures = ["completed-run-detail"]
+fixtures = ["selected-agent-completed-run-detail"]
 required_test_ids = [
   "run-header",
   "run-summary-panel",
@@ -136,7 +125,7 @@ scenario_id = "SCN-0001"
 title = "Selects a node step and typed artifact without leaving the current run workspace"
 route_id = "run-detail"
 state_id = "artifact-drill-in"
-fixtures = ["completed-run-detail"]
+fixtures = ["selected-agent-completed-run-detail"]
 required_test_ids = [
   "run-tree-node",
   "run-step-list",
@@ -151,7 +140,7 @@ scenario_id = "SCN-0002"
 title = "Refreshes run detail data without losing the current selection context"
 route_id = "run-detail"
 state_id = "inspection-refresh"
-fixtures = ["completed-run-detail-refreshed"]
+fixtures = ["selected-agent-completed-run-detail-refreshed"]
 required_test_ids = [
   "run-refresh-button",
   "run-tree-node",
@@ -177,7 +166,7 @@ paper_artboards = { desktop = "PRD-0400--SCN-0000--run-detail--live-attached--de
 [[scenario]]
 prd = "PRD-0400"
 scenario_id = "SCN-0001"
-title = "Resumes a live run subscription after reconnect without duplicating applied events"
+title = "Resumes a live run workspace after reconnect without duplicating applied events"
 route_id = "run-detail"
 state_id = "live-resumed"
 fixtures = ["live-run-resumed"]
@@ -205,30 +194,34 @@ paper_artboards = { desktop = "PRD-0400--SCN-0002--run-detail--live-terminal--de
 [[scenario]]
 prd = "PRD-0500"
 scenario_id = "SCN-0000"
-title = "Starts a run from an inline YAML composer without requiring server-local file paths"
-route_id = "run-new"
-state_id = "composer-ready"
-fixtures = ["run-start-valid"]
+title = "Starts a run for the selected agent from an agents-hub dialog without requiring server-local file paths"
+route_id = "agents-hub"
+state_id = "new-run-dialog"
+fixtures = ["selected-agent-run-start-valid"]
 required_test_ids = [
+  "selected-agent-panel",
+  "new-run-button",
+  "new-run-dialog",
   "run-composer-editor",
   "template-vars-panel",
   "start-run-button",
 ]
-paper_artboards = { desktop = "PRD-0500--SCN-0000--run-new--composer-ready--desktop" }
+paper_artboards = { desktop = "PRD-0500--SCN-0000--agents-hub--new-run-dialog--desktop" }
 
 [[scenario]]
 prd = "PRD-0500"
 scenario_id = "SCN-0001"
-title = "Validates malformed inline YAML before issuing run start"
-route_id = "run-new"
-state_id = "composer-invalid"
-fixtures = ["run-start-invalid-yaml"]
+title = "Validates malformed inline YAML in the selected agent's new run dialog before issuing run start"
+route_id = "agents-hub"
+state_id = "new-run-invalid"
+fixtures = ["selected-agent-run-start-invalid-yaml"]
 required_test_ids = [
+  "new-run-dialog",
   "run-composer-editor",
   "composer-validation-error",
   "start-run-button",
 ]
-paper_artboards = { desktop = "PRD-0500--SCN-0001--run-new--composer-invalid--desktop" }
+paper_artboards = { desktop = "PRD-0500--SCN-0001--agents-hub--new-run-invalid--desktop" }
 
 [[scenario]]
 prd = "PRD-0500"
