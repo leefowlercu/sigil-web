@@ -1,0 +1,245 @@
+version = 1
+design_tool = "paper"
+artboard_name_pattern = "<prd>--<scenario-id>--<route-id>--<state-id>--<viewport-id>"
+required_viewports = ["desktop"]
+
+[[viewport]]
+id = "desktop"
+width = 1440
+height = 1024
+
+[[route]]
+id = "connect"
+path = "/connect"
+description = "Session bootstrap, compatibility, and reconnect workflow."
+
+[[route]]
+id = "runs-index"
+path = "/runs"
+description = "Operator shell and run list workflow."
+
+[[route]]
+id = "run-detail"
+path = "/runs/$runId"
+description = "Run summary, drill-in, live orchestration, and stop workflow."
+
+[[route]]
+id = "run-new"
+path = "/runs/new"
+description = "Inline YAML authoring workflow."
+
+[[scenario]]
+prd = "PRD-0100"
+scenario_id = "SCN-0000"
+title = "Connects to a compatible app-server and enters ready operator state"
+route_id = "connect"
+state_id = "ready"
+fixtures = ["compatible-session"]
+required_test_ids = [
+  "connection-status",
+  "connection-instance-name",
+  "connection-protocol-version",
+  "runs-nav-link",
+]
+paper_artboards = { desktop = "PRD-0100--SCN-0000--connect--ready--desktop" }
+
+[[scenario]]
+prd = "PRD-0100"
+scenario_id = "SCN-0001"
+title = "Blocks the workspace with an incompatible-server state when protocol negotiation fails"
+route_id = "connect"
+state_id = "incompatible"
+fixtures = ["incompatible-session"]
+required_test_ids = [
+  "connection-status",
+  "connection-error-code",
+  "retry-connection-button",
+]
+paper_artboards = { desktop = "PRD-0100--SCN-0001--connect--incompatible--desktop" }
+
+[[scenario]]
+prd = "PRD-0100"
+scenario_id = "SCN-0002"
+title = "Marks the session degraded and begins reconnecting after a missed heartbeat"
+route_id = "connect"
+state_id = "reconnecting"
+fixtures = ["degraded-session"]
+required_test_ids = [
+  "connection-status",
+  "reconnect-banner",
+  "resume-last-route-button",
+]
+paper_artboards = { desktop = "PRD-0100--SCN-0002--connect--reconnecting--desktop" }
+
+[[scenario]]
+prd = "PRD-0200"
+scenario_id = "SCN-0000"
+title = "Lists persisted runs after session initialization"
+route_id = "runs-index"
+state_id = "listed"
+fixtures = ["persisted-runs-page-1"]
+required_test_ids = [
+  "connection-status",
+  "run-list",
+  "run-list-item",
+  "run-count",
+]
+paper_artboards = { desktop = "PRD-0200--SCN-0000--runs-index--listed--desktop" }
+
+[[scenario]]
+prd = "PRD-0200"
+scenario_id = "SCN-0001"
+title = "Paginates the run list without losing current connection context"
+route_id = "runs-index"
+state_id = "paged"
+fixtures = ["persisted-runs-page-2"]
+required_test_ids = [
+  "connection-status",
+  "run-list",
+  "run-list-next-page",
+  "run-list-cursor",
+]
+paper_artboards = { desktop = "PRD-0200--SCN-0001--runs-index--paged--desktop" }
+
+[[scenario]]
+prd = "PRD-0200"
+scenario_id = "SCN-0002"
+title = "Shows an empty-state call to action when the run corpus has no runs"
+route_id = "runs-index"
+state_id = "empty"
+fixtures = ["empty-run-corpus"]
+required_test_ids = [
+  "connection-status",
+  "run-list-empty-state",
+  "new-run-button",
+]
+paper_artboards = { desktop = "PRD-0200--SCN-0002--runs-index--empty--desktop" }
+
+[[scenario]]
+prd = "PRD-0300"
+scenario_id = "SCN-0000"
+title = "Opens a run detail workspace with summary tree and timeline panes"
+route_id = "run-detail"
+state_id = "inspection-base"
+fixtures = ["completed-run-detail"]
+required_test_ids = [
+  "run-header",
+  "run-summary-panel",
+  "run-tree-panel",
+  "run-timeline-panel",
+]
+paper_artboards = { desktop = "PRD-0300--SCN-0000--run-detail--inspection-base--desktop" }
+
+[[scenario]]
+prd = "PRD-0300"
+scenario_id = "SCN-0001"
+title = "Selects a node step and typed artifact without leaving the current run workspace"
+route_id = "run-detail"
+state_id = "artifact-drill-in"
+fixtures = ["completed-run-detail"]
+required_test_ids = [
+  "run-tree-node",
+  "run-step-list",
+  "step-detail-panel",
+  "artifact-detail-panel",
+]
+paper_artboards = { desktop = "PRD-0300--SCN-0001--run-detail--artifact-drill-in--desktop" }
+
+[[scenario]]
+prd = "PRD-0300"
+scenario_id = "SCN-0002"
+title = "Refreshes run detail data without losing the current selection context"
+route_id = "run-detail"
+state_id = "inspection-refresh"
+fixtures = ["completed-run-detail-refreshed"]
+required_test_ids = [
+  "run-refresh-button",
+  "run-tree-node",
+  "step-detail-panel",
+  "artifact-detail-panel",
+]
+paper_artboards = { desktop = "PRD-0300--SCN-0002--run-detail--inspection-refresh--desktop" }
+
+[[scenario]]
+prd = "PRD-0400"
+scenario_id = "SCN-0000"
+title = "Attaches a live run workspace to canonical subscription updates"
+route_id = "run-detail"
+state_id = "live-attached"
+fixtures = ["live-run-attached"]
+required_test_ids = [
+  "run-live-indicator",
+  "run-timeline-panel",
+  "latest-event-seq",
+]
+paper_artboards = { desktop = "PRD-0400--SCN-0000--run-detail--live-attached--desktop" }
+
+[[scenario]]
+prd = "PRD-0400"
+scenario_id = "SCN-0001"
+title = "Resumes a live run subscription after reconnect without duplicating applied events"
+route_id = "run-detail"
+state_id = "live-resumed"
+fixtures = ["live-run-resumed"]
+required_test_ids = [
+  "reconnect-banner",
+  "latest-event-seq",
+  "run-live-indicator",
+]
+paper_artboards = { desktop = "PRD-0400--SCN-0001--run-detail--live-resumed--desktop" }
+
+[[scenario]]
+prd = "PRD-0400"
+scenario_id = "SCN-0002"
+title = "Transitions a subscribed run workspace into terminal completed or interrupted state"
+route_id = "run-detail"
+state_id = "live-terminal"
+fixtures = ["live-run-terminal"]
+required_test_ids = [
+  "run-status-badge",
+  "terminal-summary",
+  "final-answer-panel",
+]
+paper_artboards = { desktop = "PRD-0400--SCN-0002--run-detail--live-terminal--desktop" }
+
+[[scenario]]
+prd = "PRD-0500"
+scenario_id = "SCN-0000"
+title = "Starts a run from an inline YAML composer without requiring server-local file paths"
+route_id = "run-new"
+state_id = "composer-ready"
+fixtures = ["run-start-valid"]
+required_test_ids = [
+  "run-composer-editor",
+  "template-vars-panel",
+  "start-run-button",
+]
+paper_artboards = { desktop = "PRD-0500--SCN-0000--run-new--composer-ready--desktop" }
+
+[[scenario]]
+prd = "PRD-0500"
+scenario_id = "SCN-0001"
+title = "Validates malformed inline YAML before issuing run start"
+route_id = "run-new"
+state_id = "composer-invalid"
+fixtures = ["run-start-invalid-yaml"]
+required_test_ids = [
+  "run-composer-editor",
+  "composer-validation-error",
+  "start-run-button",
+]
+paper_artboards = { desktop = "PRD-0500--SCN-0001--run-new--composer-invalid--desktop" }
+
+[[scenario]]
+prd = "PRD-0500"
+scenario_id = "SCN-0002"
+title = "Stops an active run and surfaces interrupted terminal state plus stop provenance"
+route_id = "run-detail"
+state_id = "stop-confirmed"
+fixtures = ["active-run-stopped"]
+required_test_ids = [
+  "stop-run-button",
+  "run-status-badge",
+  "stop-provenance-panel",
+]
+paper_artboards = { desktop = "PRD-0500--SCN-0002--run-detail--stop-confirmed--desktop" }
