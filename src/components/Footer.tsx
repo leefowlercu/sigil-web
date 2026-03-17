@@ -6,9 +6,9 @@ export default function Footer() {
           <p className="island-kicker mb-2">Bootstrap Contract</p>
           <p className="m-0 max-w-2xl leading-6">
             TanStack Start, shadcn/ui, Tailwind CSS, and Lucide are now wired
-            into the submodule. The route skeleton mirrors the current PRD and
-            design-manifest shape so behavior, design, and implementation stay
-            aligned from day one.
+            into the submodule. The route skeleton mirrors the current PRD,
+            scenario-manifest, and design-manifest shape so behavior, design,
+            and implementation stay aligned from day one.
           </p>
         </div>
         <p className="m-0 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--sea-ink-soft)]">

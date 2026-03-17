@@ -17,7 +17,11 @@ change, then widen to full verification before concluding.
 - Update or add the failing scenario first when behavior changes.
 - Run `./scripts/verify-specs --subproject sigil-web` from the superproject
   root whenever routed-state wording or mappings change.
-- Keep acceptance titles, matrix titles, and design-manifest titles identical.
+- Keep acceptance titles, matrix titles, and scenario-manifest titles
+  identical. When a scenario carries Paper evidence, keep the matching
+  design-manifest title identical too.
+- Do not use `@visual` or `@nonvisual` in the feature file; verification lanes
+  are owned by the manifests.
 
 ## Planned Browser Lanes
 
@@ -32,7 +36,7 @@ change, then widen to full verification before concluding.
 
 - Re-run `pnpm test` and `pnpm build` after route structure, shared shell, or
   state-boundary changes.
-- Re-run the spec verifier after any PRD, matrix, acceptance-title, or design
-  manifest change.
+- Re-run the spec verifier after any PRD, matrix, acceptance-title,
+  scenario-manifest, or design-manifest change.
 - State clearly if a browser acceptance lane is not yet implemented for the
   behavior you changed.

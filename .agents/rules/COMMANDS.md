@@ -20,7 +20,8 @@ Run all commands from the `sigil-web/` root unless otherwise stated.
 ## Design and Spec Verification
 
 - `../scripts/verify-specs --subproject sigil-web`: verify PRD, matrix,
-  acceptance-title, and design-manifest consistency from the superproject root.
+  acceptance-title, scenario-manifest, and design-manifest consistency from the
+  superproject root.
 - `pnpm dlx shadcn@latest add <component>`: add new ShadCN components when the
   design requires them.
 
@@ -29,6 +30,6 @@ Run all commands from the `sigil-web/` root unless otherwise stated.
 - Prefer `pnpm check`, `pnpm test`, and `pnpm build` as the default local
   verification trio for implementation work.
 - Run `../scripts/verify-specs --subproject sigil-web` whenever PRD, matrix,
-  acceptance-title, or design-manifest structure changes.
+  acceptance-title, scenario-manifest, or design-manifest structure changes.
 - Use `pnpm dev` while iterating with Paper or reviewing routed UI states in
   the browser.

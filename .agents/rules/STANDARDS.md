@@ -28,12 +28,14 @@ place for ad hoc route, state, or design conventions.
   the specs say otherwise.
 - Keep run-detail inspection, live updates, and stop outcomes in the
   `/runs/$runId` workspace rather than splitting them across multiple pages.
-- Preserve current design-manifest route IDs, state IDs, and artboard naming
-  conventions unless the superproject specs change them in the same task.
+- Preserve current scenario-manifest route IDs and state IDs plus
+  design-manifest paper-artboard naming conventions unless the superproject
+  specs change them in the same task.
 
 ## Source Documents
 
 - Superproject agent rules: `../../AGENTS.md`
 - Architecture decisions: `../../docs/sigil-web/ADR/README.md`
 - Product requirements: `../../docs/sigil-web/PRD/README.md`
-- Paper design contract: `../../sigil-web/design/design-manifest.toml`
+- Scenario contract: `../../sigil-web/verification/scenarios/manifest.toml`
+- Paper design contract: `../../sigil-web/verification/design/manifest.toml`

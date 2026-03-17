@@ -219,7 +219,7 @@ export const runDetails: Partial<Record<string, RunDetail>> = {
     summary:
       'The verifier preview completed and confirmed PRD, MATRIX, and feature-title parity.',
     finalAnswer:
-      'Verified sigil-web specs: PRDs, MATRIX mappings, acceptance titles, and design-manifest scenarios aligned.',
+      'Verified sigil-web specs: PRDs, MATRIX mappings, acceptance titles, scenario-manifest entries, and design-manifest artboards aligned.',
     stopProvenance:
       'Terminal completed state. No stop request metadata was required.',
     nodes: [

@@ -25,4 +25,14 @@ describe('route contract', () => {
 
     expect(indexRouteSource).toContain('Navigate to="/agents"')
   })
+
+  it('preserves selected-agent search state in the agents route', () => {
+    const agentsRouteSource = readSource('./routes/agents.tsx')
+
+    expect(agentsRouteSource).toContain("createFileRoute('/agents')")
+    expect(agentsRouteSource).toContain('validateSearch:')
+    expect(agentsRouteSource).toContain("typeof search.agent === 'string'")
+    expect(agentsRouteSource).toContain('search.agent.length > 0')
+    expect(agentsRouteSource).toContain('agent?: string')
+  })
 })

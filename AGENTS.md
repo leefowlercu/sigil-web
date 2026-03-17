@@ -43,8 +43,8 @@ generic React defaults.
 ## Design Workflow
 
 Use the design workflow guide when changing routed UI states or iterating on
-Paper prototypes. It explains how PRDs, the design manifest, Paper artboards,
-and implementation should move together.
+Paper prototypes. It explains how PRDs, the scenario manifest, the design
+manifest, Paper artboards, and implementation should move together.
 
 - [Design Workflow Reference](.agents/rules/DESIGN.md)
 
@@ -52,7 +52,7 @@ and implementation should move together.
 
 Treat the superproject specs as the behavioral source of truth for this
 submodule. Use the spec guide to see which ADR, PRD, matrix, acceptance, and
-design-manifest files must move together when behavior changes.
+manifest files must move together when behavior changes.
 
 - [Specification Reference](.agents/rules/SPECS.md)
 

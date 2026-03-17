@@ -17,8 +17,10 @@ Siĝil app-server when it runs in WebSocket mode.
 - Behavior specs live in
   [`../docs/sigil-web/PRD`](../docs/sigil-web/PRD) and map to
   [`acceptance/features/web_ui.feature`](acceptance/features/web_ui.feature).
-- Routed UI design state lives in
-  [`design/design-manifest.toml`](design/design-manifest.toml).
+- Routed scenario verification lives in
+  [`verification/scenarios/manifest.toml`](verification/scenarios/manifest.toml).
+- Visual Paper metadata lives in
+  [`verification/design/manifest.toml`](verification/design/manifest.toml).
 - The current architecture decisions live in
   [`../docs/sigil-web/ADR`](../docs/sigil-web/ADR).
 
@@ -36,21 +38,22 @@ Siĝil app-server when it runs in WebSocket mode.
 ## Route Contract
 
 - `/`: redirect to `/agents`
-- `/agents`: command hub for connection posture, fleet visibility,
-  selected-agent detail, selected-agent runs, and new-run dialog flows
-- `/runs/$runId`: run summary, node tree, timeline, artifact, and
-  terminal-state workspace
+- `/agents`: selected-agent deep-link route family
+- `/runs/$runId`: reserved run-detail route family pending re-specified behavior
 
 The current implementation scaffold may lag the latest governance docs while
-route refactors are in progress. Treat the PRDs, acceptance feature, and design
-manifest as the normative route contract.
+route refactors are in progress. Treat the PRDs, acceptance feature, scenario
+manifest, and design manifest as the normative route contract.
 
 ## Workflow
 
 - Add or update PRD acceptance scenarios first.
 - Keep `docs/sigil-web/PRD/MATRIX.md`,
   `acceptance/features/web_ui.feature`, and
-  `design/design-manifest.toml` mechanically aligned.
-- Use Paper artboards as the visual source of truth for routed UI states.
+  `verification/scenarios/manifest.toml` mechanically aligned.
+- Keep `verification/design/manifest.toml` aligned for scenarios that carry Paper
+  evidence.
+- Use Paper artboards as the visual source of truth only for routed UI states
+  that declare Paper evidence.
 - Preserve stable `data-testid` values during visual iteration so acceptance
   coverage remains durable.

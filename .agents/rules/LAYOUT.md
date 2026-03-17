@@ -12,7 +12,10 @@ and routed-state governance in checked-in design and acceptance artifacts.
 - `src/lib/`: client-side helpers, seeded data, and future app-server client
   seams.
 - `public/`: static assets served by Vite and TanStack Start.
-- `design/`: the checked-in Paper design manifest and routed-state contract.
+- `verification/scenarios/`: the checked-in routed scenario registry and
+  evidence lanes.
+- `verification/design/`: the checked-in Paper-backed visual contract for
+  scenarios with Paper evidence.
 - `acceptance/features/`: Gherkin feature source of truth for web behavior.
 - `.tanstack/`: generated framework state and temp files that should remain out
   of commits.
@@ -25,7 +28,9 @@ and routed-state governance in checked-in design and acceptance artifacts.
   reusable visual composition.
 - Start from `src/lib/` when introducing shared client state, query helpers, or
   generated app-server type boundaries.
-- Start from `design/design-manifest.toml` when the routed-state contract,
-  Paper artboard mapping, or required `data-testid` values change.
+- Start from `verification/scenarios/manifest.toml` when routed scenario
+  identity, fixtures, or verification lanes change.
+- Start from `verification/design/manifest.toml` when Paper artboard mappings,
+  viewport requirements, or required `data-testid` values change.
 - Start from `acceptance/features/web_ui.feature` when behavior is
   acceptance-driven or route-state wording changes.
