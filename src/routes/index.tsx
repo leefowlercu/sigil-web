@@ -5,5 +5,5 @@ export const Route = createFileRoute('/')({
 })
 
 function IndexRedirect() {
-  return <Navigate to="/connect" />
+  return <Navigate to="/agents" />
 }

@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest'
 
-import { defaultRunId, demoRuns, runDetails, sessionSummary } from './demo-data'
+import {
+  defaultAgentId,
+  defaultRunId,
+  demoAgents,
+  demoRuns,
+  getRunsForAgent,
+  runDetails,
+  sessionSummary,
+} from './demo-data'
 
 describe('demo data bootstrap', () => {
   it('exposes a ready session summary for the command-plane shell', () => {
@@ -12,6 +20,11 @@ describe('demo data bootstrap', () => {
   it('keeps the default run mapped to a detail workspace record', () => {
     expect(demoRuns).toHaveLength(3)
     expect(runDetails[defaultRunId]?.runId).toBe(defaultRunId)
+  })
+
+  it('assigns the seeded default agent to one or more runs in the hub', () => {
+    expect(demoAgents).toHaveLength(3)
+    expect(getRunsForAgent(defaultAgentId)).not.toHaveLength(0)
   })
 
   it('orders seeded event sequences monotonically within each run detail', () => {

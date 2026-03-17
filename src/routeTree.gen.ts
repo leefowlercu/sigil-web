@@ -9,20 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RunsRouteImport } from './routes/runs'
-import { Route as ConnectRouteImport } from './routes/connect'
+import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as RunsNewRouteImport } from './routes/runs.new'
 import { Route as RunsRunIdRouteImport } from './routes/runs.$runId'
 
-const RunsRoute = RunsRouteImport.update({
-  id: '/runs',
-  path: '/runs',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConnectRoute = ConnectRouteImport.update({
-  id: '/connect',
-  path: '/connect',
+const AgentsRoute = AgentsRouteImport.update({
+  id: '/agents',
+  path: '/agents',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -30,67 +23,49 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RunsNewRoute = RunsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => RunsRoute,
-} as any)
 const RunsRunIdRoute = RunsRunIdRouteImport.update({
-  id: '/$runId',
-  path: '/$runId',
-  getParentRoute: () => RunsRoute,
+  id: '/runs/$runId',
+  path: '/runs/$runId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/connect': typeof ConnectRoute
-  '/runs': typeof RunsRouteWithChildren
+  '/agents': typeof AgentsRoute
   '/runs/$runId': typeof RunsRunIdRoute
-  '/runs/new': typeof RunsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/connect': typeof ConnectRoute
-  '/runs': typeof RunsRouteWithChildren
+  '/agents': typeof AgentsRoute
   '/runs/$runId': typeof RunsRunIdRoute
-  '/runs/new': typeof RunsNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/connect': typeof ConnectRoute
-  '/runs': typeof RunsRouteWithChildren
+  '/agents': typeof AgentsRoute
   '/runs/$runId': typeof RunsRunIdRoute
-  '/runs/new': typeof RunsNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/connect' | '/runs' | '/runs/$runId' | '/runs/new'
+  fullPaths: '/' | '/agents' | '/runs/$runId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/connect' | '/runs' | '/runs/$runId' | '/runs/new'
-  id: '__root__' | '/' | '/connect' | '/runs' | '/runs/$runId' | '/runs/new'
+  to: '/' | '/agents' | '/runs/$runId'
+  id: '__root__' | '/' | '/agents' | '/runs/$runId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ConnectRoute: typeof ConnectRoute
-  RunsRoute: typeof RunsRouteWithChildren
+  AgentsRoute: typeof AgentsRoute
+  RunsRunIdRoute: typeof RunsRunIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/runs': {
-      id: '/runs'
-      path: '/runs'
-      fullPath: '/runs'
-      preLoaderRoute: typeof RunsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/connect': {
-      id: '/connect'
-      path: '/connect'
-      fullPath: '/connect'
-      preLoaderRoute: typeof ConnectRouteImport
+    '/agents': {
+      id: '/agents'
+      path: '/agents'
+      fullPath: '/agents'
+      preLoaderRoute: typeof AgentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -100,39 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/runs/new': {
-      id: '/runs/new'
-      path: '/new'
-      fullPath: '/runs/new'
-      preLoaderRoute: typeof RunsNewRouteImport
-      parentRoute: typeof RunsRoute
-    }
     '/runs/$runId': {
       id: '/runs/$runId'
-      path: '/$runId'
+      path: '/runs/$runId'
       fullPath: '/runs/$runId'
       preLoaderRoute: typeof RunsRunIdRouteImport
-      parentRoute: typeof RunsRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface RunsRouteChildren {
-  RunsRunIdRoute: typeof RunsRunIdRoute
-  RunsNewRoute: typeof RunsNewRoute
-}
-
-const RunsRouteChildren: RunsRouteChildren = {
-  RunsRunIdRoute: RunsRunIdRoute,
-  RunsNewRoute: RunsNewRoute,
-}
-
-const RunsRouteWithChildren = RunsRoute._addFileChildren(RunsRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ConnectRoute: ConnectRoute,
-  RunsRoute: RunsRouteWithChildren,
+  AgentsRoute: AgentsRoute,
+  RunsRunIdRoute: RunsRunIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

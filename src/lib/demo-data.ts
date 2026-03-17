@@ -2,6 +2,7 @@ export type RunStatus = 'queued' | 'running' | 'completed' | 'interrupted'
 
 export type RunRecord = {
   id: string
+  agentId: string
   title: string
   status: RunStatus
   updatedAt: string
@@ -50,6 +51,16 @@ export type RunDetail = {
   events: RunEvent[]
 }
 
+export type AgentRecord = {
+  id: string
+  name: string
+  lane: string
+  runtime: string
+  model: string
+  lastSeen: string
+  summary: string
+}
+
 export const sessionSummary = {
   endpoint: 'ws://127.0.0.1:7411/ws',
   instanceName: 'dev-localhost',
@@ -58,9 +69,43 @@ export const sessionSummary = {
   capabilitiesConfig: 'v1',
 }
 
+export const demoAgents: AgentRecord[] = [
+  {
+    id: 'agent_control_plane',
+    name: 'control-plane',
+    lane: 'Reconnect monitor',
+    runtime: 'sigil app-server',
+    model: 'gpt-5.4',
+    lastSeen: 'heartbeat 8s ago',
+    summary:
+      'Primary operator lane watching canonical subscriptions and heartbeat recovery.',
+  },
+  {
+    id: 'agent_spec_governance',
+    name: 'spec-governance',
+    lane: 'Traceability verifier',
+    runtime: 'sigil app-server',
+    model: 'gpt-5.4-mini',
+    lastSeen: 'heartbeat 14s ago',
+    summary:
+      'Checks PRD, MATRIX, and acceptance parity before publish-time pointer updates.',
+  },
+  {
+    id: 'agent_ops_sandbox',
+    name: 'ops-sandbox',
+    lane: 'Stop-control rehearsal',
+    runtime: 'sigil app-server',
+    model: 'gpt-5.3-codex',
+    lastSeen: 'heartbeat 22s ago',
+    summary:
+      'Exercises interruption and provenance flows without disturbing the primary lane.',
+  },
+]
+
 export const demoRuns: RunRecord[] = [
   {
     id: 'run_01jf7m7d1vvb4r1fvyht',
+    agentId: demoAgents[0].id,
     title: 'Market-map orchestration dry run',
     status: 'running',
     updatedAt: '2m ago',
@@ -72,6 +117,7 @@ export const demoRuns: RunRecord[] = [
   },
   {
     id: 'run_01jf7m4s9dmwexm3f8am',
+    agentId: demoAgents[1].id,
     title: 'PRD traceability verifier preview',
     status: 'completed',
     updatedAt: '17m ago',
@@ -83,6 +129,7 @@ export const demoRuns: RunRecord[] = [
   },
   {
     id: 'run_01jf7m0h23k6xsp9qjbp',
+    agentId: demoAgents[2].id,
     title: 'Interrupted reconnect rehearsal',
     status: 'interrupted',
     updatedAt: '42m ago',
@@ -271,3 +318,8 @@ export const runDetails: Partial<Record<string, RunDetail>> = {
 }
 
 export const defaultRunId = demoRuns[0].id
+export const defaultAgentId = demoAgents[0].id
+
+export function getRunsForAgent(agentId: string) {
+  return demoRuns.filter((run) => run.agentId === agentId)
+}
