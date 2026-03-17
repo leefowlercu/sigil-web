@@ -37,6 +37,8 @@ Siĝil app-server when it runs in WebSocket mode.
 
 ## Route Contract
 
+- root application shell: viewport-constrained desktop-first workspace layout
+  with a compact-height fallback below the minimum supported desktop height
 - `/`: redirect to `/agents`
 - `/agents`: selected-agent deep-link route family
 - `/runs/$runId`: reserved run-detail route family pending re-specified behavior

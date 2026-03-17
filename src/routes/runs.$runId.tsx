@@ -6,6 +6,13 @@ export const Route = createFileRoute('/runs/$runId')({
 
 function RunDetailRoute() {
   return (
-    <main className="page-wrap min-h-[calc(100vh-12rem)] px-4 pb-10 pt-10" />
+    <main data-testid="run-detail-workspace" className="workspace-route">
+      <div className="page-wrap workspace-frame">
+        <section
+          data-testid="run-detail-workspace-scroll-region"
+          className="island-shell workspace-scroll-region"
+        />
+      </div>
+    </main>
   )
 }

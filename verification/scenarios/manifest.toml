@@ -6,6 +6,11 @@ path = "/"
 description = "Root and index route family that redirects operators into the agents route."
 
 [[route]]
+id = "root-shell"
+path = "__root__"
+description = "Root application shell route that wraps routed workspaces and owns viewport-constrained layout behavior."
+
+[[route]]
 id = "agents"
 path = "/agents"
 description = "Agents route family with selected-agent search-state ownership."
@@ -27,6 +32,32 @@ fixtures = ["root-index-redirect"]
 lane = "vitest"
 file = "sigil-web/src/route-contract.test.ts"
 match = "redirects the root route into the agents hub"
+
+[[scenario]]
+prd = "PRD-0150"
+scenario_id = "SCN-0000"
+title = "Keeps routed workspaces inside the application shell on supported desktop viewports"
+route_id = "root-shell"
+state_id = "desktop-viewport-shell"
+fixtures = ["desktop-app-shell"]
+
+[[scenario.evidence]]
+lane = "vitest"
+file = "sigil-web/src/route-contract.test.ts"
+match = "keeps routed workspaces inside the application shell on supported desktop viewports"
+
+[[scenario]]
+prd = "PRD-0150"
+scenario_id = "SCN-0001"
+title = "Preserves access below the minimum supported desktop height"
+route_id = "root-shell"
+state_id = "compact-height-fallback"
+fixtures = ["compact-height-app-shell"]
+
+[[scenario.evidence]]
+lane = "vitest"
+file = "sigil-web/src/route-contract.test.ts"
+match = "preserves access below the minimum supported desktop height"
 
 [[scenario]]
 prd = "PRD-0200"

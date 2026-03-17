@@ -58,6 +58,7 @@
   --link-bg-hover: rgba(255, 255, 255, 0.9);
   --hero-a: rgba(79, 184, 178, 0.36);
   --hero-b: rgba(47, 106, 74, 0.2);
+  --app-shell-min-height: 800px;
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -202,6 +203,7 @@ body,
 
 body {
   margin: 0;
+  min-height: 100dvh;
   color: var(--sea-ink);
   font-family: var(--font-sans);
   font-feature-settings:
@@ -225,6 +227,18 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-height: 800px) {
+  body {
+    overflow-y: hidden;
+  }
+}
+
+@media (max-height: 799px) {
+  body {
+    overflow-y: auto;
+  }
 }
 
 body::before {
@@ -300,6 +314,49 @@ pre code {
 .page-wrap {
   width: min(1080px, calc(100% - 2rem));
   margin-inline: auto;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+}
+
+.app-shell-main {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.workspace-route {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.workspace-frame {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: min(1080px, calc(100% - 2rem));
+  padding-block: 1.5rem;
+}
+
+.workspace-scroll-region {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  border-radius: 24px;
+  padding: 1.25rem;
+}
+
+@media (max-height: 799px) {
+  .app-shell {
+    min-height: var(--app-shell-min-height);
+  }
 }
 
 .display-title {
@@ -398,6 +455,7 @@ a {
 }
 
 .site-footer {
+  flex-shrink: 0;
   border-top: 1px solid var(--line);
   background: color-mix(in oklab, var(--header-bg) 84%, transparent 16%);
 }

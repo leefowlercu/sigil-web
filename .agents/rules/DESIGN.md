@@ -48,6 +48,8 @@ design manifest and Paper artboards.
 
 ## Current Route Model
 
+- root application shell owns viewport-constrained workspace layout and the
+  compact-height fallback
 - `/` redirects to `/agents`
 - `/agents` owns selected-agent route-state behavior
 - `/runs/$runId` remains the reserved run-detail route family for future specs

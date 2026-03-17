@@ -1,18 +1,13 @@
 export default function Footer() {
   return (
-    <footer className="site-footer mt-16 px-4 pb-14 pt-8 text-[var(--sea-ink-soft)]">
-      <div className="page-wrap flex flex-col gap-4 text-sm sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="island-kicker mb-2">Bootstrap Contract</p>
-          <p className="m-0 max-w-2xl leading-6">
-            TanStack Start, shadcn/ui, Tailwind CSS, and Lucide are now wired
-            into the submodule. The route skeleton mirrors the current PRD,
-            scenario-manifest, and design-manifest shape so behavior, design,
-            and implementation stay aligned from day one.
-          </p>
-        </div>
-        <p className="m-0 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--sea-ink-soft)]">
-          Desktop-first bootstrap
+    <footer className="site-footer px-4 py-3 text-[var(--sea-ink-soft)]">
+      <div className="page-wrap flex flex-col gap-2 text-xs font-semibold sm:flex-row sm:items-center sm:justify-between">
+        <p className="m-0 max-w-3xl leading-5">
+          Root shell owns the viewport-constrained workspace contract and keeps
+          route overflow inside explicit panes.
+        </p>
+        <p className="m-0 uppercase tracking-[0.22em] text-[var(--sea-ink-soft)]">
+          Desktop shell
         </p>
       </div>
     </footer>

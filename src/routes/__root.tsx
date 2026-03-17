@@ -45,9 +45,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
-        <Header />
-        <div className="relative min-h-[calc(100vh-5rem)]">{children}</div>
-        <Footer />
+        <div data-testid="app-shell" className="app-shell">
+          <Header />
+          <div data-testid="app-shell-main" className="app-shell-main">
+            {children}
+          </div>
+          <Footer />
+        </div>
         <TanStackDevtools
           config={{
             position: 'bottom-right',

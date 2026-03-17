@@ -16,6 +16,13 @@ export const Route = createFileRoute('/agents')({
 
 function AgentsRoute() {
   return (
-    <main className="page-wrap min-h-[calc(100vh-12rem)] px-4 pb-10 pt-10" />
+    <main data-testid="agents-workspace" className="workspace-route">
+      <div className="page-wrap workspace-frame">
+        <section
+          data-testid="agents-workspace-scroll-region"
+          className="island-shell workspace-scroll-region"
+        />
+      </div>
+    </main>
   )
 }
