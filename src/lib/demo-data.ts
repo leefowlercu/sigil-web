@@ -39,18 +39,6 @@ export type RunDetailView = {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Demo data: session                                                 */
-/* ------------------------------------------------------------------ */
-
-export const sessionSummary = {
-  endpoint: 'ws://127.0.0.1:8765/app-server',
-  instanceName: 'dev-localhost',
-  protocolVersion: PROTOCOL_VERSION,
-  status: 'ready',
-  capabilitiesConfig: PROTOCOL_VERSION,
-}
-
-/* ------------------------------------------------------------------ */
 /*  Demo data: agent instances                                         */
 /* ------------------------------------------------------------------ */
 

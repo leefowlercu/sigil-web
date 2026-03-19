@@ -1,63 +1,42 @@
-import { Link } from '@tanstack/react-router'
-import { Compass, PlugZap, Radar } from 'lucide-react'
-import { Badge } from '#/components/ui/badge'
-import { sessionSummary } from '#/lib/data'
 import ThemeToggle from './ThemeToggle'
+
+function SigilIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 200 200"
+      className={className}
+    >
+      <path
+        d="M 70 140 Q 100 170 130 140 T 130 70 Q 100 40 70 70 T 70 140"
+        fill="none"
+        stroke="var(--sigil-accent)"
+        strokeWidth="14"
+        strokeLinecap="round"
+      />
+      <path
+        d="M 75 35 L 100 15 L 125 35"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="12"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="100" cy="105" r="12" fill="currentColor" />
+    </svg>
+  )
+}
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] px-4 backdrop-blur-lg">
-      <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
-        <h2 className="m-0 flex-shrink-0 text-base font-semibold tracking-tight">
-          <Link
-            to="/agents"
-            className="inline-flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--secondary)] px-3 py-2 text-sm text-[var(--foreground)] no-underline shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:px-4"
-          >
-            <span className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <Radar className="size-4" />
-            </span>
-            <span className="flex flex-col text-left leading-tight">
-              <span className="text-sm font-semibold tracking-tight">
-                Sigil Web
-              </span>
-              <span className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[var(--muted-foreground)]">
-                Command Plane
-              </span>
-            </span>
-          </Link>
-        </h2>
-
-        <div className="ml-auto flex items-center gap-2 sm:ml-0">
-          <div className="hidden items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--secondary)] px-3 py-1.5 shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:flex">
-            <Badge
-              variant="secondary"
-              data-testid="connection-status"
-              className="border border-[var(--connection-ready-border)] bg-[var(--connection-ready-bg)] text-[var(--foreground)]"
-            >
-              <PlugZap className="size-3.5" />
-              {sessionSummary.status}
-            </Badge>
-            <span
-              data-testid="connection-instance-name"
-              className="text-xs font-semibold tracking-[0.18em] text-[var(--muted-foreground)] uppercase"
-            >
-              {sessionSummary.instanceName}
-            </span>
-          </div>
-          <ThemeToggle />
+    <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] backdrop-blur-lg">
+      <nav className="flex items-center gap-3 pl-[10px] pr-3 py-2.5">
+        <div className="flex items-center gap-2 text-[var(--foreground)]">
+          <SigilIcon className="size-10 pt-[2px]" />
+          <span className="text-2xl font-bold tracking-tight">Siĝil</span>
         </div>
-
-        <div className="order-3 flex w-full flex-wrap items-center gap-x-4 gap-y-2 pb-1 text-sm font-semibold sm:order-2 sm:w-auto sm:flex-nowrap sm:pb-0">
-          <Link
-            to="/agents"
-            className="nav-link"
-            activeProps={{ className: 'nav-link is-active' }}
-          >
-            <span className="inline-flex items-center gap-1.5">
-              <Compass className="size-4" />
-              Agents
-            </span>
-          </Link>
+        <div className="ml-auto">
+          <ThemeToggle />
         </div>
       </nav>
     </header>

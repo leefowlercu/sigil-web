@@ -163,7 +163,7 @@ export function AgentsPane({
           <div className="flex size-7 items-center justify-center rounded-md bg-[var(--sigil-accent-soft)]">
             <Radio className="size-3.5 text-[var(--sigil-accent)]" />
           </div>
-          <span className="text-sm font-bold tracking-[0.1em] text-[var(--foreground)]">
+          <span className="text-sm font-bold uppercase text-[var(--foreground)]">
             Agent Fleet
           </span>
           <Badge

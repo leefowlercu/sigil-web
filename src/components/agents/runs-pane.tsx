@@ -89,7 +89,7 @@ export function RunsPane({
   return (
     <div className="flex w-[360px] shrink-0 flex-col border-r border-[var(--line)]">
       <div className="flex items-center justify-between border-b border-[var(--line)] px-4 py-[15px]">
-        <span className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-[var(--muted-foreground)]">
+        <span className="text-sm font-bold uppercase text-[var(--foreground)]">
           Runs
         </span>
         <Badge

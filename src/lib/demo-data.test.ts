@@ -6,16 +6,9 @@ import {
   demoAgents,
   getRunDetail,
   getRunsForAgent,
-  sessionSummary,
 } from './demo-data'
 
 describe('demo data bootstrap', () => {
-  it('exposes a ready session summary for the command-plane shell', () => {
-    expect(sessionSummary.status).toBe('ready')
-    expect(sessionSummary.endpoint).toMatch(/^ws:\/\//)
-    expect(sessionSummary.protocolVersion).toBe('sigil.appserver.v1alpha1')
-  })
-
   it('keeps the default run mapped to a detail view', () => {
     const runs = getRunsForAgent(defaultAgentId)
     expect(runs.length).toBeGreaterThan(0)
