@@ -39,26 +39,66 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --sea-ink: #173a40;
-  --sea-ink-soft: #416166;
-  --lagoon: #4fb8b2;
-  --lagoon-deep: #328f97;
-  --palm: #2f6a4a;
-  --sand: #e7f0e8;
-  --foam: #f3faf5;
   --surface: rgba(255, 255, 255, 0.74);
   --surface-strong: rgba(255, 255, 255, 0.9);
-  --line: rgba(23, 58, 64, 0.14);
-  --inset-glint: rgba(255, 255, 255, 0.82);
-  --kicker: rgba(47, 106, 74, 0.9);
-  --bg-base: #e7f3ec;
-  --header-bg: rgba(251, 255, 248, 0.84);
-  --chip-bg: rgba(255, 255, 255, 0.8);
-  --chip-line: rgba(47, 106, 74, 0.18);
-  --link-bg-hover: rgba(255, 255, 255, 0.9);
-  --hero-a: rgba(79, 184, 178, 0.36);
-  --hero-b: rgba(47, 106, 74, 0.2);
+  --line: rgba(0, 0, 0, 0.12);
+  --header-bg: rgba(255, 255, 255, 0.84);
   --app-shell-min-height: 800px;
+
+  --sigil-accent: #FF4B2B;
+  --sigil-accent-soft: rgba(255, 75, 43, 0.10);
+  --sigil-accent-hover: rgba(255, 75, 43, 0.05);
+  --sigil-accent-border: rgba(255, 75, 43, 0.25);
+  --sigil-accent-ring: rgba(255, 75, 43, 0.20);
+  --sigil-accent-focus-border: rgba(255, 75, 43, 0.40);
+  --sigil-accent-focus-ring: rgba(255, 75, 43, 0.20);
+
+  --sidebar-bg: #f0f4f2;
+  --workspace-bg: #e8ede9;
+  --surface-hover: rgba(23, 58, 64, 0.06);
+  --input-bg: rgba(255, 255, 255, 0.7);
+  --input-border: rgba(23, 58, 64, 0.18);
+  --input-text: #173a40;
+  --input-placeholder: #416166;
+
+  --run-status-running: #FF4B2B;
+  --run-status-running-shadow: 0 0 8px rgba(255, 75, 43, 0.6);
+  --run-status-running-border: rgba(255, 75, 43, 0.30);
+  --run-status-running-bg: rgba(255, 75, 43, 0.10);
+  --run-status-running-text: #FF4B2B;
+  --run-status-completed: #10b981;
+  --run-status-completed-border: rgba(16, 185, 129, 0.30);
+  --run-status-completed-bg: rgba(16, 185, 129, 0.10);
+  --run-status-completed-text: #047857;
+  --run-status-failed: #dc2626;
+  --run-status-failed-border: rgba(220, 38, 38, 0.30);
+  --run-status-failed-bg: rgba(220, 38, 38, 0.10);
+  --run-status-failed-text: #b91c1c;
+  --run-status-interrupted: #f59e0b;
+  --run-status-interrupted-border: rgba(245, 158, 11, 0.30);
+  --run-status-interrupted-bg: rgba(245, 158, 11, 0.10);
+  --run-status-interrupted-text: #b45309;
+  --run-status-queued: #94a3b8;
+  --run-status-queued-border: rgba(148, 163, 184, 0.30);
+  --run-status-queued-bg: rgba(148, 163, 184, 0.10);
+  --run-status-queued-text: #475569;
+
+  --connection-ready: #10b981;
+  --connection-ready-border: rgba(16, 185, 129, 0.30);
+  --connection-ready-bg: rgba(16, 185, 129, 0.10);
+  --connection-ready-text: #047857;
+  --connection-degraded: #f59e0b;
+  --connection-degraded-border: rgba(245, 158, 11, 0.30);
+  --connection-degraded-bg: rgba(245, 158, 11, 0.10);
+  --connection-degraded-text: #b45309;
+  --connection-reconnecting: #ef4444;
+  --connection-reconnecting-border: rgba(239, 68, 68, 0.30);
+  --connection-reconnecting-bg: rgba(239, 68, 68, 0.10);
+  --connection-reconnecting-text: #b91c1c;
+  --connection-disconnected: #94a3b8;
+  --connection-disconnected-border: rgba(148, 163, 184, 0.30);
+  --connection-disconnected-bg: rgba(148, 163, 184, 0.10);
+  --connection-disconnected-text: #475569;
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -96,25 +136,65 @@
 }
 
 .dark {
-  --sea-ink: #d7ece8;
-  --sea-ink-soft: #afcdc8;
-  --lagoon: #60d7cf;
-  --lagoon-deep: #8de5db;
-  --palm: #6ec89a;
-  --sand: #0f1a1e;
-  --foam: #101d22;
-  --surface: rgba(16, 30, 34, 0.8);
-  --surface-strong: rgba(15, 27, 31, 0.92);
-  --line: rgba(141, 229, 219, 0.18);
-  --inset-glint: rgba(194, 247, 238, 0.14);
-  --kicker: #b8efe5;
-  --bg-base: #0a1418;
-  --header-bg: rgba(10, 20, 24, 0.8);
-  --chip-bg: rgba(13, 28, 32, 0.9);
-  --chip-line: rgba(141, 229, 219, 0.24);
-  --link-bg-hover: rgba(24, 44, 49, 0.8);
-  --hero-a: rgba(96, 215, 207, 0.18);
-  --hero-b: rgba(110, 200, 154, 0.12);
+  --sigil-accent: #FF4B2B;
+  --sigil-accent-soft: rgba(255, 75, 43, 0.12);
+  --sigil-accent-hover: rgba(255, 75, 43, 0.06);
+  --sigil-accent-border: rgba(255, 75, 43, 0.25);
+  --sigil-accent-ring: rgba(255, 75, 43, 0.20);
+  --sigil-accent-focus-border: rgba(255, 75, 43, 0.40);
+  --sigil-accent-focus-ring: rgba(255, 75, 43, 0.20);
+
+  --sidebar-bg: #0a0b0e;
+  --workspace-bg: #14161b;
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --input-bg: rgba(30, 41, 59, 0.50);
+  --input-border: rgba(141, 229, 219, 0.14);
+  --input-text: #d7ece8;
+  --input-placeholder: #64748b;
+
+  --run-status-running: #FF4B2B;
+  --run-status-running-shadow: 0 0 8px rgba(255, 75, 43, 0.6);
+  --run-status-running-border: rgba(255, 75, 43, 0.40);
+  --run-status-running-bg: rgba(255, 75, 43, 0.15);
+  --run-status-running-text: #ff8066;
+  --run-status-completed: #10b981;
+  --run-status-completed-border: rgba(52, 211, 153, 0.30);
+  --run-status-completed-bg: rgba(52, 211, 153, 0.10);
+  --run-status-completed-text: #34d399;
+  --run-status-failed: #ef4444;
+  --run-status-failed-border: rgba(239, 68, 68, 0.30);
+  --run-status-failed-bg: rgba(239, 68, 68, 0.10);
+  --run-status-failed-text: #f87171;
+  --run-status-interrupted: #f59e0b;
+  --run-status-interrupted-border: rgba(251, 191, 36, 0.30);
+  --run-status-interrupted-bg: rgba(251, 191, 36, 0.10);
+  --run-status-interrupted-text: #fbbf24;
+  --run-status-queued: #94a3b8;
+  --run-status-queued-border: rgba(148, 163, 184, 0.30);
+  --run-status-queued-bg: rgba(148, 163, 184, 0.10);
+  --run-status-queued-text: #94a3b8;
+
+  --connection-ready: #10b981;
+  --connection-ready-border: rgba(52, 211, 153, 0.30);
+  --connection-ready-bg: rgba(52, 211, 153, 0.10);
+  --connection-ready-text: #34d399;
+  --connection-degraded: #f59e0b;
+  --connection-degraded-border: rgba(251, 191, 36, 0.30);
+  --connection-degraded-bg: rgba(251, 191, 36, 0.10);
+  --connection-degraded-text: #fbbf24;
+  --connection-reconnecting: #ef4444;
+  --connection-reconnecting-border: rgba(239, 68, 68, 0.30);
+  --connection-reconnecting-bg: rgba(239, 68, 68, 0.10);
+  --connection-reconnecting-text: #f87171;
+  --connection-disconnected: #64748b;
+  --connection-disconnected-border: rgba(100, 116, 139, 0.30);
+  --connection-disconnected-bg: rgba(100, 116, 139, 0.10);
+  --connection-disconnected-text: #94a3b8;
+
+  --surface: rgba(30, 30, 36, 0.8);
+  --surface-strong: rgba(24, 24, 30, 0.92);
+  --line: rgba(255, 255, 255, 0.12);
+  --header-bg: #0a0b0e;
 
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
@@ -204,26 +284,12 @@ body,
 body {
   margin: 0;
   min-height: 100dvh;
-  color: var(--sea-ink);
+  color: var(--foreground);
   font-family: var(--font-sans);
   font-feature-settings:
     'liga' 0,
     'calt' 0;
-  background-color: var(--bg-base);
-  background:
-    radial-gradient(1100px 620px at -8% -10%, var(--hero-a), transparent 58%),
-    radial-gradient(1050px 620px at 112% -12%, var(--hero-b), transparent 62%),
-    radial-gradient(
-      720px 380px at 50% 115%,
-      rgba(79, 184, 178, 0.1),
-      transparent 68%
-    ),
-    linear-gradient(
-      180deg,
-      color-mix(in oklab, var(--sand) 68%, white) 0%,
-      var(--foam) 44%,
-      var(--bg-base) 100%
-    );
+  background-color: var(--background);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -241,50 +307,16 @@ body {
   }
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.28;
-  background:
-    radial-gradient(
-      circle at 20% 15%,
-      rgba(255, 255, 255, 0.8),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 78% 26%,
-      rgba(79, 184, 178, 0.2),
-      transparent 42%
-    ),
-    radial-gradient(circle at 42% 82%, rgba(47, 106, 74, 0.14), transparent 36%);
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.14;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(circle at 50% 30%, black, transparent 78%);
-}
 
 a {
-  color: var(--lagoon-deep);
-  text-decoration-color: rgba(50, 143, 151, 0.4);
+  color: var(--primary);
+  text-decoration-color: color-mix(in oklab, var(--primary) 40%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
 }
 
 a:hover {
-  color: #246f76;
+  color: var(--foreground);
 }
 
 code {
@@ -369,9 +401,8 @@ pre code {
   border: 1px solid var(--line);
   background: linear-gradient(165deg, var(--surface-strong), var(--surface));
   box-shadow:
-    0 1px 0 var(--inset-glint) inset,
-    0 22px 44px rgba(30, 90, 72, 0.1),
-    0 6px 18px rgba(23, 58, 64, 0.08);
+    0 22px 44px rgba(0, 0, 0, 0.06),
+    0 6px 18px rgba(0, 0, 0, 0.04);
   backdrop-filter: blur(4px);
 }
 
@@ -382,14 +413,13 @@ pre code {
     var(--surface)
   );
   box-shadow:
-    0 1px 0 var(--inset-glint) inset,
-    0 18px 34px rgba(30, 90, 72, 0.1),
-    0 4px 14px rgba(23, 58, 64, 0.06);
+    0 18px 34px rgba(0, 0, 0, 0.06),
+    0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
 .feature-card:hover {
   transform: translateY(-2px);
-  border-color: color-mix(in oklab, var(--lagoon-deep) 35%, var(--line));
+  border-color: var(--border);
 }
 
 button,
@@ -407,13 +437,13 @@ a {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 0.69rem;
-  color: var(--kicker);
+  color: var(--muted-foreground);
 }
 
 .nav-link {
   position: relative;
   text-decoration: none;
-  color: var(--sea-ink-soft);
+  color: var(--muted-foreground);
 }
 
 .nav-link::after {
@@ -425,13 +455,13 @@ a {
   height: 2px;
   transform: scaleX(0);
   transform-origin: left;
-  background: linear-gradient(90deg, var(--lagoon), #7ed3bf);
+  background: var(--primary);
   transition: transform 170ms ease;
 }
 
 .nav-link:hover,
 .nav-link.is-active {
-  color: var(--sea-ink);
+  color: var(--foreground);
 }
 
 .nav-link:hover::after,
@@ -457,13 +487,13 @@ a {
 .site-footer {
   flex-shrink: 0;
   border-top: 1px solid var(--line);
-  background: color-mix(in oklab, var(--header-bg) 84%, transparent 16%);
+  background: var(--header-bg);
 }
 
 .control-chip {
-  border: 1px solid var(--chip-line);
-  background: var(--chip-bg);
-  box-shadow: 0 10px 24px rgba(30, 90, 72, 0.08);
+  border: 1px solid var(--border);
+  background: var(--secondary);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
 }
 
 @layer base {

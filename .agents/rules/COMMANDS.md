@@ -7,7 +7,9 @@ Run all commands from the `sigil-web/` root unless otherwise stated.
 - `pnpm install`: install or reconcile dependencies from `package.json` and
   `pnpm-lock.yaml`.
 - `pnpm dev`: run the TanStack Start and Vite development server on port
-  `3000`.
+  `3000` in live mode (no demo data).
+- `pnpm dev:demo`: run the development server on port `3000` in demo mode
+  with seeded agent instances, runs, and detail views.
 - `pnpm build`: build the client and server bundles.
 - `pnpm preview`: preview the production build locally.
 - `pnpm test`: run the current Vitest suite.
@@ -16,6 +18,16 @@ Run all commands from the `sigil-web/` root unless otherwise stated.
 - `pnpm format`: format the repo with Prettier.
 - `pnpm format:check`: verify Prettier formatting without modifying files.
 - `pnpm check`: run non-mutating formatting plus lint verification.
+
+## Protocol Type Generation
+
+- `cd ../sigil && make build`: build the `sigil` binary in the sibling
+  submodule (required before generating types).
+- `../sigil/sigil app-server generate-ts --output-file src/lib/protocol/current.generated.ts`:
+  regenerate the canonical app-server protocol TypeScript interfaces from the
+  Go source of truth. Run this whenever the `sigil` protocol types change.
+  After regenerating, verify that existing version adapters in
+  `src/lib/protocol/adapters/` still compile against the new types.
 
 ## Design and Spec Verification
 
@@ -31,5 +43,7 @@ Run all commands from the `sigil-web/` root unless otherwise stated.
   verification trio for implementation work.
 - Run `../scripts/verify-specs --subproject sigil-web` whenever PRD, matrix,
   acceptance-title, scenario-manifest, or design-manifest structure changes.
-- Use `pnpm dev` while iterating with Paper or reviewing routed UI states in
-  the browser.
+- Use `pnpm dev:demo` while iterating on UI layout, styling, or Paper
+  prototypes where seeded data is needed.
+- Use `pnpm dev` when testing against a real `sigil` app-server instance over
+  WebSocket.

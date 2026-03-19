@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { Compass, PlugZap, Radar } from 'lucide-react'
 import { Badge } from '#/components/ui/badge'
-import { sessionSummary } from '#/lib/demo-data'
+import { sessionSummary } from '#/lib/data'
 import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
@@ -11,16 +11,16 @@ export default function Header() {
         <h2 className="m-0 flex-shrink-0 text-base font-semibold tracking-tight">
           <Link
             to="/agents"
-            className="inline-flex items-center gap-3 rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-2 text-sm text-[var(--sea-ink)] no-underline shadow-[0_8px_24px_rgba(30,90,72,0.08)] sm:px-4"
+            className="inline-flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--secondary)] px-3 py-2 text-sm text-[var(--foreground)] no-underline shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:px-4"
           >
-            <span className="flex size-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,rgba(79,184,178,0.95),rgba(47,106,74,0.9))] text-white">
+            <span className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <Radar className="size-4" />
             </span>
             <span className="flex flex-col text-left leading-tight">
               <span className="text-sm font-semibold tracking-tight">
                 Sigil Web
               </span>
-              <span className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[var(--sea-ink-soft)]">
+              <span className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-[var(--muted-foreground)]">
                 Command Plane
               </span>
             </span>
@@ -28,18 +28,18 @@ export default function Header() {
         </h2>
 
         <div className="ml-auto flex items-center gap-2 sm:ml-0">
-          <div className="hidden items-center gap-2 rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-1.5 shadow-[0_8px_24px_rgba(30,90,72,0.08)] sm:flex">
+          <div className="hidden items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--secondary)] px-3 py-1.5 shadow-[0_8px_24px_rgba(0,0,0,0.06)] sm:flex">
             <Badge
               variant="secondary"
               data-testid="connection-status"
-              className="border border-emerald-400/30 bg-emerald-400/12 text-[var(--sea-ink)]"
+              className="border border-[var(--connection-ready-border)] bg-[var(--connection-ready-bg)] text-[var(--foreground)]"
             >
               <PlugZap className="size-3.5" />
               {sessionSummary.status}
             </Badge>
             <span
               data-testid="connection-instance-name"
-              className="text-xs font-semibold tracking-[0.18em] text-[var(--sea-ink-soft)] uppercase"
+              className="text-xs font-semibold tracking-[0.18em] text-[var(--muted-foreground)] uppercase"
             >
               {sessionSummary.instanceName}
             </span>

@@ -40,6 +40,23 @@ generic React defaults.
 
 - [Implementation Standards Reference](.agents/rules/STANDARDS.md)
 
+## Protocol Types and Data
+
+Use the protocol and data guide to understand how upstream `sigil` app-server
+wire types flow into `sigil-web`, where client-side domain types are defined,
+and how to run the application with or without demo data.
+
+- Protocol types are generated from the `sigil` binary and must not be edited
+  by hand.
+- Client-side types wrap or compose protocol types for domain modeling; they
+  never fabricate fields absent from the wire types.
+- Data values are gated behind `VITE_DATA_SOURCE` and accessed through
+  `src/lib/data.ts`.
+- See [Layout Reference](.agents/rules/LAYOUT.md) for the type hierarchy and
+  file responsibilities.
+- See [Commands Reference](.agents/rules/COMMANDS.md) for `pnpm dev` vs
+  `pnpm dev:demo` and protocol type regeneration.
+
 ## Design Workflow
 
 Use the design workflow guide when changing routed UI states or iterating on

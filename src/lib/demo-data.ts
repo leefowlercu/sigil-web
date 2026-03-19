@@ -1,325 +1,508 @@
-export type RunStatus = 'queued' | 'running' | 'completed' | 'interrupted'
+import type {
+  EventEnvelopeView,
+  InitializeResult,
+  RunNodeProjectionView,
+  RunProjectionView,
+  RunStepSummaryView,
+  RunSummaryView,
+} from './protocol'
+import { PROTOCOL_VERSION } from './protocol'
 
-export type RunRecord = {
+/* ------------------------------------------------------------------ */
+/*  Client-side types                                                  */
+/* ------------------------------------------------------------------ */
+
+export type RunState =
+  | 'queued'
+  | 'running'
+  | 'completed'
+  | 'failed'
+  | 'interrupted'
+
+export type ConnectionState =
+  | 'ready'
+  | 'degraded'
+  | 'reconnecting'
+  | 'disconnected'
+
+export type AgentInstance = {
   id: string
-  agentId: string
-  title: string
-  status: RunStatus
-  updatedAt: string
-  operator: string
-  source: string
-  seq: number
-  nodes: number
-  focus: string
+  endpoint: string
+  connectionState: ConnectionState
+  server: InitializeResult
 }
 
-export type RunEvent = {
-  seq: number
-  at: string
-  label: string
-  summary: string
+export type RunDetailView = {
+  projection: RunProjectionView
+  events: EventEnvelopeView[]
+  steps: RunStepSummaryView[]
 }
 
-export type RunStep = {
-  id: string
-  label: string
-  schemaId: string
-  artifactTitle: string
-  artifactBody: string
-}
-
-export type RunNode = {
-  id: string
-  label: string
-  state: 'root' | 'active' | 'completed'
-}
-
-export type RunDetail = {
-  runId: string
-  status: RunStatus
-  operator: string
-  source: string
-  seq: number
-  updatedAt: string
-  model: string
-  live: boolean
-  summary: string
-  finalAnswer: string
-  stopProvenance: string
-  nodes: RunNode[]
-  steps: RunStep[]
-  events: RunEvent[]
-}
-
-export type AgentRecord = {
-  id: string
-  name: string
-  lane: string
-  runtime: string
-  model: string
-  lastSeen: string
-  summary: string
-}
+/* ------------------------------------------------------------------ */
+/*  Demo data: session                                                 */
+/* ------------------------------------------------------------------ */
 
 export const sessionSummary = {
-  endpoint: 'ws://127.0.0.1:7411/ws',
+  endpoint: 'ws://127.0.0.1:8765/app-server',
   instanceName: 'dev-localhost',
-  protocolVersion: 'sigil.appserver.v1alpha1',
+  protocolVersion: PROTOCOL_VERSION,
   status: 'ready',
-  capabilitiesConfig: 'v1',
+  capabilitiesConfig: PROTOCOL_VERSION,
 }
 
-export const demoAgents: AgentRecord[] = [
+/* ------------------------------------------------------------------ */
+/*  Demo data: agent instances                                         */
+/* ------------------------------------------------------------------ */
+
+const serverCapabilities = {
+  config: {
+    defaultVersion: PROTOCOL_VERSION,
+    supportedVersions: [PROTOCOL_VERSION],
+  },
+  views: { runTree: true, stepDetail: true, liveSubscriptions: true },
+  protocolArtifacts: true,
+}
+
+export const demoAgents: AgentInstance[] = [
   {
     id: 'agent_control_plane',
-    name: 'control-plane',
-    lane: 'Reconnect monitor',
-    runtime: 'sigil app-server',
-    model: 'gpt-5.4',
-    lastSeen: 'heartbeat 8s ago',
-    summary:
-      'Primary operator lane watching canonical subscriptions and heartbeat recovery.',
+    endpoint: 'ws://10.0.1.12:8765/app-server',
+    connectionState: 'ready',
+    server: {
+      serverName: 'sigil',
+      serverVersion: '0.1.0',
+      instanceId: 'control-plane',
+      instanceName: 'control-plane',
+      protocolVersion: PROTOCOL_VERSION,
+      methodFamilies: ['run', 'server'],
+      capabilities: serverCapabilities,
+    },
   },
   {
     id: 'agent_spec_governance',
-    name: 'spec-governance',
-    lane: 'Traceability verifier',
-    runtime: 'sigil app-server',
-    model: 'gpt-5.4-mini',
-    lastSeen: 'heartbeat 14s ago',
-    summary:
-      'Checks PRD, MATRIX, and acceptance parity before publish-time pointer updates.',
+    endpoint: 'ws://10.0.1.13:8765/app-server',
+    connectionState: 'ready',
+    server: {
+      serverName: 'sigil',
+      serverVersion: '0.1.0',
+      instanceId: 'spec-governance',
+      instanceName: 'spec-governance',
+      protocolVersion: PROTOCOL_VERSION,
+      methodFamilies: ['run', 'server'],
+      capabilities: serverCapabilities,
+    },
   },
   {
     id: 'agent_ops_sandbox',
-    name: 'ops-sandbox',
-    lane: 'Stop-control rehearsal',
-    runtime: 'sigil app-server',
-    model: 'gpt-5.3-codex',
-    lastSeen: 'heartbeat 22s ago',
-    summary:
-      'Exercises interruption and provenance flows without disturbing the primary lane.',
+    endpoint: 'ws://10.0.1.14:8765/app-server',
+    connectionState: 'degraded',
+    server: {
+      serverName: 'sigil',
+      serverVersion: '0.1.0',
+      instanceId: 'ops-sandbox',
+      instanceName: 'ops-sandbox',
+      protocolVersion: PROTOCOL_VERSION,
+      methodFamilies: ['run', 'server'],
+      capabilities: serverCapabilities,
+    },
   },
 ]
 
-export const demoRuns: RunRecord[] = [
+/* ------------------------------------------------------------------ */
+/*  Demo data: run summaries (from run/list)                           */
+/* ------------------------------------------------------------------ */
+
+type AgentRunSummary = { agentId: string; run: RunSummaryView }
+
+const demoRunSummaries: AgentRunSummary[] = [
   {
-    id: 'run_01jf7m7d1vvb4r1fvyht',
     agentId: demoAgents[0].id,
-    title: 'Market-map orchestration dry run',
-    status: 'running',
-    updatedAt: '2m ago',
-    operator: 'control-plane',
-    source: 'app_server.run.start',
-    seq: 48,
-    nodes: 5,
-    focus: 'Subscription replay stable after heartbeat recovery.',
+    run: {
+      runId: '019569a1-2b3c-7d4e-8f01-234567890abc',
+      state: 'running',
+      source: 'app_server.run.start',
+      queuedAt: '2026-03-18T16:58:00Z',
+      startedAt: '2026-03-18T16:58:01Z',
+      eventsPath: '/var/sigil/runs/019569a1-2b3c-7d4e-8f01-234567890abc/events.jsonl',
+      pidStatus: 'current',
+      stopRequested: false,
+    },
   },
   {
-    id: 'run_01jf7m4s9dmwexm3f8am',
     agentId: demoAgents[1].id,
-    title: 'PRD traceability verifier preview',
-    status: 'completed',
-    updatedAt: '17m ago',
-    operator: 'spec-governance',
-    source: 'cli.imported',
-    seq: 32,
-    nodes: 3,
-    focus: 'Matrix and feature titles are aligned.',
+    run: {
+      runId: '019569a0-1a2b-7c3d-8e0f-123456789def',
+      state: 'completed',
+      source: 'cli.run.start',
+      queuedAt: '2026-03-18T16:41:00Z',
+      startedAt: '2026-03-18T16:41:01Z',
+      terminalAt: '2026-03-18T16:41:14Z',
+      eventsPath: '/var/sigil/runs/019569a0-1a2b-7c3d-8e0f-123456789def/events.jsonl',
+      pidStatus: 'not_running',
+      stopRequested: false,
+    },
   },
   {
-    id: 'run_01jf7m0h23k6xsp9qjbp',
     agentId: demoAgents[2].id,
-    title: 'Interrupted reconnect rehearsal',
-    status: 'interrupted',
-    updatedAt: '42m ago',
-    operator: 'ops-sandbox',
-    source: 'app_server.run.start',
-    seq: 21,
-    nodes: 2,
-    focus: 'Stop provenance captured as app_server.run.stop.',
+    run: {
+      runId: '0195699f-0a1b-7c2d-8e3f-0123456789ab',
+      state: 'interrupted',
+      source: 'app_server.run.start',
+      queuedAt: '2026-03-18T16:16:00Z',
+      startedAt: '2026-03-18T16:16:01Z',
+      terminalAt: '2026-03-18T16:17:05Z',
+      eventsPath: '/var/sigil/runs/0195699f-0a1b-7c2d-8e3f-0123456789ab/events.jsonl',
+      pidStatus: 'not_running',
+      stopRequested: true,
+    },
   },
 ]
 
-export const runDetails: Partial<Record<string, RunDetail>> = {
-  [demoRuns[0].id]: {
-    runId: demoRuns[0].id,
-    status: 'running',
-    operator: demoRuns[0].operator,
-    source: demoRuns[0].source,
-    seq: 48,
-    updatedAt: demoRuns[0].updatedAt,
-    model: 'gpt-5.4',
-    live: true,
-    summary:
-      'The run is attached to a live subscription and has resumed cleanly after one heartbeat interruption.',
-    finalAnswer:
-      'Awaiting terminal output. Current workspace remains attached to canonical event delivery.',
-    stopProvenance:
-      'No stop request persisted yet. Active workspace remains eligible for run/stop.',
-    nodes: [
-      { id: 'root', label: 'Root planner', state: 'root' },
-      { id: 'child-1', label: 'Protocol inspector', state: 'completed' },
-      { id: 'child-2', label: 'Design reconciler', state: 'active' },
-    ],
+/* ------------------------------------------------------------------ */
+/*  Demo data: run detail views (from run/read + run/events/read +     */
+/*  run/steps/list)                                                    */
+/* ------------------------------------------------------------------ */
+
+const run0Id = demoRunSummaries[0].run.runId
+const run1Id = demoRunSummaries[1].run.runId
+const run2Id = demoRunSummaries[2].run.runId
+
+const demoNodes0: RunNodeProjectionView[] = [
+  {
+    nodeId: '019569a1-3c4d-7e5f-9012-000000000001',
+    depth: 0,
+    role: 'root',
+    state: 'running',
+    startedAt: '2026-03-18T16:58:01Z',
+    stepCount: 3,
+  },
+  {
+    nodeId: '019569a1-3c4d-7e5f-9012-000000000002',
+    parentNodeId: '019569a1-3c4d-7e5f-9012-000000000001',
+    depth: 1,
+    role: 'recursive_subcall',
+    state: 'completed',
+    startedAt: '2026-03-18T16:58:04Z',
+    terminalAt: '2026-03-18T16:59:30Z',
+    stepCount: 5,
+  },
+  {
+    nodeId: '019569a1-3c4d-7e5f-9012-000000000003',
+    parentNodeId: '019569a1-3c4d-7e5f-9012-000000000001',
+    depth: 1,
+    role: 'recursive_subcall',
+    state: 'running',
+    startedAt: '2026-03-18T16:59:31Z',
+    stepCount: 2,
+  },
+]
+
+const demoNodes1: RunNodeProjectionView[] = [
+  {
+    nodeId: '019569a0-2b3c-7d4e-9012-000000000001',
+    depth: 0,
+    role: 'root',
+    state: 'completed',
+    startedAt: '2026-03-18T16:41:01Z',
+    terminalAt: '2026-03-18T16:41:14Z',
+    stepCount: 4,
+  },
+  {
+    nodeId: '019569a0-2b3c-7d4e-9012-000000000002',
+    parentNodeId: '019569a0-2b3c-7d4e-9012-000000000001',
+    depth: 1,
+    role: 'recursive_subcall',
+    state: 'completed',
+    startedAt: '2026-03-18T16:41:03Z',
+    terminalAt: '2026-03-18T16:41:12Z',
+    stepCount: 2,
+  },
+]
+
+const demoNodes2: RunNodeProjectionView[] = [
+  {
+    nodeId: '0195699f-1b2c-7d3e-9012-000000000001',
+    depth: 0,
+    role: 'root',
+    state: 'interrupted',
+    startedAt: '2026-03-18T16:16:01Z',
+    terminalAt: '2026-03-18T16:17:05Z',
+    stepCount: 2,
+  },
+]
+
+const demoDetails: Record<string, RunDetailView> = {
+  [run0Id]: {
+    projection: {
+      runId: run0Id,
+      state: 'running',
+      runDir: `/var/sigil/runs/${run0Id}`,
+      eventsPath: `/var/sigil/runs/${run0Id}/events.jsonl`,
+      source: 'app_server.run.start',
+      queuedAt: '2026-03-18T16:58:00Z',
+      startedAt: '2026-03-18T16:58:01Z',
+      executor: 'rlm',
+      maxDepth: 2,
+      pidStatus: 'current',
+      stopRequested: false,
+      nodeCount: 3,
+      stepCount: 10,
+      actionCount: 4,
+      subcallCount: 2,
+      nodes: demoNodes0,
+    },
     steps: [
       {
-        id: 'step-17',
-        label: 'resume-subscription',
+        nodeId: demoNodes0[2].nodeId,
+        stepId: '019569a2-4d5e-7f60-0123-000000000017',
+        nodeStepIndex: 0,
+        stepStartedSeq: 43,
         schemaId: 'sigil.rlm.response.v1',
-        artifactTitle: 'Replay reconciliation',
-        artifactBody:
-          'Applied canonical events 45-48 after reconnect with no duplicate sequences.',
+        decision: 'continue',
+        state: 'completed',
+        startedAt: '2026-03-18T17:02:10Z',
+        completedAt: '2026-03-18T17:02:18Z',
+        durationMs: 8000,
+        actionCount: 1,
+        subcallCount: 0,
       },
       {
-        id: 'step-18',
-        label: 'update-workspace',
+        nodeId: demoNodes0[2].nodeId,
+        stepId: '019569a2-4d5e-7f60-0123-000000000018',
+        nodeStepIndex: 1,
+        stepStartedSeq: 46,
         schemaId: 'sigil.rlm.response.v1',
-        artifactTitle: 'Workspace diff',
-        artifactBody:
-          'Updated timeline, live indicator, and terminal guardrails for the operator shell.',
+        state: 'running',
+        startedAt: '2026-03-18T17:02:20Z',
+        actionCount: 0,
+        subcallCount: 0,
       },
     ],
     events: [
       {
+        eventId: '019569a2-5e6f-7012-3456-000000000045',
+        schemaVersion: 'v1',
+        runId: run0Id,
         seq: 45,
-        at: '11:02:14',
-        label: 'run/eventAppended',
-        summary: 'Canonical replay resumed after reconnect.',
+        ts: '2026-03-18T17:02:14Z',
+        type: 'node.step.completed',
+        nodeId: demoNodes0[2].nodeId,
+        causationId: run0Id,
+        correlationId: run0Id,
+        payload: { decision: 'continue' },
       },
       {
+        eventId: '019569a2-6f70-7123-4567-000000000046',
+        schemaVersion: 'v1',
+        runId: run0Id,
         seq: 46,
-        at: '11:02:20',
-        label: 'run/statusChanged',
-        summary: 'Live workspace marked healthy after heartbeat recovery.',
+        ts: '2026-03-18T17:02:20Z',
+        type: 'node.step.started',
+        nodeId: demoNodes0[2].nodeId,
+        causationId: run0Id,
+        correlationId: run0Id,
+        payload: { schemaId: 'sigil.rlm.response.v1' },
       },
       {
+        eventId: '019569a2-7081-7234-5678-000000000047',
+        schemaVersion: 'v1',
+        runId: run0Id,
         seq: 47,
-        at: '11:02:27',
-        label: 'run/eventAppended',
-        summary: 'Design reconciler node wrote updated artifact output.',
+        ts: '2026-03-18T17:02:27Z',
+        type: 'node.turn.model',
+        nodeId: demoNodes0[2].nodeId,
+        causationId: run0Id,
+        correlationId: run0Id,
+        payload: { artifactRef: `artifact://${run0Id}/node/${demoNodes0[2].nodeId}/step/1/model-turn` },
       },
       {
+        eventId: '019569a2-8192-7345-6789-000000000048',
+        schemaVersion: 'v1',
+        runId: run0Id,
         seq: 48,
-        at: '11:02:34',
-        label: 'server/heartbeat',
-        summary: 'Heartbeat observed on the active operator session.',
+        ts: '2026-03-18T17:02:34Z',
+        type: 'node.action.executed',
+        nodeId: demoNodes0[2].nodeId,
+        causationId: run0Id,
+        correlationId: run0Id,
+        payload: { actionIndex: 0 },
       },
     ],
   },
-  [demoRuns[1].id]: {
-    runId: demoRuns[1].id,
-    status: 'completed',
-    operator: demoRuns[1].operator,
-    source: demoRuns[1].source,
-    seq: 32,
-    updatedAt: demoRuns[1].updatedAt,
-    model: 'gpt-5.4-mini',
-    live: false,
-    summary:
-      'The verifier preview completed and confirmed PRD, MATRIX, and feature-title parity.',
-    finalAnswer:
-      'Verified sigil-web specs: PRDs, MATRIX mappings, acceptance titles, scenario-manifest entries, and design-manifest artboards aligned.',
-    stopProvenance:
-      'Terminal completed state. No stop request metadata was required.',
-    nodes: [
-      { id: 'root', label: 'Verifier coordinator', state: 'root' },
-      { id: 'child-1', label: 'Matrix checker', state: 'completed' },
-    ],
+  [run1Id]: {
+    projection: {
+      runId: run1Id,
+      state: 'completed',
+      runDir: `/var/sigil/runs/${run1Id}`,
+      eventsPath: `/var/sigil/runs/${run1Id}/events.jsonl`,
+      source: 'cli.run.start',
+      queuedAt: '2026-03-18T16:41:00Z',
+      startedAt: '2026-03-18T16:41:01Z',
+      terminalAt: '2026-03-18T16:41:14Z',
+      executor: 'rlm',
+      maxDepth: 2,
+      pidStatus: 'not_running',
+      stopRequested: false,
+      nodeCount: 2,
+      stepCount: 6,
+      actionCount: 2,
+      subcallCount: 1,
+      nodes: demoNodes1,
+    },
     steps: [
       {
-        id: 'step-11',
-        label: 'parse-prds',
+        nodeId: demoNodes1[1].nodeId,
+        stepId: '019569a0-3c4d-7e5f-0123-000000000011',
+        nodeStepIndex: 0,
+        stepStartedSeq: 28,
         schemaId: 'sigil.rlm.response.v1',
-        artifactTitle: 'PRD scan',
-        artifactBody:
-          'Collected 5 sigil-web PRDs with globally unique scenario titles.',
+        decision: 'continue',
+        state: 'completed',
+        startedAt: '2026-03-18T16:41:05Z',
+        completedAt: '2026-03-18T16:41:09Z',
+        durationMs: 4000,
+        actionCount: 1,
+        subcallCount: 0,
       },
       {
-        id: 'step-12',
-        label: 'compare-feature-titles',
+        nodeId: demoNodes1[1].nodeId,
+        stepId: '019569a0-3c4d-7e5f-0123-000000000012',
+        nodeStepIndex: 1,
+        stepStartedSeq: 30,
         schemaId: 'sigil.rlm.response.v1',
-        artifactTitle: 'Acceptance parity',
-        artifactBody:
-          'All matrix rows resolved to the expected feature scenario titles.',
+        decision: 'final',
+        state: 'completed',
+        startedAt: '2026-03-18T16:41:10Z',
+        completedAt: '2026-03-18T16:41:12Z',
+        durationMs: 2000,
+        actionCount: 0,
+        subcallCount: 0,
       },
     ],
     events: [
       {
+        eventId: '019569a0-4d5e-7f60-1234-000000000030',
+        schemaVersion: 'v1',
+        runId: run1Id,
         seq: 30,
-        at: '10:41:07',
-        label: 'run/eventAppended',
-        summary: 'Read PRD scenarios and matrix mappings.',
+        ts: '2026-03-18T16:41:07Z',
+        type: 'node.step.completed',
+        nodeId: demoNodes1[1].nodeId,
+        causationId: run1Id,
+        correlationId: run1Id,
+        payload: { decision: 'continue' },
       },
       {
+        eventId: '019569a0-5e6f-7012-2345-000000000031',
+        schemaVersion: 'v1',
+        runId: run1Id,
         seq: 31,
-        at: '10:41:13',
-        label: 'run/completed',
-        summary: 'Verifier completed with no drift detected.',
+        ts: '2026-03-18T16:41:13Z',
+        type: 'node.completed',
+        nodeId: demoNodes1[1].nodeId,
+        causationId: run1Id,
+        correlationId: run1Id,
+        payload: {},
       },
       {
+        eventId: '019569a0-6f70-7123-3456-000000000032',
+        schemaVersion: 'v1',
+        runId: run1Id,
         seq: 32,
-        at: '10:41:14',
-        label: 'run/statusChanged',
-        summary: 'Run entered terminal completed state.',
+        ts: '2026-03-18T16:41:14Z',
+        type: 'run.completed',
+        causationId: run1Id,
+        correlationId: run1Id,
+        payload: { state: 'completed', terminal: true },
       },
     ],
   },
-  [demoRuns[2].id]: {
-    runId: demoRuns[2].id,
-    status: 'interrupted',
-    operator: demoRuns[2].operator,
-    source: demoRuns[2].source,
-    seq: 21,
-    updatedAt: demoRuns[2].updatedAt,
-    model: 'gpt-5.3-codex',
-    live: false,
-    summary:
-      'The operator requested a stop during reconnect rehearsal and the run terminated with preserved provenance.',
-    finalAnswer:
-      'Interrupted after stop request. Partial accounting and stop metadata were persisted.',
-    stopProvenance:
-      'requested_by=app_server.run.stop, reason=user_request, interrupted_by=app_server.run.stop',
-    nodes: [
-      { id: 'root', label: 'Reconnect rehearsal', state: 'root' },
-      { id: 'child-1', label: 'Stop control', state: 'completed' },
-    ],
+  [run2Id]: {
+    projection: {
+      runId: run2Id,
+      state: 'interrupted',
+      runDir: `/var/sigil/runs/${run2Id}`,
+      eventsPath: `/var/sigil/runs/${run2Id}/events.jsonl`,
+      source: 'app_server.run.start',
+      queuedAt: '2026-03-18T16:16:00Z',
+      startedAt: '2026-03-18T16:16:01Z',
+      terminalAt: '2026-03-18T16:17:05Z',
+      executor: 'rlm',
+      maxDepth: 1,
+      pidStatus: 'not_running',
+      stopRequested: true,
+      stopRequest: {
+        runId: run2Id,
+        requestedAt: '2026-03-18T16:17:03Z',
+        requestedBy: 'app_server.run.stop',
+        signal: 'user_request',
+      },
+      interruptedReason: 'user_request',
+      interruptedBy: 'app_server.run.stop',
+      interruptedNodeId: demoNodes2[0].nodeId,
+      nodeCount: 1,
+      stepCount: 2,
+      actionCount: 0,
+      subcallCount: 0,
+      nodes: demoNodes2,
+    },
     steps: [
       {
-        id: 'step-7',
-        label: 'issue-stop',
+        nodeId: demoNodes2[0].nodeId,
+        stepId: '0195699f-2c3d-7e4f-0123-000000000007',
+        nodeStepIndex: 0,
+        stepStartedSeq: 17,
         schemaId: 'sigil.rlm.response.v1',
-        artifactTitle: 'Stop request',
-        artifactBody:
-          'Persisted stop-request metadata and observed terminal interruption transition.',
+        decision: 'continue',
+        state: 'completed',
+        startedAt: '2026-03-18T16:16:05Z',
+        completedAt: '2026-03-18T16:16:50Z',
+        durationMs: 45000,
+        actionCount: 0,
+        subcallCount: 0,
       },
     ],
     events: [
       {
+        eventId: '0195699f-3d4e-7f50-1234-000000000019',
+        schemaVersion: 'v1',
+        runId: run2Id,
         seq: 19,
-        at: '10:16:55',
-        label: 'run/eventAppended',
-        summary: 'Heartbeat window exceeded while rehearsing reconnect.',
+        ts: '2026-03-18T16:16:55Z',
+        type: 'node.step.completed',
+        nodeId: demoNodes2[0].nodeId,
+        causationId: run2Id,
+        correlationId: run2Id,
+        payload: { decision: 'continue' },
       },
       {
+        eventId: '0195699f-4e5f-7060-2345-000000000020',
+        schemaVersion: 'v1',
+        runId: run2Id,
         seq: 20,
-        at: '10:17:03',
-        label: 'run/statusChanged',
-        summary: 'Stop control issued from app-server workspace.',
-      },
-      {
-        seq: 21,
-        at: '10:17:05',
-        label: 'run/completed',
-        summary: 'Run interrupted with persisted stop provenance.',
+        ts: '2026-03-18T16:17:03Z',
+        type: 'run.interrupted',
+        causationId: run2Id,
+        correlationId: run2Id,
+        payload: { state: 'interrupted', terminal: true, reason: 'user_request' },
       },
     ],
   },
 }
 
-export const defaultRunId = demoRuns[0].id
-export const defaultAgentId = demoAgents[0].id
+/* ------------------------------------------------------------------ */
+/*  Accessors                                                          */
+/* ------------------------------------------------------------------ */
 
-export function getRunsForAgent(agentId: string) {
-  return demoRuns.filter((run) => run.agentId === agentId)
+export const defaultAgentId = demoAgents[0].id
+export const defaultRunId = demoRunSummaries[0].run.runId
+
+export function getRunsForAgent(agentId: string): RunSummaryView[] {
+  return demoRunSummaries
+    .filter((entry) => entry.agentId === agentId)
+    .map((entry) => entry.run)
+}
+
+export function getRunDetail(runId: string): RunDetailView | undefined {
+  return demoDetails[runId]
 }
