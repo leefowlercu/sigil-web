@@ -14,6 +14,7 @@ import {
 
 const baseProjection: RunProjectionView = {
   runId: '019569a1-2b3c-7d4e-8f01-234567890abc',
+  name: 'test-run',
   state: 'running',
   runDir: '/var/sigil/runs/019569a1',
   eventsPath: '/var/sigil/runs/019569a1/events.jsonl',

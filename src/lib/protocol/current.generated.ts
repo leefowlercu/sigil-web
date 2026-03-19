@@ -187,6 +187,7 @@ export interface RunNodeReadResult {
 
 export interface RunProjectionView {
   runId: string;
+  name: string;
   state: string;
   runDir: string;
   eventsPath: string;
@@ -382,6 +383,7 @@ export interface RunSubscriptionSnapshotView {
 
 export interface RunSummaryView {
   runId: string;
+  name: string;
   state: string;
   source?: string;
   queuedAt?: string;

@@ -107,6 +107,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     agentId: demoAgents[0].id,
     run: {
       runId: '019569a1-2b3c-7d4e-8f01-234567890abc',
+      name: 'control-plane-deploy-v2',
       state: 'running',
       source: 'app_server.run.start',
       queuedAt: '2026-03-18T16:58:00Z',
@@ -120,6 +121,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     agentId: demoAgents[1].id,
     run: {
       runId: '019569a0-1a2b-7c3d-8e0f-123456789def',
+      name: 'spec-lint-pr-481',
       state: 'completed',
       source: 'cli.run.start',
       queuedAt: '2026-03-18T16:41:00Z',
@@ -134,6 +136,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     agentId: demoAgents[2].id,
     run: {
       runId: '0195699f-0a1b-7c2d-8e3f-0123456789ab',
+      name: 'sandbox-stress-test',
       state: 'interrupted',
       source: 'app_server.run.start',
       queuedAt: '2026-03-18T16:16:00Z',
@@ -223,6 +226,7 @@ const demoDetails: Record<string, RunDetailView> = {
   [run0Id]: {
     projection: {
       runId: run0Id,
+      name: 'control-plane-deploy-v2',
       state: 'running',
       runDir: `/var/sigil/runs/${run0Id}`,
       eventsPath: `/var/sigil/runs/${run0Id}/events.jsonl`,
@@ -320,6 +324,7 @@ const demoDetails: Record<string, RunDetailView> = {
   [run1Id]: {
     projection: {
       runId: run1Id,
+      name: 'spec-lint-pr-481',
       state: 'completed',
       runDir: `/var/sigil/runs/${run1Id}`,
       eventsPath: `/var/sigil/runs/${run1Id}/events.jsonl`,
@@ -408,6 +413,7 @@ const demoDetails: Record<string, RunDetailView> = {
   [run2Id]: {
     projection: {
       runId: run2Id,
+      name: 'sandbox-stress-test',
       state: 'interrupted',
       runDir: `/var/sigil/runs/${run2Id}`,
       eventsPath: `/var/sigil/runs/${run2Id}/events.jsonl`,

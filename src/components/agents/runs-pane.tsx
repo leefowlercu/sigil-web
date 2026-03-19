@@ -1,14 +1,34 @@
-import { Terminal, Clock, Hash } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Terminal, Timer } from 'lucide-react'
 import { Badge } from '#/components/ui/badge'
 import { ScrollArea } from '#/components/ui/scroll-area'
 import type { RunState } from '#/lib/demo-data'
 import type { RunSummaryView } from '#/lib/protocol'
-import { StateBadge, StateIcon } from './status-primitives'
+import { StateBadge } from './status-primitives'
 
-function formatTimestamp(iso?: string): string {
-  if (!iso) return '--'
-  const date = new Date(iso)
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+function formatDuration(ms: number): string {
+  const seconds = Math.floor(ms / 1000)
+  if (seconds < 60) return `${seconds}s`
+  const minutes = Math.floor(seconds / 60)
+  const rem = seconds % 60
+  if (minutes < 60) return rem > 0 ? `${minutes}m ${rem}s` : `${minutes}m`
+  const hours = Math.floor(minutes / 60)
+  const remMin = minutes % 60
+  return remMin > 0 ? `${hours}h ${remMin}m` : `${hours}h`
+}
+
+function useElapsed(startedAt?: string, active?: boolean): string | null {
+  const [now, setNow] = useState(Date.now)
+
+  useEffect(() => {
+    if (!active || !startedAt) return
+    setNow(Date.now())
+    const id = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(id)
+  }, [active, startedAt])
+
+  if (!active || !startedAt) return null
+  return formatDuration(now - new Date(startedAt).getTime())
 }
 
 /* ------------------------------------------------------------------ */
@@ -25,50 +45,46 @@ function RunCard({
   onSelect: () => void
 }) {
   const state = run.state as RunState
+  const isActive = state === 'running' || state === 'queued'
+  const elapsed = useElapsed(run.startedAt, isActive)
+  const duration =
+    !isActive && run.startedAt && run.terminalAt
+      ? formatDuration(
+          new Date(run.terminalAt).getTime() -
+            new Date(run.startedAt).getTime(),
+        )
+      : null
+  const timeLabel = elapsed ?? duration
+
   return (
     <button
       type="button"
       onClick={onSelect}
       data-testid={`run-item-${run.runId}`}
-      className={`group flex w-full flex-col gap-2 rounded-xl border p-3.5 text-left transition-all ${
+      className={`group flex w-full flex-col gap-2.5 rounded-xl border p-3.5 text-left transition-all ${
         isSelected
           ? 'border-[var(--sigil-accent-border)] bg-[var(--sigil-accent-hover)] shadow-sm'
-          : 'border-[var(--line)] bg-transparent hover:border-[var(--line)] hover:bg-[var(--surface)]'
+          : 'border-[var(--line)] bg-transparent hover:border-[var(--border)] hover:bg-[var(--surface)]'
       }`}
     >
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <StateIcon state={state} />
-          <span className="font-mono text-[0.72rem] font-bold leading-tight text-[var(--foreground)]">
-            {run.runId.slice(0, 13)}
-          </span>
-        </div>
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-[0.75rem] font-bold leading-tight text-[var(--foreground)]">
+          {run.name}
+        </span>
         <StateBadge state={state} />
       </div>
 
-      <div className="flex items-center gap-3 pl-5.5 text-[0.62rem] font-semibold text-[var(--muted-foreground)]">
-        <span className="inline-flex items-center gap-1">
-          <Clock className="size-2.5" />
-          {formatTimestamp(run.startedAt)}
+      <div className="flex items-center gap-3 text-[0.68rem] font-semibold text-[var(--muted-foreground)]">
+        <span className="min-w-0 truncate font-mono">
+          {run.runId}
         </span>
-        {run.source && (
-          <span className="inline-flex items-center gap-1">
-            <Hash className="size-2.5" />
-            {run.source}
-          </span>
-        )}
-        {run.pidStatus && (
-          <span className="inline-flex items-center gap-1 rounded-md bg-[var(--secondary)] px-1.5 py-0.5 text-[0.55rem] font-semibold text-[var(--muted-foreground)]">
-            pid: {run.pidStatus}
+        {timeLabel && (
+          <span className="ml-auto inline-flex shrink-0 items-center gap-1 whitespace-nowrap tabular-nums">
+            <Timer className="size-2.5" />
+            {timeLabel}
           </span>
         )}
       </div>
-
-      {run.stopRequested && (
-        <p className="pl-5.5 text-[0.68rem] leading-snug font-semibold text-[var(--run-status-interrupted)]">
-          Stop requested
-        </p>
-      )}
     </button>
   )
 }

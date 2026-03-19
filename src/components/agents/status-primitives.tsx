@@ -71,13 +71,10 @@ export function StateDot({
 export function StateBadge({ state }: { state: RunState }) {
   const config = STATE_CONFIG[state]
   return (
-    <Badge
-      variant="outline"
-      className={`gap-1.5 border py-0.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] ${config.badgeClass}`}
-    >
-      <StateDot state={state} pulse={state === 'running'} />
+    <span className="inline-flex items-center gap-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em]" style={{ color: `var(--run-status-${state}-text)` }}>
       {config.label}
-    </Badge>
+      <StateDot state={state} pulse={state === 'running'} />
+    </span>
   )
 }
 

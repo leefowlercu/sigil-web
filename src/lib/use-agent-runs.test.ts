@@ -10,6 +10,7 @@ import {
 
 const baseRun: RunSummaryView = {
   runId: '019569a1-2b3c-7d4e-8f01-234567890abc',
+  name: 'test-run',
   state: 'running',
   source: 'app_server.run.start',
   queuedAt: '2026-03-18T16:58:00Z',

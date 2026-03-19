@@ -70,11 +70,11 @@ export function RunDetailPane({ runId }: { runId: string }) {
   const isLive = state === 'running' && !terminal
 
   return (
-    <div className="flex flex-1 flex-col gap-0 overflow-hidden">
+    <div className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden">
       {/* Tabbed detail content */}
       <Tabs
         defaultValue="timeline"
-        className="flex flex-1 flex-col overflow-hidden gap-0"
+        className="flex min-h-0 flex-1 flex-col overflow-hidden gap-0"
       >
         <div className="flex shrink-0 items-center border-b border-[var(--line)] px-4 py-[7px]">
           <TabsList variant="line" className="h-auto gap-0">
@@ -243,9 +243,10 @@ export function RunDetailPane({ runId }: { runId: string }) {
         </TabsContent>
 
         {/* Meta tab */}
-        <TabsContent value="meta" className="flex-1 overflow-hidden">
-          <ScrollArea className="h-full">
+        <TabsContent value="meta" className="flex min-h-0 flex-1 flex-col overflow-hidden">
+          <ScrollArea className="min-h-0 flex-1">
             <div className="flex flex-col gap-3 px-5 py-4">
+              <MetaRow label="Name" value={projection.name} />
               <MetaRow label="Run ID" value={projection.runId} mono />
               <MetaRow label="State" value={projection.state} />
               {projection.source && (
