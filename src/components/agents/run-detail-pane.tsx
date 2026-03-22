@@ -7,10 +7,12 @@ import {
   Box,
   Terminal,
 } from 'lucide-react'
+import { useMemo } from 'react'
 import { ScrollArea } from '#/components/ui/scroll-area'
 import { Separator } from '#/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '#/components/ui/tabs'
 import type { RunState } from '#/lib/demo-data'
+import { buildTurnTokenMap, getEventDisplayInfo } from '#/lib/timeline-events'
 import { useRunSubscription } from '#/lib/use-run-subscription'
 
 function MetaRow({
@@ -49,6 +51,7 @@ function formatTimestamp(iso?: string): string {
 export function RunDetailPane({ runId }: { runId: string }) {
   const { status, projection, events, steps, terminal } =
     useRunSubscription(runId)
+  const turnTokenMap = useMemo(() => buildTurnTokenMap(events), [events])
 
   if (status === 'loading' || !projection) {
     return (
@@ -109,6 +112,7 @@ export function RunDetailPane({ runId }: { runId: string }) {
               <div className="relative flex flex-col gap-0">
                 {events.map((event, i) => {
                   const isLast = i === events.length - 1
+                  const info = getEventDisplayInfo(event, turnTokenMap)
                   return (
                     <div key={event.seq} className="relative flex gap-3 pb-4">
                       {/* Vertical connector line */}
@@ -121,7 +125,7 @@ export function RunDetailPane({ runId }: { runId: string }) {
                           className={`size-[5px] rounded-full ${
                             isLast && isLive
                               ? 'bg-[var(--sigil-accent)]'
-                              : 'bg-[var(--muted-foreground)]'
+                              : info.dotColorClass
                           }`}
                         />
                       </span>
@@ -131,18 +135,28 @@ export function RunDetailPane({ runId }: { runId: string }) {
                           <span className="text-[0.62rem] font-bold uppercase tracking-[0.1em] text-[var(--muted-foreground)]">
                             {formatTimestamp(event.ts)}
                           </span>
-                          <span className="rounded-md bg-[var(--secondary)] px-1.5 py-0.5 text-[0.58rem] font-semibold text-[var(--muted-foreground)]">
-                            {event.type}
-                          </span>
-                          <span className="text-[0.58rem] font-semibold text-[var(--muted-foreground)] opacity-50">
-                            seq {event.seq}
+                          <span className="text-[0.68rem] font-semibold text-[var(--foreground)]">
+                            {info.label}
                           </span>
                         </div>
-                        {event.nodeId && (
-                          <p className="font-mono text-[0.6rem] leading-relaxed text-[var(--muted-foreground)]">
-                            node {event.nodeId.slice(0, 13)}
+                        {info.summary && (
+                          <p className="text-[0.6rem] leading-relaxed text-[var(--muted-foreground)]">
+                            {info.summary}
                           </p>
                         )}
+                        <div className="flex items-center gap-2">
+                          <span className="text-[0.55rem] font-semibold text-[var(--muted-foreground)] opacity-40">
+                            {event.type}
+                          </span>
+                          <span className="text-[0.55rem] font-semibold text-[var(--muted-foreground)] opacity-40">
+                            seq {event.seq}
+                          </span>
+                          {event.nodeId && (
+                            <span className="font-mono text-[0.55rem] text-[var(--muted-foreground)] opacity-40">
+                              {event.nodeId.slice(0, 13)}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   )
