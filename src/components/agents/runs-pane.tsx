@@ -68,16 +68,14 @@ function RunCard({
       }`}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className="text-[0.75rem] font-bold leading-tight text-[var(--foreground)]">
+        <span className="text-sm font-bold leading-tight text-[var(--foreground)]">
           {run.name}
         </span>
         <StateBadge state={state} />
       </div>
 
       <div className="flex items-center gap-3 text-[0.68rem] font-semibold text-[var(--muted-foreground)]">
-        <span className="min-w-0 truncate font-mono">
-          {run.runId}
-        </span>
+        <span className="min-w-0 truncate font-mono">{run.runId}</span>
         {timeLabel && (
           <span className="ml-auto inline-flex shrink-0 items-center gap-1 whitespace-nowrap tabular-nums">
             <Timer className="size-2.5" />
