@@ -9,10 +9,10 @@ width = 1440
 height = 1024
 
 [[scenario]]
-prd = "PRD-0200"
-scenario_id = "SCN-0000"
-title = "Deep-links the selected agent in the agents route"
-route_id = "agents"
+prd = "PRD-0100"
+scenario_id = "SCN-0001"
+title = "Deep-links the selected agent in the root route"
+route_id = "index"
 state_id = "agent-selected"
 required_test_ids = ["selected-agent-panel", "selected-agent-name", "agent-search-param"]
-paper_artboards = { desktop = "PRD-0200--SCN-0000--agents--agent-selected--desktop" }
+paper_artboards = { desktop = "PRD-0100--SCN-0001--index--agent-selected--desktop" }

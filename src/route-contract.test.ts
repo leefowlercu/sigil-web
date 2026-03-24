@@ -10,20 +10,24 @@ function readSource(relativePath: string) {
 }
 
 describe('route contract', () => {
-  it('generates only the spec-owned hub and run detail routes', () => {
+  it('generates only the spec-owned root and run detail routes', () => {
     const routeTreeSource = readSource('./routeTree.gen.ts')
 
-    expect(routeTreeSource).toContain("'/agents'")
+    expect(routeTreeSource).toContain("'/': typeof IndexRoute")
     expect(routeTreeSource).toContain("'/runs/$runId'")
+    expect(routeTreeSource).not.toContain("'/agents'")
     expect(routeTreeSource).not.toContain("'/connect'")
     expect(routeTreeSource).not.toContain("'/runs/new'")
     expect(routeTreeSource).not.toContain("'/runs':")
   })
 
-  it('redirects the root route into the agents hub', () => {
+  it('renders the primary agent workspace at the root route', () => {
     const indexRouteSource = readSource('./routes/index.tsx')
 
-    expect(indexRouteSource).toContain('Navigate to="/agents"')
+    expect(indexRouteSource).toContain("createFileRoute('/')")
+    expect(indexRouteSource).toContain('data-testid="agents-workspace"')
+    expect(indexRouteSource).toContain('data-testid="agents-workspace-scroll-region"')
+    expect(indexRouteSource).not.toContain('Navigate to="/agents"')
   })
 
   it('keeps routed workspaces inside the application shell on supported desktop viewports', () => {
@@ -49,15 +53,15 @@ describe('route contract', () => {
     expect(stylesSource).toContain('min-height: var(--app-shell-min-height);')
   })
 
-  it('preserves selected-agent search state in the agents route', () => {
-    const agentsRouteSource = readSource('./routes/agents.tsx')
+  it('preserves selected-agent search state in the root route', () => {
+    const indexRouteSource = readSource('./routes/index.tsx')
 
-    expect(agentsRouteSource).toContain("createFileRoute('/agents')")
-    expect(agentsRouteSource).toContain('validateSearch:')
-    expect(agentsRouteSource).toContain("typeof search.agent === 'string'")
-    expect(agentsRouteSource).toContain('search.agent.length > 0')
-    expect(agentsRouteSource).toContain('agent?: string')
-    expect(agentsRouteSource).toContain('data-testid="agents-workspace"')
-    expect(agentsRouteSource).toContain('data-testid="agents-workspace-scroll-region"')
+    expect(indexRouteSource).toContain('validateSearch:')
+    expect(indexRouteSource).toContain("typeof search.agent === 'string'")
+    expect(indexRouteSource).toContain('search.agent.length > 0')
+    expect(indexRouteSource).toContain("useSearch({ from: '/' })")
+    expect(indexRouteSource).toContain("useNavigate({ from: '/' })")
+    expect(indexRouteSource).toContain('data-testid="selected-agent-panel"')
+    expect(indexRouteSource).toContain('data-testid="agent-search-param"')
   })
 })

@@ -296,14 +296,14 @@ async function clickScrollToBottom(context: AgentBrowserScenarioContext) {
   )
 }
 
-async function openAgentsRoute(context: AgentBrowserScenarioContext) {
-  await context.browser.open(`${context.appURL}/agents`)
+async function openRootRoute(context: AgentBrowserScenarioContext) {
+  await context.browser.open(`${context.appURL}/`)
   await context.browser.waitForLoad('networkidle')
 }
 
 async function prepareLiveTimeline(context: AgentBrowserScenarioContext) {
   const runId = LIVE_TIMELINE_RUN_ID
-  await openAgentsRoute(context)
+  await openRootRoute(context)
   await connectAgent(context, context.controller.endpoint)
 
   await waitForRunCard(context, runId)

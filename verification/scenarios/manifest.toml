@@ -3,17 +3,12 @@ version = 1
 [[route]]
 id = "index"
 path = "/"
-description = "Root and index route family that redirects operators into the agents route."
+description = "Root and index route family that renders the primary agent workspace and owns selected-agent search state."
 
 [[route]]
 id = "root-shell"
 path = "__root__"
 description = "Root application shell route that wraps routed workspaces and owns viewport-constrained layout behavior."
-
-[[route]]
-id = "agents"
-path = "/agents"
-description = "Agents route family with selected-agent search-state ownership."
 
 [[route]]
 id = "run-detail"
@@ -23,15 +18,31 @@ description = "Run-detail route family that owns shared live timeline follow and
 [[scenario]]
 prd = "PRD-0100"
 scenario_id = "SCN-0000"
-title = "Redirects the root route to the agents hub"
+title = "Renders the primary agent workspace at the root route"
 route_id = "index"
-state_id = "redirect-to-agents"
-fixtures = ["root-index-redirect"]
+state_id = "agent-workspace"
+fixtures = ["root-agent-workspace"]
 
 [[scenario.evidence]]
 lane = "vitest"
 file = "sigil-web/src/route-contract.test.ts"
-match = "redirects the root route into the agents hub"
+match = "renders the primary agent workspace at the root route"
+
+[[scenario]]
+prd = "PRD-0100"
+scenario_id = "SCN-0001"
+title = "Deep-links the selected agent in the root route"
+route_id = "index"
+state_id = "agent-selected"
+fixtures = ["selected-agent-route-state"]
+
+[[scenario.evidence]]
+lane = "vitest"
+file = "sigil-web/src/route-contract.test.ts"
+match = "preserves selected-agent search state in the root route"
+
+[[scenario.evidence]]
+lane = "paper"
 
 [[scenario]]
 prd = "PRD-0150"
@@ -58,22 +69,6 @@ fixtures = ["compact-height-app-shell"]
 lane = "vitest"
 file = "sigil-web/src/route-contract.test.ts"
 match = "preserves access below the minimum supported desktop height"
-
-[[scenario]]
-prd = "PRD-0200"
-scenario_id = "SCN-0000"
-title = "Deep-links the selected agent in the agents route"
-route_id = "agents"
-state_id = "agent-selected"
-fixtures = ["selected-agent-route-state"]
-
-[[scenario.evidence]]
-lane = "vitest"
-file = "sigil-web/src/route-contract.test.ts"
-match = "preserves selected-agent search state in the agents route"
-
-[[scenario.evidence]]
-lane = "paper"
 
 [[scenario]]
 prd = "PRD-0300"

@@ -13,7 +13,10 @@ export function AgentContextPane({ agent }: { agent: AgentInstance }) {
         <span className="flex size-7 items-center justify-center rounded-md bg-[var(--sigil-accent-soft)]">
           <Bot className="size-3.5 text-[var(--sigil-accent)]" />
         </span>
-        <span className="text-sm font-bold tracking-tight text-[var(--foreground)]">
+        <span
+          data-testid="selected-agent-name"
+          className="text-sm font-bold tracking-tight text-[var(--foreground)]"
+        >
           {agent.server.instanceName}
         </span>
       </div>

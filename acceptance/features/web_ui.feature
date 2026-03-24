@@ -6,10 +6,10 @@ Feature: Sigil Web operator workflows
     Given the operator has configured a sigil-web app-server endpoint
 
   @PRD-0100
-  Scenario: Redirects the root route to the agents hub
+  Scenario: Renders the primary agent workspace at the root route
     Given the operator opens sigil-web at the root route
     When the application resolves the initial route
-    Then the application redirects the operator to `/agents`
+    Then the application renders the primary agent workspace without redirecting the operator to another route
 
   @PRD-0150
   Scenario: Keeps routed workspaces inside the application shell on supported desktop viewports
@@ -24,11 +24,11 @@ Feature: Sigil Web operator workflows
     When the application applies its compact-height fallback
     Then the operator can still reach primary navigation, primary context, and primary actions
 
-  @PRD-0200
-  Scenario: Deep-links the selected agent in the agents route
+  @PRD-0100
+  Scenario: Deep-links the selected agent in the root route
     Given the application can resolve a valid agent identity
-    When the operator opens /agents with an agent search parameter
-    Then the application preserves that selected-agent intent in the `/agents` route state
+    When the operator opens / with an agent search parameter
+    Then the application preserves that selected-agent intent in the `/` route state
 
   @PRD-0300
   Scenario: Auto-follows the latest event while a live run detail timeline is pinned to the bottom
