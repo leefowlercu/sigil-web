@@ -7,15 +7,15 @@ export function AgentContextPane({ agent }: { agent: AgentInstance }) {
   return (
     <div
       data-testid="agent-context-pane"
-      className="flex shrink-0 items-center gap-3 border-b border-[var(--line)] bg-[var(--surface)] pl-4 py-2.5"
+      className="flex shrink-0 items-center gap-3 border-b border-(--line) bg-(--surface) py-2.5 pl-4"
     >
       <div className="flex items-center gap-3">
-        <span className="flex size-7 items-center justify-center rounded-md bg-[var(--sigil-accent-soft)]">
-          <Bot className="size-3.5 text-[var(--sigil-accent)]" />
+        <span className="flex size-7 items-center justify-center rounded-md bg-(--sigil-accent-soft)">
+          <Bot className="size-3.5 text-(--sigil-accent)" />
         </span>
         <span
           data-testid="selected-agent-name"
-          className="text-sm font-bold tracking-tight text-[var(--foreground)]"
+          className="text-sm font-bold tracking-tight text-foreground"
         >
           {agent.server.instanceName}
         </span>
@@ -27,11 +27,11 @@ export function AgentContextPane({ agent }: { agent: AgentInstance }) {
 
       <Separator orientation="vertical" className="h-4" />
 
-      <span className="font-mono text-[0.62rem] font-medium text-[var(--muted-foreground)]">
+      <span className="font-mono text-[0.62rem] font-medium text-muted-foreground">
         {agent.endpoint}
       </span>
 
-      <span className="ml-auto inline-flex items-center gap-1 text-[0.58rem] font-semibold text-[var(--muted-foreground)]">
+      <span className="ml-auto inline-flex items-center gap-1 text-[0.58rem] font-semibold text-muted-foreground">
         <Hash className="size-2.5" />
         {agent.server.instanceId}
       </span>

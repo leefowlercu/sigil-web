@@ -6,9 +6,10 @@ then widen to full verification before concluding.
 
 ## Current Implementation Checks
 
-- Use `pnpm check` for formatting and lint verification.
-- Use `pnpm test` for the current Vitest suite.
-- Use `pnpm build` to verify the TanStack Start production bundles.
+- Use `vp check` for formatting, canonical Tailwind linting, and type
+  verification.
+- Use `vp test` for the current Vitest suite.
+- Use `vp build` to verify the TanStack Start production bundles.
 
 ## Acceptance and Spec Rules
 
@@ -34,8 +35,10 @@ then widen to full verification before concluding.
 
 ## Working Guidance
 
-- Re-run `pnpm test` and `pnpm build` after route structure, shared shell, or
+- Re-run `vp test` and `vp build` after route structure, shared shell, or
   state-boundary changes.
+- Re-run `vp lint --fix --fix-suggestions` after broad Tailwind refactors when
+  you need canonical-class rewrites applied automatically.
 - Use `pnpm test:acceptance` for deterministic scripted-server browser
   coverage.
 - Re-run the spec verifier after any PRD, matrix, acceptance-title,

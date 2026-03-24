@@ -86,7 +86,7 @@ function IndexRoute() {
         onRemove={removeAgent}
       />
 
-      <div className="flex flex-1 flex-col overflow-hidden bg-[var(--workspace-bg)]">
+      <div className="flex flex-1 flex-col overflow-hidden bg-(--workspace-bg)">
         {selectedAgent && (
           <div data-testid="selected-agent-panel">
             <AgentContextPane agent={selectedAgent} />
@@ -101,10 +101,10 @@ function IndexRoute() {
               <RunDetailPane agentId={selectedAgentId} runId={activeRunId} />
             ) : (
               <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
-                <div className="flex size-12 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface)]">
-                  <Activity className="size-5 text-[var(--muted-foreground)] opacity-40" />
+                <div className="flex size-12 items-center justify-center rounded-xl border border-(--line) bg-(--surface)">
+                  <Activity className="size-5 text-muted-foreground opacity-40" />
                 </div>
-                <span className="text-xs font-semibold text-[var(--muted-foreground)]">
+                <span className="text-xs font-semibold text-muted-foreground">
                   Select a run to view details.
                 </span>
               </div>

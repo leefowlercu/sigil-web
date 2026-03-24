@@ -60,16 +60,16 @@ function RunCard({
       data-testid={`run-item-${run.runId}`}
       className={`group flex w-full flex-col gap-2.5 rounded-xl border p-3.5 text-left transition-all ${
         isSelected
-          ? 'border-[var(--sigil-accent-border)] bg-[var(--sigil-accent-hover)] shadow-sm'
-          : 'border-[var(--line)] bg-transparent hover:border-[var(--border)] hover:bg-[var(--surface)]'
+          ? 'border-(--sigil-accent-border) bg-(--sigil-accent-hover) shadow-sm'
+          : 'border-(--line) bg-transparent hover:border-border hover:bg-(--surface)'
       }`}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-bold leading-tight text-[var(--foreground)]">{run.name}</span>
+        <span className="text-sm leading-tight font-bold text-foreground">{run.name}</span>
         <StateBadge state={state} />
       </div>
 
-      <div className="flex items-center gap-3 text-[0.68rem] font-semibold text-[var(--muted-foreground)]">
+      <div className="flex items-center gap-3 text-[0.68rem] font-semibold text-muted-foreground">
         <span className="min-w-0 truncate font-mono">{run.runId}</span>
         {timeLabel && (
           <span className="ml-auto inline-flex shrink-0 items-center gap-1 whitespace-nowrap tabular-nums">
@@ -96,12 +96,12 @@ export function RunsPane({
   onSelectRun: (id: string) => void
 }) {
   return (
-    <div className="flex w-[360px] shrink-0 flex-col border-r border-[var(--line)]">
-      <div className="flex items-center justify-between border-b border-[var(--line)] px-4 py-[15px]">
-        <span className="text-sm font-bold uppercase text-[var(--foreground)]">Runs</span>
+    <div className="flex w-90 shrink-0 flex-col border-r border-(--line)">
+      <div className="flex items-center justify-between border-b border-(--line) px-4 py-3.75">
+        <span className="text-sm font-bold text-foreground uppercase">Runs</span>
         <Badge
           variant="outline"
-          className="border-[var(--border)] bg-[var(--secondary)] text-[0.58rem] font-bold text-[var(--muted-foreground)]"
+          className="border-border bg-secondary text-[0.58rem] font-bold text-muted-foreground"
         >
           {runs.length}
         </Badge>
@@ -120,8 +120,8 @@ export function RunsPane({
 
           {runs.length === 0 && (
             <div className="flex flex-col items-center gap-2 py-12 text-center">
-              <Terminal className="size-6 text-[var(--muted-foreground)] opacity-40" />
-              <span className="text-xs font-semibold text-[var(--muted-foreground)]">
+              <Terminal className="size-6 text-muted-foreground opacity-40" />
+              <span className="text-xs font-semibold text-muted-foreground">
                 No runs for this agent.
               </span>
             </div>

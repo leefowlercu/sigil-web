@@ -2,27 +2,32 @@
 
 Run all commands from the `sigil-web/` root unless otherwise stated.
 
-## Primary PNPM Commands
+## Primary Commands
 
-- `pnpm install`: install or reconcile dependencies from `package.json` and
-  `pnpm-lock.yaml`.
+Prefer the native `vp` command surface over equivalent `pnpm` script wrappers
+when both exist.
+
 - `vp install`: install or reconcile dependencies through Vite+ using the
   declared package manager.
-- `pnpm dev`: run the TanStack Start and Vite development server on port
-  `3000` in live mode (no demo data) through Vite+.
-- `pnpm dev:demo`: run the development server on port `3000` in demo mode
-  with seeded agent instances, runs, and detail views through Vite+.
-- `pnpm build`: build the client and server bundles through Vite+.
-- `pnpm preview`: preview the production build locally.
-- `pnpm test`: run the current Vite+ test suite.
+- `vp dev`: run the TanStack Start and Vite development server on port `3000`
+  in live mode (no demo data).
+- `vp dev --mode demo`: run the development server on port `3000` in demo mode
+  with seeded agent instances, runs, and detail views.
+- `vp build`: build the client and server bundles.
+- `vp preview`: preview the production build locally.
+- `vp test`: run the current Vite+ test suite.
 - `pnpm test:acceptance`: run the browser acceptance harness with the pinned
-  `agent-browser` runner against a production preview build.
-- `pnpm lint`: run Vite+ linting without modifying files.
-- `pnpm lint:fix`: apply Vite+ lint fixes.
-- `pnpm format`: format the repo with Vite+ formatting.
-- `pnpm format:check`: verify Vite+ formatting without modifying files.
-- `pnpm check`: run non-mutating formatting, lint, and type verification.
-- `vp check`: run the same built-in Vite+ verification path directly.
+  `agent-browser` runner against a production preview build. No `vp`
+  equivalent exists for this custom package script today.
+- `vp lint`: run Oxlint without modifying files.
+- `vp lint --fix`: apply safe Oxlint fixes.
+- `vp lint --fix --fix-suggestions`: apply Tailwind canonical-class rewrites
+  and other suggestion fixes in addition to safe fixes.
+- `vp fmt . --write`: format the repo with Oxfmt and sort Tailwind classes.
+- `vp fmt . --check`: verify formatting without modifying files.
+- `vp check`: run non-mutating formatting, lint, and type verification.
+- `pnpm <script>` wrappers remain available for compatibility, but use them
+  only when a documented `vp` equivalent does not exist.
 
 ## Protocol Type Generation
 
@@ -44,13 +49,18 @@ Run all commands from the `sigil-web/` root unless otherwise stated.
 
 ## Working Guidance
 
-- Prefer `pnpm check`, `pnpm test`, and `pnpm build` as the default local
+- Prefer `vp check`, `vp test`, and `vp build` as the default local
   verification trio for implementation work.
+- Use `vp lint --fix --fix-suggestions` after broad Tailwind edits; canonical
+  class rewrites are suggestion fixes rather than plain safe fixes.
+- Do not rely on `vp lint --fix --fix-suggestions` to rewrite every VSCode
+  Tailwind canonical-class suggestion; theme-alias cases such as
+  `text-(--foreground)` to `text-foreground` may still need manual cleanup.
 - Use `pnpm test:acceptance` for deterministic browser verification of live
   WebSocket UI behavior through the scripted fixture harness.
 - Run `../scripts/verify-specs --subproject sigil-web` whenever PRD, matrix,
   acceptance-title, scenario-manifest, or design-manifest structure changes.
-- Use `pnpm dev:demo` while iterating on UI layout, styling, or Paper
+- Use `vp dev --mode demo` while iterating on UI layout, styling, or Paper
   prototypes where seeded data is needed.
-- Use `pnpm dev` when testing against a real `sigil` app-server instance over
+- Use `vp dev` when testing against a real `sigil` app-server instance over
   WebSocket.

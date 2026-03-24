@@ -1,8 +1,11 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite-plus'
 import { devtools } from '@tanstack/devtools-vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+
+const tailwindStylesheetPath = fileURLToPath(new URL('./src/styles.css', import.meta.url))
 
 const config = defineConfig({
   staged: {
@@ -14,10 +17,20 @@ const config = defineConfig({
     trailingComma: 'all',
     printWidth: 100,
     sortPackageJson: false,
+    sortTailwindcss: {
+      functions: ['cn', 'clsx', 'classNames', 'twMerge', 'cva'],
+      stylesheet: tailwindStylesheetPath,
+    },
     ignorePatterns: ['package-lock.json', 'pnpm-lock.yaml', 'yarn.lock'],
   },
   lint: {
     plugins: ['import', 'typescript'],
+    jsPlugins: [
+      {
+        name: 'tailwind-canonical-classes',
+        specifier: 'eslint-plugin-tailwind-canonical-classes',
+      },
+    ],
     categories: {
       correctness: 'off',
     },
@@ -33,7 +46,15 @@ const config = defineConfig({
       '**/snap/**',
       '**/vite.config.*.timestamp-*.*',
     ],
-    rules: {},
+    rules: {
+      'tailwind-canonical-classes/tailwind-canonical-classes': [
+        'error',
+        {
+          calleeFunctions: ['cn', 'clsx', 'classNames', 'twMerge', 'cva'],
+          cssPath: tailwindStylesheetPath,
+        },
+      ],
+    },
     overrides: [
       {
         files: ['**/*.{js,ts,tsx}'],

@@ -48,7 +48,7 @@ export default function ThemeToggle() {
       onClick={toggleMode}
       aria-label={label}
       title={label}
-      className="inline-flex size-8 items-center justify-center rounded-md border border-[var(--line)] bg-transparent text-[var(--muted-foreground)] transition hover:border-[var(--sigil-accent-focus-border)] hover:bg-[var(--sigil-accent-hover)] hover:text-[var(--sigil-accent)]"
+      className="inline-flex size-8 items-center justify-center rounded-md border border-(--line) bg-transparent text-muted-foreground transition hover:border-(--sigil-accent-focus-border) hover:bg-(--sigil-accent-hover) hover:text-(--sigil-accent)"
     >
       <Icon className="size-4" />
     </button>

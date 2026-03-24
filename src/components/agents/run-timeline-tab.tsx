@@ -291,38 +291,38 @@ export function RunTimelineTab({
               return (
                 <div key={event.seq} className="relative flex gap-3 pb-4">
                   {!isLast && (
-                    <span className="absolute top-4 left-[7px] h-[calc(100%-8px)] w-px bg-[var(--line)]" />
+                    <span className="absolute top-4 left-1.75 h-[calc(100%-8px)] w-px bg-(--line)" />
                   )}
-                  <span className="relative z-10 mt-1 flex size-[15px] shrink-0 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-strong)]">
+                  <span className="relative z-10 mt-1 flex size-3.75 shrink-0 items-center justify-center rounded-full border border-(--line) bg-(--surface-strong)">
                     <span
-                      className={`size-[5px] rounded-full ${
-                        isLast && isLive ? 'bg-[var(--sigil-accent)]' : info.dotColorClass
+                      className={`size-1.25 rounded-full ${
+                        isLast && isLive ? 'bg-(--sigil-accent)' : info.dotColorClass
                       }`}
                     />
                   </span>
                   <div className="flex flex-1 flex-col gap-0.5 pt-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-[0.62rem] font-bold uppercase tracking-[0.1em] text-[var(--muted-foreground)]">
+                      <span className="text-[0.62rem] font-bold tracking-widest text-muted-foreground uppercase">
                         {formatTimestamp(event.ts)}
                       </span>
-                      <span className="text-[0.68rem] font-semibold text-[var(--foreground)]">
+                      <span className="text-[0.68rem] font-semibold text-foreground">
                         {info.label}
                       </span>
                     </div>
                     {info.summary && (
-                      <p className="text-[0.6rem] leading-relaxed text-[var(--muted-foreground)]">
+                      <p className="text-[0.6rem] leading-relaxed text-muted-foreground">
                         {info.summary}
                       </p>
                     )}
                     <div className="flex items-center gap-2">
-                      <span className="text-[0.55rem] font-semibold text-[var(--muted-foreground)] opacity-40">
+                      <span className="text-[0.55rem] font-semibold text-muted-foreground opacity-40">
                         {event.type}
                       </span>
-                      <span className="text-[0.55rem] font-semibold text-[var(--muted-foreground)] opacity-40">
+                      <span className="text-[0.55rem] font-semibold text-muted-foreground opacity-40">
                         seq {event.seq}
                       </span>
                       {event.nodeId && (
-                        <span className="font-mono text-[0.55rem] text-[var(--muted-foreground)] opacity-40">
+                        <span className="font-mono text-[0.55rem] text-muted-foreground opacity-40">
                           {event.nodeId.slice(0, 13)}
                         </span>
                       )}
@@ -346,7 +346,7 @@ export function RunTimelineTab({
             tabIndex={isScrollControlVisible ? 0 : -1}
             data-testid="run-detail-timeline-scroll-to-bottom"
             className={cn(
-              'size-10 rounded-full border border-[var(--sigil-accent-border)] bg-[var(--surface-strong)] text-[var(--foreground)] shadow-lg transition-all duration-150 ease-out hover:border-[var(--sigil-accent-focus-border)] hover:bg-[var(--sigil-accent-hover)] hover:text-[var(--sigil-accent)]',
+              'size-10 rounded-full border border-(--sigil-accent-border) bg-(--surface-strong) text-foreground shadow-lg transition-all duration-150 ease-out hover:border-(--sigil-accent-focus-border) hover:bg-(--sigil-accent-hover) hover:text-(--sigil-accent)',
               isScrollControlVisible
                 ? 'pointer-events-auto translate-y-0 opacity-100'
                 : 'pointer-events-none translate-y-1 opacity-0',

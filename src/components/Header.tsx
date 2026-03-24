@@ -25,10 +25,10 @@ function SigilIcon({ className }: { className?: string }) {
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--header-bg)] backdrop-blur-lg">
-      <nav className="flex items-center gap-3 pl-[10px] pr-3 py-2.5">
-        <div className="flex items-center gap-2 text-[var(--foreground)]">
-          <SigilIcon className="size-10 pt-[2px]" />
+    <header className="sticky top-0 z-50 border-b border-(--line) bg-(--header-bg) backdrop-blur-lg">
+      <nav className="flex items-center gap-3 py-2.5 pr-3 pl-2.5">
+        <div className="flex items-center gap-2 text-foreground">
+          <SigilIcon className="size-10 pt-0.5" />
           <span className="text-2xl font-bold tracking-tight">Siĝil</span>
         </div>
         <div className="ml-auto">

@@ -19,7 +19,8 @@ acceptance traceability contracts in the superproject.
 
 Use the documented local command surface before inventing ad hoc frontend or
 verification flows. Run commands from the `sigil-web/` subproject root unless a
-document says otherwise.
+document says otherwise. Prefer the native `vp` command surface over equivalent
+`pnpm` script wrappers when both exist.
 
 - [Development Commands Reference](.agents/rules/COMMANDS.md)
 
@@ -36,7 +37,13 @@ code.
 Follow the local implementation standards for TanStack Start routes, React
 state boundaries, Tailwind and ShadCN usage, and selector stability. This keeps
 the web UI aligned with the repo's route and design contracts instead of
-generic React defaults.
+generic React defaults. This includes writing canonical Tailwind class forms at
+authoring time instead of relying on arbitrary-value equivalents when a
+canonical utility exists. When a token is exported through
+`src/styles.css` `@theme inline`, prefer the named utility such as
+`text-foreground`, `text-muted-foreground`, `bg-secondary`, or
+`border-border`; reserve `text-(--token)` and similar forms for bespoke
+repo-local variables such as `--sigil-accent`, `--surface`, or `--line`.
 
 - [Implementation Standards Reference](.agents/rules/STANDARDS.md)
 
@@ -54,8 +61,10 @@ and how to run the application with or without demo data.
   `src/lib/data.ts`.
 - See [Layout Reference](.agents/rules/LAYOUT.md) for the type hierarchy and
   file responsibilities.
-- See [Commands Reference](.agents/rules/COMMANDS.md) for `pnpm dev` vs
-  `pnpm dev:demo` and protocol type regeneration.
+- See [Commands Reference](.agents/rules/COMMANDS.md) for `vp dev` vs
+  `vp dev --mode demo`, canonical Tailwind lint/fmt workflows, Tailwind
+  canonical-class limits that still require manual cleanup, and protocol type
+  regeneration.
 
 ## Design Workflow
 

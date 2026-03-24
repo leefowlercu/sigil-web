@@ -19,6 +19,30 @@ place for ad hoc route, state, or design conventions.
   protocol or transport logic directly inside route components.
 - Commit `src/routeTree.gen.ts` when route structure changes, because the
   router generator owns that file.
+- Write Tailwind utilities in canonical form at authoring time whenever
+  Tailwind provides one.
+- Prefer named theme utilities when the token is exported through
+  `src/styles.css` `@theme inline`, for example `bg-background`,
+  `text-foreground`, `bg-secondary`, `text-muted-foreground`,
+  `border-border`, and `ring-ring`.
+- Prefer CSS-variable shorthands like `bg-(--token)`, `text-(--token)`, and
+  `border-(--token)` over `bg-[var(--token)]`, `text-[var(--token)]`, and
+  `border-[var(--token)]`.
+- Reserve `bg-(--token)`, `text-(--token)`, `border-(--token)`, and
+  `ring-(--token)` for bespoke repo-local variables that are not exported as
+  Tailwind theme utilities, for example `--sigil-accent`, `--surface`,
+  `--surface-strong`, `--line`, and the run-status or connection-status
+  tokens.
+- Prefer canonical spacing and sizing utilities over arbitrary equivalents when
+  they are exact matches, for example `mr-1` over `mr-[4px]`, `py-1.75` over
+  `py-[7px]`, and `tracking-widest` over `tracking-[0.1em]`.
+- Treat `vp fmt --write` as the canonical class-sorting path and
+  `vp lint --fix --fix-suggestions` as the canonical Tailwind class rewrite
+  path after broad styling edits.
+- Treat VSCode Tailwind CSS `suggestCanonicalClasses` diagnostics as required
+  style-review feedback even when `vp lint --fix --fix-suggestions` leaves a
+  class unchanged; theme-alias rewrites such as `text-(--foreground)` to
+  `text-foreground` may still require manual cleanup.
 
 ## Repo-Specific Expectations
 
