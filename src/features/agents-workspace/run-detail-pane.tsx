@@ -21,6 +21,10 @@ function MetaRow({ label, value, mono }: { label: string; value: string; mono?: 
   )
 }
 
+function formatStepDurationSeconds(durationMs: number): string {
+  return `${(durationMs / 1000).toFixed(2)}s`
+}
+
 export function RunDetailPane({ agentId, runId }: { agentId: string; runId: string }) {
   const { status, projection, events, steps, terminal } = useRunSubscription(agentId, runId)
   const turnTokenMap = useMemo(() => buildTurnTokenMap(events), [events])
@@ -162,9 +166,11 @@ export function RunDetailPane({ agentId, runId }: { agentId: string; runId: stri
                       {step.state}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 text-[0.6rem] font-semibold text-muted-foreground">
-                    <span className="font-mono">{step.stepId.slice(0, 13)}</span>
-                    {step.durationMs != null && <span>{step.durationMs}ms</span>}
+                  <div className="flex flex-wrap items-center gap-3 text-[0.6rem] font-semibold text-muted-foreground">
+                    <span className="font-mono break-all">{step.stepId}</span>
+                    {step.durationMs != null && (
+                      <span>{formatStepDurationSeconds(step.durationMs)}</span>
+                    )}
                     <span>step #{step.nodeStepIndex}</span>
                   </div>
                 </div>
