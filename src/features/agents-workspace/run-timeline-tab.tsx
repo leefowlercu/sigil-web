@@ -300,32 +300,27 @@ export function RunTimelineTab({
                       }`}
                     />
                   </span>
-                  <div className="flex flex-1 flex-col gap-0.5 pt-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[0.62rem] font-bold tracking-widest text-muted-foreground uppercase">
+                  <div className="flex flex-1 flex-col gap-1 pt-0">
+                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                      <span className="text-xs font-bold tracking-[0.14em] text-muted-foreground uppercase">
                         {formatTimestamp(event.ts)}
                       </span>
-                      <span className="text-[0.68rem] font-semibold text-foreground">
+                      <span className="text-sm leading-tight font-semibold text-foreground">
                         {info.label}
                       </span>
                     </div>
                     {info.summary && (
-                      <p className="text-[0.6rem] leading-relaxed text-muted-foreground">
+                      <p className="text-xs leading-relaxed text-muted-foreground">
                         {info.summary}
                       </p>
                     )}
                     <div className="flex items-center gap-2">
-                      <span className="text-[0.55rem] font-semibold text-muted-foreground opacity-40">
+                      <span className="text-xs font-medium text-muted-foreground/70">
                         {event.type}
                       </span>
-                      <span className="text-[0.55rem] font-semibold text-muted-foreground opacity-40">
-                        seq {event.seq}
+                      <span className="font-mono text-xs whitespace-nowrap text-muted-foreground/70">
+                        {event.eventId}
                       </span>
-                      {event.nodeId && (
-                        <span className="font-mono text-[0.55rem] text-muted-foreground opacity-40">
-                          {event.nodeId.slice(0, 13)}
-                        </span>
-                      )}
                     </div>
                   </div>
                 </div>

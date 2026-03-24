@@ -229,6 +229,38 @@ describe('RunTimelineTab', () => {
     expect(queryScrollButton(rendered.container)).toBe(null)
   })
 
+  it('shows each event identifier in full for both run-scoped and node-scoped events', async () => {
+    const runScopedEvent = makeEvent(1)
+    const nodeScopedEvent = makeEvent(3)
+    const nodeScopedNodeId = nodeScopedEvent.nodeId
+
+    expect(nodeScopedNodeId).toBeDefined()
+
+    const rendered = await renderTimeline({
+      events: [runScopedEvent, nodeScopedEvent],
+      isLive: true,
+      runId: 'run-identifiers',
+      turnTokenMap: new Map(),
+    })
+
+    await waitFor(() => {
+      expect(rendered.container.textContent).toContain(runScopedEvent.eventId)
+      expect(rendered.container.textContent).toContain(nodeScopedEvent.eventId)
+    })
+
+    const runScopedEventIdSpan = Array.from(rendered.container.querySelectorAll('span')).find(
+      (element) => element.textContent === runScopedEvent.eventId,
+    )
+    expect(runScopedEventIdSpan).not.toBeUndefined()
+    expect(runScopedEventIdSpan?.className).not.toContain('basis-full')
+    expect(runScopedEventIdSpan?.className).not.toContain('break-all')
+
+    expect(rendered.container.textContent).not.toContain(`seq ${runScopedEvent.seq}`)
+    expect(rendered.container.textContent).not.toContain(`seq ${nodeScopedEvent.seq}`)
+    expect(rendered.container.textContent).not.toContain(nodeScopedNodeId!)
+    expect(rendered.container.textContent).not.toContain(nodeScopedNodeId!.slice(0, 13))
+  })
+
   it('Shows a centered scroll-to-bottom control and resumes follow when the operator has scrolled away from the latest live event', async () => {
     const rendered = await renderTimeline({
       events: [makeEvent(1), makeEvent(2)],
