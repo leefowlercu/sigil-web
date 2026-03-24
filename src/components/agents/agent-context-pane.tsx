@@ -7,9 +7,9 @@ export function AgentContextPane({ agent }: { agent: AgentInstance }) {
   return (
     <div
       data-testid="agent-context-pane"
-      className="flex shrink-0 items-center gap-3 border-b border-[var(--line)] bg-[var(--surface)] px-5 py-2.5"
+      className="flex shrink-0 items-center gap-3 border-b border-[var(--line)] bg-[var(--surface)] pl-4 py-2.5"
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <span className="flex size-7 items-center justify-center rounded-md bg-[var(--sigil-accent-soft)]">
           <Bot className="size-3.5 text-[var(--sigil-accent)]" />
         </span>
