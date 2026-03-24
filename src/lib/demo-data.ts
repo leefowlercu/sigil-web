@@ -1,6 +1,7 @@
 import type {
   EventEnvelopeView,
   InitializeResult,
+  RunArtifactReadPayload,
   RunNodeProjectionView,
   RunProjectionView,
   RunStepSummaryView,
@@ -28,6 +29,143 @@ export type RunDetailView = {
   events: EventEnvelopeView[]
   steps: RunStepSummaryView[]
 }
+
+const templatedFinalAnswer =
+  'token=SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719; ' +
+  'chunk=CHUNK-0539; ' +
+  'evidence=CHUNK-0539 | corpus=critical | topic=needle | ' +
+  'token=SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719 | ' +
+  'instruction=This is the only true needle token in the document.'
+
+const mrcr2NeedleFinalAnswer = `mWEa9DrPT3**Verse 1**  
+In a world so vast and wide,  
+We walk on paths unknown.  
+Two souls meeting eye to eye,  
+Seeds of trust are sown.  
+Whispers of understanding,  
+In the gentle breeze they glide,  
+Promises of commitment,  
+As we stand side by side.  
+
+**Chorus**  
+In the bond we’re making,  
+Hearts learn to unite.  
+In every word spoken,  
+Our future takes its flight.  
+Handshakes and nods affirming,  
+Our visions set in stone.  
+Through the power of agreement,  
+Together, we're not alone.  
+
+**Verse 2**  
+We bridge the gaps of silence,  
+With words sincere and true.  
+Painting dreams in color,  
+In shades both me and you.  
+Our hopes are woven tightly,  
+In threads that won’t unwind,  
+We craft our shared intentions,  
+In the fabric of our minds.  
+
+**Chorus**  
+In the bond we’re making,  
+Hearts learn to unite.  
+In every word spoken,  
+Our future takes its flight.  
+Handshakes and nods affirming,  
+Our visions set in stone.  
+Through the power of agreement,  
+Together, we're not alone.  
+
+**Bridge**  
+Let the winds of doubt blow through,  
+We'll stand strong and resolute.  
+With faith as our foundation,  
+No storm can we refute.  
+
+**Verse 3**  
+From whispers into action,  
+With courage we will strive.  
+For every promise written,  
+In our spirits, we revive.  
+Through trials and through triumphs,  
+In every high and low,  
+Our agreement is a beacon,  
+A light that will always glow.  
+
+**Chorus**  
+In the bond we’re making,  
+Hearts learn to unite.  
+In every word spoken,  
+Our future takes its flight.  
+Handshakes and nods affirming,  
+Our visions set in stone.  
+Through the power of agreement,  
+Together, we're not alone.  
+
+**Outro**  
+So here’s to the agreements,  
+The vows that bind us tight.  
+For in our shared convictions,  
+We'll march into the night.  
+Hand in hand we journey,  
+On a path we've made our own.  
+With every heart’s agreement,  
+Together, we have grown.`
+
+const mrcr4NeedleFinalAnswer = `lPiXbALSeQ**Verse 1**  
+In a world full of moments passing by,  
+We seek a way to hold them, never say goodbye.  
+Frames of color, frames of gold,  
+Tell the stories that we've told.  
+
+**Pre-Chorus**  
+Capture laughter, capture tears,  
+Every snapshot through the years.  
+Hanging memories on the wall,  
+In these frames, we recall it all.  
+
+**Chorus**  
+Frames of life, frames of time,  
+Hold the pictures, hold the rhyme.  
+From the corners of our hearts,  
+They keep us close when we're apart.  
+
+**Verse 2**  
+Old and dusty, yet they shine,  
+Each one a window to a time.  
+A faded photo, a smile so bright,  
+Framed forever in the light.  
+
+**Pre-Chorus**  
+Moments stolen from the past,  
+Time is fleeting, but they last.  
+Every frame a whispered dream,  
+Telling tales with silent themes.  
+
+**Chorus**  
+Frames of life, frames of time,  
+Hold the pictures, hold the rhyme.  
+From the corners of our hearts,  
+They keep us close when we're apart.  
+
+**Bridge**  
+Wooden borders, silver lines,  
+Frames encase what love defines.  
+A gallery of heart-held art,  
+Bearing witness as we start.  
+
+**Chorus**  
+Frames of life, frames of time,  
+Hold the pictures, hold the rhyme.  
+From the corners of our hearts,  
+They keep us close when we're apart.  
+
+**Outro**  
+In shadowed halls or sunlit space,  
+Frames embrace our love's embrace.  
+So when the world feels out of view,  
+Our frames remind us what is true.`
 
 /* ------------------------------------------------------------------ */
 /*  Demo data: agent instances                                         */
@@ -8856,4 +8994,51 @@ export function getRunsForAgent(agentId: string): RunSummaryView[] {
 
 export function getRunDetail(runId: string): RunDetailView | undefined {
   return demoDetails[runId]
+}
+
+function getDemoFinalAnswer(runId: string): string | undefined {
+  const detail = demoDetails[runId]
+  switch (detail?.projection.name) {
+    case 'run-start-templated':
+      return templatedFinalAnswer
+    case 'mrcr-2needle':
+      return mrcr2NeedleFinalAnswer
+    case 'mrcr-4needle':
+      return detail.projection.state === 'completed' ? mrcr4NeedleFinalAnswer : undefined
+    default:
+      return undefined
+  }
+}
+
+function parseFinalAnswerNodeId(artifactRef: string): string | undefined {
+  const match = /^run-artifact:\/\/node\/([^/]+)\/final-answer\.json$/.exec(artifactRef)
+  return match?.[1]
+}
+
+export function getRunArtifact(
+  runId: string,
+  artifactRef: string,
+): RunArtifactReadPayload | undefined {
+  const detail = demoDetails[runId]
+  if (detail?.projection.finalAnswerRef !== artifactRef) {
+    return undefined
+  }
+
+  const finalAnswer = getDemoFinalAnswer(runId)
+  if (finalAnswer == null) {
+    return undefined
+  }
+
+  const nodeId = parseFinalAnswerNodeId(artifactRef)
+  return {
+    artifactRef,
+    artifactKind: 'final_answer',
+    identity: nodeId != null ? { nodeId } : {},
+    artifact: {
+      run_id: runId,
+      ...(nodeId != null ? { node_id: nodeId } : {}),
+      final_answer: finalAnswer,
+      evidence: [],
+    },
+  }
 }

@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '#/components/ui/tabs'
 import { RunTimelineTab } from '#/features/agents-workspace/run-timeline-tab'
 import type { RunState } from '#/lib/demo-data'
 import { buildTurnTokenMap } from '#/lib/timeline-events'
+import { useRunArtifact } from '#/lib/use-run-artifact'
 import { useRunSubscription } from '#/lib/use-run-subscription'
 
 function MetaRow({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
@@ -21,13 +22,44 @@ function MetaRow({ label, value, mono }: { label: string; value: string; mono?: 
   )
 }
 
+function MetaBlock({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <span className="text-[0.6rem] font-bold tracking-[0.14em] text-muted-foreground uppercase">
+        {label}
+      </span>
+      <pre className="overflow-x-auto text-xs leading-relaxed wrap-break-word whitespace-pre-wrap text-foreground">
+        {value}
+      </pre>
+    </div>
+  )
+}
+
 function formatStepDurationSeconds(durationMs: number): string {
   return `${(durationMs / 1000).toFixed(2)}s`
+}
+
+function getFinalAnswerDisplay(state: ReturnType<typeof useRunArtifact>): string {
+  if (state.status === 'loading') {
+    return 'Loading final answer...'
+  }
+
+  const finalAnswer = state.payload?.artifact.final_answer
+  if (typeof finalAnswer === 'string' && finalAnswer.length > 0) {
+    return finalAnswer
+  }
+
+  if (state.status === 'error') {
+    return 'Final answer unavailable.'
+  }
+
+  return 'No final answer available.'
 }
 
 export function RunDetailPane({ agentId, runId }: { agentId: string; runId: string }) {
   const { status, projection, events, steps, terminal } = useRunSubscription(agentId, runId)
   const turnTokenMap = useMemo(() => buildTurnTokenMap(events), [events])
+  const finalAnswerState = useRunArtifact(agentId, runId, projection?.finalAnswerRef)
 
   if (status === 'error') {
     return (
@@ -217,7 +249,10 @@ export function RunDetailPane({ agentId, runId }: { agentId: string; runId: stri
                 </>
               )}
               {projection.finalAnswerRef && (
-                <MetaRow label="Final Answer Ref" value={projection.finalAnswerRef} mono />
+                <>
+                  <MetaRow label="Final Answer Ref" value={projection.finalAnswerRef} mono />
+                  <MetaBlock label="Final Answer" value={getFinalAnswerDisplay(finalAnswerState)} />
+                </>
               )}
             </div>
           </ScrollArea>

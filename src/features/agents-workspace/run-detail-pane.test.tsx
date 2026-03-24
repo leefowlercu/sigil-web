@@ -7,7 +7,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { RunDetailPane } from './run-detail-pane'
 
 const runDetailPaneMocks = vi.hoisted(() => ({
+  useRunArtifact: vi.fn(),
   useRunSubscription: vi.fn(),
+}))
+
+vi.mock('#/lib/use-run-artifact', () => ({
+  useRunArtifact: runDetailPaneMocks.useRunArtifact,
 }))
 
 vi.mock('#/lib/use-run-subscription', () => ({
@@ -95,7 +100,13 @@ function makeProjection(overrides: Record<string, unknown> = {}) {
 describe('RunDetailPane', () => {
   beforeEach(() => {
     actEnvironmentGlobal.IS_REACT_ACT_ENVIRONMENT = true
+    runDetailPaneMocks.useRunArtifact.mockReset()
     runDetailPaneMocks.useRunSubscription.mockReset()
+    runDetailPaneMocks.useRunArtifact.mockReturnValue({
+      status: 'idle',
+      payload: null,
+      error: null,
+    })
     runDetailPaneMocks.useRunSubscription.mockReturnValue(makeSubscriptionState())
   })
 
@@ -186,6 +197,59 @@ describe('RunDetailPane', () => {
       expect(spanTexts).toContain('1.23s')
       expect(spanTexts).not.toContain(fullStepId.slice(0, 13))
       expect(spanTexts).not.toContain('1234ms')
+    })
+  })
+
+  it('shows the final answer beneath the final answer ref on the meta tab', async () => {
+    const finalAnswer =
+      'token=SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719; chunk=CHUNK-0539; evidence=line'
+    runDetailPaneMocks.useRunArtifact.mockReturnValue({
+      status: 'ready',
+      payload: {
+        artifactRef: 'run-artifact://node/node-root-123456/final-answer.json',
+        artifactKind: 'final_answer',
+        identity: { nodeId: 'node-root-123456' },
+        artifact: {
+          final_answer: finalAnswer,
+        },
+      },
+      error: null,
+    })
+    runDetailPaneMocks.useRunSubscription.mockReturnValue(
+      makeSubscriptionState({
+        status: 'terminal',
+        projection: makeProjection({
+          finalAnswerRef: 'run-artifact://node/node-root-123456/final-answer.json',
+        }),
+        terminal: true,
+        error: null,
+      }),
+    )
+
+    const container = document.createElement('div')
+    document.body.append(container)
+    mountedContainers.push(container)
+
+    const root = ReactDOMClient.createRoot(container)
+    mountedRoots.push(root)
+
+    await React.act(async () => {
+      root.render(<RunDetailPane agentId="agent-live" runId="run-live" />)
+    })
+
+    const metaTab = Array.from(container.querySelectorAll('button')).find(
+      (button) => button.textContent?.trim() === 'Meta',
+    )
+    expect(metaTab).toBeInstanceOf(HTMLButtonElement)
+
+    await React.act(async () => {
+      metaTab?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, button: 0 }))
+    })
+
+    await waitFor(() => {
+      expect(container.textContent).toContain('Final Answer Ref')
+      expect(container.textContent).toContain('Final Answer')
+      expect(container.textContent).toContain(finalAnswer)
     })
   })
 })
