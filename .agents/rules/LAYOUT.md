@@ -8,8 +8,11 @@ and routed-state governance in checked-in design and acceptance artifacts.
 
 - `src/routes/`: TanStack Start file-routed workflows and application shell.
 - `src/components/`: shared app chrome and non-route-specific React components.
+- `src/features/`: routed workflow composition and feature-owned UI that is not
+  shared across unrelated routes.
 - `src/components/ui/`: ShadCN-derived UI primitives.
-- `src/components/agents/`: route-associated components for the `/agents` hub.
+- `src/features/agents-workspace/`: feature-owned components for the root route
+  agent workspace and embedded run inspection surfaces.
 - `src/lib/`: client-side types, data access, protocol bindings, and helpers.
 - `public/`: static assets served by Vite and TanStack Start.
 - `verification/scenarios/`: the checked-in routed scenario registry and
@@ -89,7 +92,7 @@ hierarchy:
    types for domain modeling. Never fabricate fields that do not exist in the
    wire types.
 
-## Agents Route Components (`src/components/agents/`)
+## Agents Workspace Components (`src/features/agents-workspace/`)
 
 - `agents-pane.tsx`: `AgentsPane` (exported) + `AgentCard` (file-local).
   Manages the agent fleet sidebar with connect, filter, and agent selection.
@@ -106,6 +109,8 @@ hierarchy:
 ## Working Guidance
 
 - Start from `src/routes/` when changing user-visible workflow behavior.
+- Start from `src/features/` when changing route-owned workflow UI such as the
+  root agent workspace or embedded run detail panes.
 - Start from `src/components/` when changing shared shell, navigation, or
   reusable visual composition.
 - Start from `src/lib/` when introducing shared client state, query helpers, or

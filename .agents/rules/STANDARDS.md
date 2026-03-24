@@ -6,8 +6,8 @@ place for ad hoc route, state, or design conventions.
 ## Required Local Patterns
 
 - Use TanStack Start file routes as the primary workflow boundary.
-- Keep `/` as a redirect to `/agents`.
-- Keep selected-agent state deep-linkable with the `/agents?agent=<agent-id>`
+- Keep `/` as the primary operator workspace route.
+- Keep selected-agent state deep-linkable with the `/?agent=<agent-id>`
   search parameter.
 - Keep `/runs/$runId` as the dedicated run-detail workspace route.
 - Keep session health as one shared application concern rather than
@@ -46,10 +46,10 @@ place for ad hoc route, state, or design conventions.
 
 ## Repo-Specific Expectations
 
-- Keep the `/agents` hub responsible for fleet visibility, selected-agent
-  detail, and selected-agent run discovery.
-- Keep new-run authoring scoped to a selected-agent dialog in `/agents` until
-  the specs say otherwise.
+- Keep the root route responsible for fleet visibility, selected-agent detail,
+  and selected-agent run discovery.
+- Keep new-run authoring scoped to a selected-agent dialog in the root route
+  workspace until the specs say otherwise.
 - Keep run-detail inspection, live updates, and stop outcomes in the
   `/runs/$runId` workspace rather than splitting them across multiple pages.
 - Preserve current scenario-manifest route IDs and state IDs plus

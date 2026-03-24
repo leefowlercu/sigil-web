@@ -80,7 +80,7 @@ fixtures = ["run-detail-live-timeline"]
 
 [[scenario.evidence]]
 lane = "vitest"
-file = "sigil-web/src/components/agents/run-timeline-tab.test.tsx"
+file = "sigil-web/src/features/agents-workspace/run-timeline-tab.test.tsx"
 match = "Auto-follows the latest event while a live run detail timeline is pinned to the bottom"
 
 [[scenario.evidence]]
@@ -98,7 +98,7 @@ fixtures = ["run-detail-live-timeline"]
 
 [[scenario.evidence]]
 lane = "vitest"
-file = "sigil-web/src/components/agents/run-timeline-tab.test.tsx"
+file = "sigil-web/src/features/agents-workspace/run-timeline-tab.test.tsx"
 match = "Shows a centered scroll-to-bottom control and resumes follow when the operator has scrolled away from the latest live event"
 
 [[scenario.evidence]]
