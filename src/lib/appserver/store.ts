@@ -32,7 +32,7 @@ function buildPlaceholderServer(endpoint: string): InitializeResult {
     instanceId: instanceName,
     instanceName,
     protocolVersion: PROTOCOL_VERSION,
-    methodFamilies: ['run', 'server'],
+    methodFamilies: ['run', 'runs', 'server'],
     capabilities: {
       config: {
         defaultVersion: PROTOCOL_VERSION,
@@ -174,7 +174,7 @@ export async function listAllRuns(
   const items: RunSummaryView[] = []
   let cursor: string | undefined
   do {
-    const result = await session.request('run/list', {
+    const result = await session.request('runs/list', {
       cursor,
       limit: 100,
     })

@@ -5,11 +5,7 @@ import * as React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type {
-  InitializeResult,
-  RunProjectionView,
-  RunSummaryView,
-} from '#/lib/protocol'
+import type { InitializeResult, RunSummaryView } from '#/lib/protocol'
 import { PROTOCOL_VERSION } from '#/lib/protocol'
 import { useAgentRuns } from './use-agent-runs'
 
@@ -25,6 +21,8 @@ type LiveSessionSnapshot = {
 }
 
 type LiveSession = {
+  getSnapshot: () => LiveSessionSnapshot
+  request: ReturnType<typeof vi.fn>
   subscribeNotifications: ReturnType<
     typeof vi.fn<(_: (notification: unknown) => void) => () => void>
   >
@@ -46,23 +44,6 @@ vi.mock('./appserver/store', () => ({
   getAgentSession: () => liveStore.state.session,
   getAgentSessionSnapshot: () => liveStore.state.snapshot,
   listAllRuns: () => liveStore.state.listAllRuns(),
-  runSummaryFromProjection: (
-    projection: RunProjectionView,
-  ): RunSummaryView => ({
-    runId: projection.runId,
-    name: projection.name,
-    state: projection.state,
-    source: projection.source,
-    queuedAt: projection.queuedAt,
-    startedAt: projection.startedAt,
-    terminalAt: projection.terminalAt,
-    eventsPath: projection.eventsPath,
-    pidStatus: projection.pidStatus,
-    stopRequested: projection.stopRequested,
-    finalAnswerRef: projection.finalAnswerRef,
-    accountingRef: projection.accountingRef,
-    error: projection.errorMessage,
-  }),
   subscribeAgentSessionStore: (listener: () => void) => {
     liveStore.listeners.add(listener)
     return () => {
@@ -81,7 +62,7 @@ const baseServer: InitializeResult = {
   instanceId: 'local-agent',
   instanceName: 'local-agent',
   protocolVersion: PROTOCOL_VERSION,
-  methodFamilies: ['run', 'server'],
+  methodFamilies: ['run', 'runs', 'server'],
   capabilities: {
     config: {
       defaultVersion: PROTOCOL_VERSION,
@@ -131,11 +112,40 @@ function makeSessionSnapshot(
   }
 }
 
-function createLiveSession(runSnapshots: RunSummaryView[][]) {
+function createLiveSession(args: {
+  listSnapshots: RunSummaryView[][]
+  subscribeSnapshots: RunSummaryView[][]
+  subscribeErrors?: Error[]
+}) {
   const notificationListeners = new Set<(notification: unknown) => void>()
-  const listAllRuns = vi.fn(async () => runSnapshots.shift() ?? [])
+  const listAllRuns = vi.fn(async () => args.listSnapshots.shift() ?? [])
+  let revision = 1
+  const request = vi.fn(async (method: string) => {
+    switch (method) {
+      case 'runs/subscribe':
+        if ((args.subscribeErrors?.length ?? 0) > 0) {
+          throw args.subscribeErrors?.shift()
+        }
+        return {
+          payload: {
+            items: args.subscribeSnapshots.shift() ?? [],
+            revision: revision++,
+          },
+        }
+      case 'runs/unsubscribe':
+        return {
+          payload: {
+            unsubscribed: true,
+          },
+        }
+      default:
+        throw new Error(`unexpected request method ${method}`)
+    }
+  })
 
   const session: LiveSession = {
+    getSnapshot: () => liveStore.state.snapshot as LiveSessionSnapshot,
+    request,
     subscribeNotifications: vi.fn(
       (listener: (notification: unknown) => void) => {
         notificationListeners.add(listener)
@@ -157,6 +167,7 @@ function createLiveSession(runSnapshots: RunSummaryView[][]) {
       }
     },
     listAllRuns,
+    request,
   }
 }
 
@@ -239,17 +250,17 @@ describe('useAgentRuns hook', () => {
     liveStore.listeners.clear()
   })
 
-  it('reloads authoritative terminalAt values after terminal notifications', async () => {
+  it('applies runs/changed upserts without reloading the list surface', async () => {
     const completedRun: RunSummaryView = {
       ...baseRun,
       state: 'completed',
       terminalAt: '2026-03-18T17:10:00Z',
       pidStatus: 'not_running',
     }
-    const { emitNotification, listAllRuns } = createLiveSession([
-      [baseRun],
-      [completedRun],
-    ])
+    const { emitNotification, listAllRuns, request } = createLiveSession({
+      listSnapshots: [[baseRun]],
+      subscribeSnapshots: [[baseRun]],
+    })
 
     let latestRuns: RunSummaryView[] = []
     await renderRunsProbe({
@@ -265,13 +276,12 @@ describe('useAgentRuns hook', () => {
 
     await React.act(async () => {
       emitNotification({
-        method: 'run/statusChanged',
+        method: 'runs/changed',
         params: {
-          runId: baseRun.runId,
-          seq: 2,
+          revision: 2,
           payload: {
-            state: 'completed',
-            terminal: true,
+            kind: 'upsert',
+            run: completedRun,
           },
         },
       })
@@ -282,6 +292,72 @@ describe('useAgentRuns hook', () => {
       expect(latestRuns[0]).toEqual(completedRun)
     })
     expect(latestRuns[0]?.terminalAt).toBe('2026-03-18T17:10:00Z')
-    expect(listAllRuns).toHaveBeenCalledTimes(2)
+    expect(listAllRuns).toHaveBeenCalledTimes(1)
+    expect(request).toHaveBeenCalledTimes(1)
+    expect(request).toHaveBeenCalledWith('runs/subscribe', {})
+  })
+
+  it('reissues runs/subscribe after a runs/changed reset', async () => {
+    const completedRun: RunSummaryView = {
+      ...baseRun,
+      state: 'completed',
+      terminalAt: '2026-03-18T17:10:00Z',
+      pidStatus: 'not_running',
+    }
+    const { emitNotification, request } = createLiveSession({
+      listSnapshots: [[baseRun], [completedRun]],
+      subscribeSnapshots: [[baseRun], [completedRun]],
+    })
+
+    let latestRuns: RunSummaryView[] = []
+    await renderRunsProbe({
+      agentId: 'agent-live',
+      onRuns: (runs) => {
+        latestRuns = runs
+      },
+    })
+
+    await waitFor(() => {
+      expect(latestRuns[0]?.state).toBe('running')
+    })
+
+    await React.act(async () => {
+      emitNotification({
+        method: 'runs/changed',
+        params: {
+          revision: 2,
+          payload: {
+            kind: 'reset',
+          },
+        },
+      })
+    })
+    await flushEffects()
+
+    await waitFor(() => {
+      expect(request).toHaveBeenCalledTimes(2)
+      expect(latestRuns[0]).toEqual(completedRun)
+    })
+  })
+
+  it('keeps the last loaded snapshot when runs/subscribe fails', async () => {
+    const { request } = createLiveSession({
+      listSnapshots: [[baseRun]],
+      subscribeSnapshots: [],
+      subscribeErrors: [new Error('subscription unavailable')],
+    })
+
+    let latestRuns: RunSummaryView[] = []
+    await renderRunsProbe({
+      agentId: 'agent-live',
+      onRuns: (runs) => {
+        latestRuns = runs
+      },
+    })
+
+    await waitFor(() => {
+      expect(request).toHaveBeenCalledWith('runs/subscribe', {})
+      expect(latestRuns).toEqual([baseRun])
+    })
   })
 })

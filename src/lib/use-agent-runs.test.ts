@@ -24,33 +24,36 @@ function reduce(
 }
 
 describe('agentRunsReducer', () => {
-  it('RESET returns initial state', () => {
+  it('RUNS_RESET returns initial state', () => {
     const loaded = reduce(initialState, {
-      type: 'RUNS_LOADED',
+      type: 'RUNS_SNAPSHOT_LOADED',
       runs: [baseRun],
     })
-    expect(reduce(loaded, { type: 'RESET' })).toEqual(initialState)
+    expect(reduce(loaded, { type: 'RUNS_RESET' })).toEqual(initialState)
   })
 
-  it('RUNS_LOADED populates runs array', () => {
+  it('RUNS_SNAPSHOT_LOADED populates runs array', () => {
     const runs = [baseRun, { ...baseRun, runId: 'run-2' }]
-    const result = reduce(initialState, { type: 'RUNS_LOADED', runs })
+    const result = reduce(initialState, { type: 'RUNS_SNAPSHOT_LOADED', runs })
     expect(result.runs).toHaveLength(2)
-    expect(result.runs).toBe(runs)
+    expect(result.runs.map((run) => run.runId)).toEqual([
+      'run-2',
+      baseRun.runId,
+    ])
   })
 
-  it('RUN_STARTED prepends a new run', () => {
+  it('RUN_UPSERTED prepends a new run', () => {
     const loaded = reduce(initialState, {
-      type: 'RUNS_LOADED',
+      type: 'RUNS_SNAPSHOT_LOADED',
       runs: [baseRun],
     })
     const newRun = { ...baseRun, runId: 'run-new', state: 'queued' }
-    const result = reduce(loaded, { type: 'RUN_STARTED', run: newRun })
+    const result = reduce(loaded, { type: 'RUN_UPSERTED', run: newRun })
     expect(result.runs).toHaveLength(2)
     expect(result.runs[0].runId).toBe('run-new')
   })
 
-  it('RUN_STARTED updates an existing run instead of duplicating it', () => {
+  it('RUN_UPSERTED updates an existing run instead of duplicating it', () => {
     const queuedRun: RunSummaryView = {
       ...baseRun,
       state: 'queued',
@@ -65,11 +68,11 @@ describe('agentRunsReducer', () => {
     }
 
     const loaded = reduce(initialState, {
-      type: 'RUNS_LOADED',
+      type: 'RUNS_SNAPSHOT_LOADED',
       runs: [queuedRun],
     })
     const result = reduce(loaded, {
-      type: 'RUN_STARTED',
+      type: 'RUN_UPSERTED',
       run: startedRun,
     })
 
@@ -77,46 +80,44 @@ describe('agentRunsReducer', () => {
     expect(result.runs[0]).toEqual(startedRun)
   })
 
-  it('RUN_STATE_CHANGED updates state for matching run', () => {
+  it('RUN_REMOVED deletes the matching run', () => {
     const loaded = reduce(initialState, {
-      type: 'RUNS_LOADED',
-      runs: [baseRun],
+      type: 'RUNS_SNAPSHOT_LOADED',
+      runs: [baseRun, { ...baseRun, runId: 'run-2' }],
     })
     const result = reduce(loaded, {
-      type: 'RUN_STATE_CHANGED',
+      type: 'RUN_REMOVED',
       runId: baseRun.runId,
-      state: 'completed',
-      terminalAt: '2026-03-18T17:10:00Z',
     })
-    expect(result.runs[0].state).toBe('completed')
-    expect(result.runs[0].terminalAt).toBe('2026-03-18T17:10:00Z')
-    expect(result.runs[0].pidStatus).toBe('not_running')
+    expect(result.runs).toHaveLength(1)
+    expect(result.runs[0].runId).toBe('run-2')
   })
 
-  it('RUN_STATE_CHANGED without terminalAt preserves pidStatus', () => {
+  it('RUN_UPSERTED keeps newest-first ordering when updating a run', () => {
     const loaded = reduce(initialState, {
-      type: 'RUNS_LOADED',
-      runs: [{ ...baseRun, state: 'queued' }],
+      type: 'RUNS_SNAPSHOT_LOADED',
+      runs: [
+        {
+          ...baseRun,
+          runId: 'run-old',
+          queuedAt: '2026-03-18T16:40:00Z',
+        },
+        {
+          ...baseRun,
+          runId: 'run-newer',
+          queuedAt: '2026-03-18T16:58:00Z',
+        },
+      ],
     })
     const result = reduce(loaded, {
-      type: 'RUN_STATE_CHANGED',
-      runId: baseRun.runId,
-      state: 'running',
+      type: 'RUN_UPSERTED',
+      run: {
+        ...baseRun,
+        runId: 'run-old',
+        queuedAt: '2026-03-18T17:05:00Z',
+      },
     })
-    expect(result.runs[0].state).toBe('running')
-    expect(result.runs[0].pidStatus).toBe('current')
-  })
-
-  it('RUN_STATE_CHANGED does not affect other runs', () => {
-    const runs = [baseRun, { ...baseRun, runId: 'run-2' }]
-    const loaded = reduce(initialState, { type: 'RUNS_LOADED', runs })
-    const result = reduce(loaded, {
-      type: 'RUN_STATE_CHANGED',
-      runId: baseRun.runId,
-      state: 'completed',
-      terminalAt: '2026-03-18T17:10:00Z',
-    })
-    expect(result.runs[0].state).toBe('completed')
-    expect(result.runs[1].state).toBe('running')
+    expect(result.runs[0].runId).toBe('run-old')
+    expect(result.runs[1].runId).toBe('run-newer')
   })
 })

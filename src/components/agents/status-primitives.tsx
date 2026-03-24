@@ -18,7 +18,8 @@ export const STATE_CONFIG: Record<
 > = {
   running: {
     label: 'Running',
-    dotClass: 'bg-[var(--run-status-running)] shadow-[var(--run-status-running-shadow)]',
+    dotClass:
+      'bg-[var(--run-status-running)] shadow-[var(--run-status-running-shadow)]',
     badgeClass:
       'border-[var(--run-status-running-border)] bg-[var(--run-status-running-bg)] text-[var(--run-status-running-text)]',
   },
@@ -71,7 +72,10 @@ export function StateDot({
 export function StateBadge({ state }: { state: RunState }) {
   const config = STATE_CONFIG[state]
   return (
-    <span className="inline-flex items-center gap-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em]" style={{ color: `var(--run-status-${state}-text)` }}>
+    <span
+      className="inline-flex items-center gap-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em]"
+      style={{ color: `var(--run-status-${state}-text)` }}
+    >
       {config.label}
       <StateDot state={state} pulse={state === 'running'} />
     </span>
@@ -84,11 +88,17 @@ export function StateIcon({ state }: { state: RunState }) {
     case 'running':
       return <CircleDot className={`${cls} text-[var(--run-status-running)]`} />
     case 'completed':
-      return <CheckCircle2 className={`${cls} text-[var(--run-status-completed)]`} />
+      return (
+        <CheckCircle2 className={`${cls} text-[var(--run-status-completed)]`} />
+      )
     case 'failed':
       return <XCircle className={`${cls} text-[var(--run-status-failed)]`} />
     case 'interrupted':
-      return <AlertOctagon className={`${cls} text-[var(--run-status-interrupted)]`} />
+      return (
+        <AlertOctagon
+          className={`${cls} text-[var(--run-status-interrupted)]`}
+        />
+      )
     case 'queued':
       return <Clock className={`${cls} text-[var(--run-status-queued)]`} />
   }

@@ -102,9 +102,9 @@ describe('formatDuration', () => {
 
 describe('getEventSummary', () => {
   test('run.queued with source', () => {
-    expect(
-      getEventSummary('run.queued', { source: 'cli.run.start' }),
-    ).toBe('from cli.run.start')
+    expect(getEventSummary('run.queued', { source: 'cli.run.start' })).toBe(
+      'from cli.run.start',
+    )
   })
 
   test('run.queued without source', () => {
@@ -118,9 +118,9 @@ describe('getEventSummary', () => {
   })
 
   test('run.completed with duration', () => {
-    expect(
-      getEventSummary('run.completed', { durationMs: 20329 }),
-    ).toBe('20.3s')
+    expect(getEventSummary('run.completed', { durationMs: 20329 })).toBe(
+      '20.3s',
+    )
   })
 
   test('run.failed with error', () => {
@@ -142,9 +142,9 @@ describe('getEventSummary', () => {
   })
 
   test('node.started root', () => {
-    expect(
-      getEventSummary('node.started', { role: 'root', depth: 0 }),
-    ).toBe('root node, depth 0')
+    expect(getEventSummary('node.started', { role: 'root', depth: 0 })).toBe(
+      'root node, depth 0',
+    )
   })
 
   test('node.started recursive_subcall', () => {
@@ -157,9 +157,9 @@ describe('getEventSummary', () => {
   })
 
   test('node.completed', () => {
-    expect(
-      getEventSummary('node.completed', { durationMs: 20319 }),
-    ).toBe('20.3s')
+    expect(getEventSummary('node.completed', { durationMs: 20319 })).toBe(
+      '20.3s',
+    )
   })
 
   test('node.failed', () => {
@@ -224,10 +224,7 @@ describe('getEventSummary', () => {
 
   test('node.turn.user with token map but no match shows pending', () => {
     const tokenMap = new Map([
-      [
-        'other-step',
-        { inputTokens: 100, outputTokens: 50, totalTokens: 150 },
-      ],
+      ['other-step', { inputTokens: 100, outputTokens: 50, totalTokens: 150 }],
     ])
     expect(
       getEventSummary(
@@ -258,9 +255,7 @@ describe('getEventSummary', () => {
   })
 
   test('node.turn.model without token fields returns empty', () => {
-    expect(
-      getEventSummary('node.turn.model', { role: 'model' }),
-    ).toBe('')
+    expect(getEventSummary('node.turn.model', { role: 'model' })).toBe('')
   })
 
   test('node.action.executed', () => {

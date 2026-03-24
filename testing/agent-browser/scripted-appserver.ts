@@ -24,6 +24,7 @@ type ConnectionRecord = {
   connectionID: number
   initialized: boolean
   ready: boolean
+  runsSubscribed: boolean
   socket: WebSocket
   subscriptions: Map<string, { attachedSeq: number }>
 }
@@ -175,6 +176,16 @@ export async function createScriptedConnectionController(options: {
       jsonrpc: '2.0',
       method: frame.method,
       params: frame.params,
+    }
+
+    if (frame.method === 'runs/changed') {
+      for (const connection of connections.values()) {
+        if (!connection.ready || !connection.runsSubscribed) {
+          continue
+        }
+        sendMessage(connection, notification)
+      }
+      return
     }
 
     const runId = runIDFromParams(frame.params)
@@ -330,7 +341,7 @@ export async function createScriptedConnectionController(options: {
     }
 
     switch (method) {
-      case 'run/list': {
+      case 'runs/list': {
         const items = options.scenario.runs.map((run) => {
           const snapshot = stateForRun(run.runId)
           if (snapshot == null) {
@@ -343,6 +354,42 @@ export async function createScriptedConnectionController(options: {
           successEnvelope(id, {
             payload: {
               items,
+              revision: 1,
+            },
+          }),
+        )
+        return
+      }
+
+      case 'runs/subscribe': {
+        connection.runsSubscribed = true
+        const items = options.scenario.runs.map((run) => {
+          const snapshot = stateForRun(run.runId)
+          if (snapshot == null) {
+            throw new Error(`missing run snapshot for ${run.runId}`)
+          }
+          return snapshot.summary
+        })
+        sendMessage(
+          connection,
+          successEnvelope(id, {
+            payload: {
+              items,
+              revision: 1,
+            },
+          }),
+        )
+        return
+      }
+
+      case 'runs/unsubscribe': {
+        const unsubscribed = connection.runsSubscribed
+        connection.runsSubscribed = false
+        sendMessage(
+          connection,
+          successEnvelope(id, {
+            payload: {
+              unsubscribed,
             },
           }),
         )
@@ -532,6 +579,7 @@ export async function createScriptedConnectionController(options: {
           connectionID: nextConnectionID++,
           initialized: false,
           ready: false,
+          runsSubscribed: false,
           socket,
           subscriptions: new Map(),
         }

@@ -135,7 +135,7 @@ describe('scripted app-server controller', () => {
       JSON.stringify({
         jsonrpc: '2.0',
         id: 'pre-init',
-        method: 'run/list',
+        method: 'runs/list',
         params: { limit: 100 },
       }),
     )
@@ -175,7 +175,7 @@ describe('scripted app-server controller', () => {
       JSON.stringify({
         jsonrpc: '2.0',
         id: 'pre-ready',
-        method: 'run/list',
+        method: 'runs/list',
         params: { limit: 100 },
       }),
     )
@@ -195,7 +195,7 @@ describe('scripted app-server controller', () => {
       JSON.stringify({
         jsonrpc: '2.0',
         id: 'ready',
-        method: 'run/list',
+        method: 'runs/list',
         params: { limit: 100 },
       }),
     )
@@ -214,7 +214,7 @@ describe('scripted app-server controller', () => {
 
     const runList = await client.request<{
       payload: { items: Array<{ runId: string }> }
-    }>('run/list', { limit: 100 })
+    }>('runs/list', { limit: 100 })
     expect(runList.payload.items.map((item) => item.runId)).toEqual([
       LIVE_TIMELINE_RUN_ID,
     ])
@@ -380,8 +380,8 @@ describe('scripted app-server controller', () => {
     clients.push(secondClient)
     await secondClient.connect()
 
-    await first.client.request('run/list', { limit: 100 })
-    await secondClient.request('run/list', { limit: 100 })
+    await first.client.request('runs/list', { limit: 100 })
+    await secondClient.request('runs/list', { limit: 100 })
 
     expect(first.controller.getReceivedRequests().length).toBeGreaterThan(0)
     expect(secondController.getReceivedRequests().length).toBeGreaterThan(0)

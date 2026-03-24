@@ -60,7 +60,7 @@ function serverSnapshot(): InitializeResult {
     instanceId: 'sigil-scripted-agent-browser',
     instanceName: 'sigil-scripted-agent-browser',
     protocolVersion: PROTOCOL_VERSION,
-    methodFamilies: ['run', 'server'],
+    methodFamilies: ['run', 'runs', 'server'],
     capabilities: {
       config: {
         defaultVersion: PROTOCOL_VERSION,

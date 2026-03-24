@@ -60,7 +60,7 @@ const initializedServer: InitializeResult = {
   instanceId: 'local-agent',
   instanceName: 'local-agent',
   protocolVersion: 'sigil.appserver.v1alpha1',
-  methodFamilies: ['run', 'server'],
+  methodFamilies: ['run', 'runs', 'server'],
   capabilities: {
     config: {
       defaultVersion: 'sigil.appserver.v1alpha1',
@@ -146,13 +146,13 @@ describe('AppServerSessionClient', () => {
     const { client, sockets } = createClientHarness()
     await connectClient(client, sockets)
 
-    const requestPromise = client.request('run/list', { limit: 1 })
+    const requestPromise = client.request('runs/list', { limit: 1 })
     await Promise.resolve()
     const runListRequest = JSON.parse(sockets[0].sent[2]) as {
       id: string
       method: string
     }
-    expect(runListRequest.method).toBe('run/list')
+    expect(runListRequest.method).toBe('runs/list')
 
     sockets[0].receive({
       jsonrpc: '2.0',
@@ -257,7 +257,7 @@ describe('AppServerSessionClient', () => {
     await vi.advanceTimersByTimeAsync(2000)
     expect(client.getSnapshot().connectionState).toBe('degraded')
 
-    const requestPromise = client.request('run/list', { limit: 1 })
+    const requestPromise = client.request('runs/list', { limit: 1 })
     await Promise.resolve()
 
     expect(client.getSnapshot().connectionState).toBe('degraded')
@@ -266,7 +266,7 @@ describe('AppServerSessionClient', () => {
       id: string
       method: string
     }
-    expect(runListRequest.method).toBe('run/list')
+    expect(runListRequest.method).toBe('runs/list')
 
     sockets[0].receive({
       jsonrpc: '2.0',

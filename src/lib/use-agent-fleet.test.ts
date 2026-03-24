@@ -14,7 +14,7 @@ const baseAgent: AgentInstance = {
     instanceId: 'test-instance',
     instanceName: 'test-instance',
     protocolVersion: 'sigil.appserver.v1alpha1',
-    methodFamilies: ['run', 'server'],
+    methodFamilies: ['run', 'runs', 'server'],
     capabilities: {
       config: {
         defaultVersion: 'sigil.appserver.v1alpha1',

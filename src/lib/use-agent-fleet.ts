@@ -158,7 +158,7 @@ export function useAgentFleet(): AgentFleetHandle {
         instanceId: instanceName,
         instanceName,
         protocolVersion: PROTOCOL_VERSION,
-        methodFamilies: ['run', 'server'],
+        methodFamilies: ['run', 'runs', 'server'],
         capabilities: {
           config: {
             defaultVersion: PROTOCOL_VERSION,
