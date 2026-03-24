@@ -80,7 +80,7 @@ function AgentsRoute() {
           {/* Right: Run detail */}
           <div className="flex flex-1 flex-col overflow-hidden">
             {activeRunId ? (
-              <RunDetailPane runId={activeRunId} />
+              <RunDetailPane agentId={effectiveAgentId} runId={activeRunId} />
             ) : (
               <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
                 <div className="flex size-12 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface)]">

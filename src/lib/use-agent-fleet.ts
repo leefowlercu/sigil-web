@@ -1,7 +1,15 @@
-import { useCallback, useEffect, useReducer } from 'react'
+import { useCallback, useEffect, useReducer, useSyncExternalStore } from 'react'
 import type { AgentInstance, ConnectionState } from './demo-data'
 import type { InitializeResult } from './protocol'
 import { PROTOCOL_VERSION } from './protocol'
+import {
+  connectAgentSession,
+  disconnectAgentSession,
+  getAgentInstanceSnapshots,
+  reconnectAgentSession,
+  removeAgentSession,
+  subscribeAgentSessionStore,
+} from './appserver/store'
 import { getAgentFleet } from './data'
 
 /* ------------------------------------------------------------------ */
@@ -83,10 +91,21 @@ export type AgentFleetHandle = {
   removeAgent: (agentId: string) => void
 }
 
+const emptyAgentInstances: AgentInstance[] = []
+
 export function useAgentFleet(): AgentFleetHandle {
+  const isDemoMode = import.meta.env.VITE_DATA_SOURCE === 'demo'
   const [state, dispatch] = useReducer(agentFleetReducer, initialState)
+  const liveAgents = useSyncExternalStore(
+    subscribeAgentSessionStore,
+    getAgentInstanceSnapshots,
+    () => emptyAgentInstances,
+  )
 
   useEffect(() => {
+    if (!isDemoMode) {
+      return
+    }
     dispatch({ type: 'RESET' })
     const fleet = getAgentFleet()
     if (fleet.length > 0) {
@@ -94,98 +113,119 @@ export function useAgentFleet(): AgentFleetHandle {
     }
 
     // Demo mode: simulate heartbeat-driven state transitions
-    if (import.meta.env.VITE_DATA_SOURCE === 'demo') {
-      const degradedAgent = fleet.find(
-        (a) => a.connectionState === 'degraded',
-      )
-      if (degradedAgent) {
-        const transitions: ConnectionState[] = [
-          'reconnecting',
-          'ready',
-        ]
-        let step = 0
-        const interval = setInterval(() => {
-          if (step < transitions.length) {
-            dispatch({
-              type: 'AGENT_STATE_CHANGED',
-              agentId: degradedAgent.id,
-              connectionState: transitions[step],
-            })
-            step++
-          } else {
-            clearInterval(interval)
-          }
-        }, 5000)
-        return () => clearInterval(interval)
-      }
+    const degradedAgent = fleet.find((a) => a.connectionState === 'degraded')
+    if (degradedAgent) {
+      const transitions: ConnectionState[] = ['reconnecting', 'ready']
+      let step = 0
+      const interval = setInterval(() => {
+        if (step < transitions.length) {
+          dispatch({
+            type: 'AGENT_STATE_CHANGED',
+            agentId: degradedAgent.id,
+            connectionState: transitions[step],
+          })
+          step++
+        } else {
+          clearInterval(interval)
+        }
+      }, 5000)
+      return () => clearInterval(interval)
     }
 
     // Future: live mode would establish WebSocket connections here
     // and dispatch AGENT_CONNECTED/AGENT_STATE_CHANGED on events
-  }, [])
+  }, [isDemoMode])
 
-  const connectAgent = useCallback((endpoint: string) => {
-    // Demo mode: create a synthetic agent from the endpoint
-    // Live mode (future): initiate WebSocket, perform initialize handshake
-    let instanceName = endpoint
-    try {
-      const url = new URL(endpoint)
-      instanceName = url.hostname
-    } catch {
-      // Use raw endpoint as name if URL parsing fails
-    }
+  const connectAgent = useCallback(
+    (endpoint: string) => {
+      if (!isDemoMode) {
+        connectAgentSession(`agent_${Date.now()}`, endpoint)
+        return
+      }
+      // Demo mode: create a synthetic agent from the endpoint
+      // Live mode (future): initiate WebSocket, perform initialize handshake
+      let instanceName = endpoint
+      try {
+        const url = new URL(endpoint)
+        instanceName = url.hostname
+      } catch {
+        // Use raw endpoint as name if URL parsing fails
+      }
 
-    const server: InitializeResult = {
-      serverName: 'sigil',
-      serverVersion: '0.1.0',
-      instanceId: instanceName,
-      instanceName,
-      protocolVersion: PROTOCOL_VERSION,
-      methodFamilies: ['run', 'server'],
-      capabilities: {
-        config: {
-          defaultVersion: PROTOCOL_VERSION,
-          supportedVersions: [PROTOCOL_VERSION],
+      const server: InitializeResult = {
+        serverName: 'sigil',
+        serverVersion: '0.1.0',
+        instanceId: instanceName,
+        instanceName,
+        protocolVersion: PROTOCOL_VERSION,
+        methodFamilies: ['run', 'server'],
+        capabilities: {
+          config: {
+            defaultVersion: PROTOCOL_VERSION,
+            supportedVersions: [PROTOCOL_VERSION],
+          },
+          views: { runTree: true, stepDetail: true, liveSubscriptions: true },
+          protocolArtifacts: true,
         },
-        views: { runTree: true, stepDetail: true, liveSubscriptions: true },
-        protocolArtifacts: true,
-      },
-    }
+      }
 
-    dispatch({
-      type: 'AGENT_CONNECTED',
-      agent: {
-        id: `agent_${Date.now()}`,
-        endpoint,
+      dispatch({
+        type: 'AGENT_CONNECTED',
+        agent: {
+          id: `agent_${Date.now()}`,
+          endpoint,
+          connectionState: 'ready',
+          server,
+        },
+      })
+    },
+    [isDemoMode],
+  )
+
+  const disconnectAgent = useCallback(
+    (agentId: string) => {
+      if (!isDemoMode) {
+        disconnectAgentSession(agentId)
+        return
+      }
+      dispatch({ type: 'AGENT_DISCONNECTED', agentId })
+      // Future: live mode would also close the WebSocket connection
+    },
+    [isDemoMode],
+  )
+
+  const reconnectAgent = useCallback(
+    (agentId: string) => {
+      if (!isDemoMode) {
+        reconnectAgentSession(agentId)
+        return
+      }
+      dispatch({
+        type: 'AGENT_STATE_CHANGED',
+        agentId,
         connectionState: 'ready',
-        server,
-      },
-    })
-  }, [])
+      })
+      // Future: live mode would re-establish the WebSocket connection
+      // and perform the initialize handshake
+    },
+    [isDemoMode],
+  )
 
-  const disconnectAgent = useCallback((agentId: string) => {
-    dispatch({ type: 'AGENT_DISCONNECTED', agentId })
-    // Future: live mode would also close the WebSocket connection
-  }, [])
-
-  const reconnectAgent = useCallback((agentId: string) => {
-    dispatch({
-      type: 'AGENT_STATE_CHANGED',
-      agentId,
-      connectionState: 'ready',
-    })
-    // Future: live mode would re-establish the WebSocket connection
-    // and perform the initialize handshake
-  }, [])
-
-  const removeAgent = useCallback((agentId: string) => {
-    dispatch({ type: 'AGENT_REMOVED', agentId })
-    // Future: live mode would also close the WebSocket connection
-    // and clean up any subscriptions
-  }, [])
+  const removeAgent = useCallback(
+    (agentId: string) => {
+      if (!isDemoMode) {
+        removeAgentSession(agentId)
+        return
+      }
+      dispatch({ type: 'AGENT_REMOVED', agentId })
+      // Future: live mode would also close the WebSocket connection
+      // and clean up any subscriptions
+    },
+    [isDemoMode],
+  )
 
   return {
-    agents: state.agents,
+    agents: isDemoMode ? state.agents : liveAgents,
     connectAgent,
     disconnectAgent,
     reconnectAgent,

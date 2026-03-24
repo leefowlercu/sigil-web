@@ -1,12 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
 import type { RunSummaryView } from '#/lib/protocol'
-import {
-  agentRunsReducer,
-  initialState,
-  type AgentRunsAction,
-  type AgentRunsState,
-} from './use-agent-runs'
+import { agentRunsReducer, initialState } from './use-agent-runs'
+import type { AgentRunsAction, AgentRunsState } from './use-agent-runs'
 
 const baseRun: RunSummaryView = {
   runId: '019569a1-2b3c-7d4e-8f01-234567890abc',
@@ -52,6 +48,33 @@ describe('agentRunsReducer', () => {
     const result = reduce(loaded, { type: 'RUN_STARTED', run: newRun })
     expect(result.runs).toHaveLength(2)
     expect(result.runs[0].runId).toBe('run-new')
+  })
+
+  it('RUN_STARTED updates an existing run instead of duplicating it', () => {
+    const queuedRun: RunSummaryView = {
+      ...baseRun,
+      state: 'queued',
+      startedAt: undefined,
+      terminalAt: undefined,
+    }
+    const startedRun: RunSummaryView = {
+      ...queuedRun,
+      state: 'running',
+      startedAt: '2026-03-18T17:00:00Z',
+      pidStatus: 'current',
+    }
+
+    const loaded = reduce(initialState, {
+      type: 'RUNS_LOADED',
+      runs: [queuedRun],
+    })
+    const result = reduce(loaded, {
+      type: 'RUN_STARTED',
+      run: startedRun,
+    })
+
+    expect(result.runs).toHaveLength(1)
+    expect(result.runs[0]).toEqual(startedRun)
   })
 
   it('RUN_STATE_CHANGED updates state for matching run', () => {

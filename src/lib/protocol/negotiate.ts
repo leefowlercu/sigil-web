@@ -1,7 +1,7 @@
 import type { ProtocolAdapter } from './adapter'
 import { v1alpha1Adapter } from './adapters/v1alpha1'
 
-const adapterRegistry: Record<string, ProtocolAdapter> = {
+const adapterRegistry: Partial<Record<string, ProtocolAdapter>> = {
   'sigil.appserver.v1alpha1': v1alpha1Adapter,
 }
 

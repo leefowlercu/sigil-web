@@ -29,3 +29,17 @@ Feature: Sigil Web operator workflows
     Given the application can resolve a valid agent identity
     When the operator opens /agents with an agent search parameter
     Then the application preserves that selected-agent intent in the `/agents` route state
+
+  @PRD-0300
+  Scenario: Auto-follows the latest event while a live run detail timeline is pinned to the bottom
+    Given the operator is viewing a live run detail timeline at its latest event
+    When new live run events append to the timeline
+    Then the timeline keeps the latest event visible without additional operator input
+
+  @PRD-0300
+  Scenario: Shows a centered scroll-to-bottom control and resumes follow when the operator has scrolled away from the latest live event
+    Given the operator is viewing an overflowing live run detail timeline above its latest event
+    When the operator has scrolled away from the bottom of the timeline
+    Then the timeline shows a centered floating `Scroll to bottom` control near the bottom of the pane
+    And activating that control returns the timeline to the latest event
+    And the timeline resumes automatic live following for subsequent appended events

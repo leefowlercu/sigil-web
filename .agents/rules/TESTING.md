@@ -1,8 +1,8 @@
 # Testing
 
 Testing is split between local implementation checks, spec verification, and
-the planned browser acceptance lanes. Choose the narrowest lane that proves the
-change, then widen to full verification before concluding.
+the browser acceptance harness. Choose the narrowest lane that proves the change,
+then widen to full verification before concluding.
 
 ## Current Implementation Checks
 
@@ -23,19 +23,21 @@ change, then widen to full verification before concluding.
 - Do not use `@visual` or `@nonvisual` in the feature file; verification lanes
   are owned by the manifests.
 
-## Planned Browser Lanes
+## Browser Harness
 
-- Keep a deterministic fake or scriptable server lane for UI-state and
+- `agent-browser` is the browser acceptance runner for `sigil-web`.
+- Keep a deterministic scripted `agent-browser` fixture lane for UI-state and
   error-state coverage.
-- Keep a real `sigil app-server serve` lane for contract confidence against the
-  actual backend surface.
-- Keep those two lanes separate so fast UI iteration does not weaken real
-  contract checks.
+- Record browser evidence in
+  `sigil-web/verification/scenarios/manifest.toml` with
+  `lane = "agent-browser"` plus the matching `file` and `match`.
 
 ## Working Guidance
 
 - Re-run `pnpm test` and `pnpm build` after route structure, shared shell, or
   state-boundary changes.
+- Use `pnpm test:acceptance` for deterministic scripted-server browser
+  coverage.
 - Re-run the spec verifier after any PRD, matrix, acceptance-title,
   scenario-manifest, or design-manifest change.
 - State clearly if a browser acceptance lane is not yet implemented for the

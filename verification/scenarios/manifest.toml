@@ -18,7 +18,7 @@ description = "Agents route family with selected-agent search-state ownership."
 [[route]]
 id = "run-detail"
 path = "/runs/$runId"
-description = "Reserved run-detail route family awaiting re-specified behavior."
+description = "Run-detail route family that owns shared live timeline follow and recovery behavior, including embedded run-detail surfaces."
 
 [[scenario]]
 prd = "PRD-0100"
@@ -74,3 +74,39 @@ match = "preserves selected-agent search state in the agents route"
 
 [[scenario.evidence]]
 lane = "paper"
+
+[[scenario]]
+prd = "PRD-0300"
+scenario_id = "SCN-0000"
+title = "Auto-follows the latest event while a live run detail timeline is pinned to the bottom"
+route_id = "run-detail"
+state_id = "live-timeline-follow"
+fixtures = ["run-detail-live-timeline"]
+
+[[scenario.evidence]]
+lane = "vitest"
+file = "sigil-web/src/components/agents/run-timeline-tab.test.tsx"
+match = "Auto-follows the latest event while a live run detail timeline is pinned to the bottom"
+
+[[scenario.evidence]]
+lane = "agent-browser"
+file = "sigil-web/testing/agent-browser/scenarios/prd-0300-live-timeline.ts"
+match = "Auto-follows the latest event while a live run detail timeline is pinned to the bottom"
+
+[[scenario]]
+prd = "PRD-0300"
+scenario_id = "SCN-0001"
+title = "Shows a centered scroll-to-bottom control and resumes follow when the operator has scrolled away from the latest live event"
+route_id = "run-detail"
+state_id = "live-timeline-scroll-recovery"
+fixtures = ["run-detail-live-timeline"]
+
+[[scenario.evidence]]
+lane = "vitest"
+file = "sigil-web/src/components/agents/run-timeline-tab.test.tsx"
+match = "Shows a centered scroll-to-bottom control and resumes follow when the operator has scrolled away from the latest live event"
+
+[[scenario.evidence]]
+lane = "agent-browser"
+file = "sigil-web/testing/agent-browser/scenarios/prd-0300-live-timeline.ts"
+match = "Shows a centered scroll-to-bottom control and resumes follow when the operator has scrolled away from the latest live event"

@@ -76,9 +76,9 @@ manifest files must move together when behavior changes.
 ## Testing
 
 Use the testing guide to keep implementation checks, spec verification, and the
-future browser acceptance lanes separate and deterministic. Update the failing
-contract first, then run the smallest relevant verification path before broader
-suites.
+scripted browser acceptance harness separate and deterministic. Update the
+failing contract first, then run the smallest relevant verification path before
+broader suites.
 
 - [Testing Reference](.agents/rules/TESTING.md)
 

@@ -11,8 +11,9 @@ import { useMemo } from 'react'
 import { ScrollArea } from '#/components/ui/scroll-area'
 import { Separator } from '#/components/ui/separator'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '#/components/ui/tabs'
+import { RunTimelineTab } from '#/components/agents/run-timeline-tab'
 import type { RunState } from '#/lib/demo-data'
-import { buildTurnTokenMap, getEventDisplayInfo } from '#/lib/timeline-events'
+import { buildTurnTokenMap } from '#/lib/timeline-events'
 import { useRunSubscription } from '#/lib/use-run-subscription'
 
 function MetaRow({
@@ -38,33 +39,31 @@ function MetaRow({
   )
 }
 
-function formatTimestamp(iso?: string): string {
-  if (!iso) return '--'
-  const date = new Date(iso)
-  return date.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  })
-}
-
-export function RunDetailPane({ runId }: { runId: string }) {
-  const { status, projection, events, steps, terminal } =
-    useRunSubscription(runId)
+export function RunDetailPane({
+  agentId,
+  runId,
+}: {
+  agentId: string
+  runId: string
+}) {
+  const { status, projection, events, steps, terminal } = useRunSubscription(
+    agentId,
+    runId,
+  )
   const turnTokenMap = useMemo(() => buildTurnTokenMap(events), [events])
-
-  if (status === 'loading' || !projection) {
-    return (
-      <div className="flex flex-1 items-center justify-center text-sm text-[var(--muted-foreground)]">
-        Loading run detail...
-      </div>
-    )
-  }
 
   if (status === 'error') {
     return (
       <div className="flex flex-1 items-center justify-center text-sm text-[var(--muted-foreground)]">
         Failed to load run detail.
+      </div>
+    )
+  }
+
+  if (status === 'loading' || !projection) {
+    return (
+      <div className="flex flex-1 items-center justify-center text-sm text-[var(--muted-foreground)]">
+        Loading run detail...
       </div>
     )
   }
@@ -105,65 +104,17 @@ export function RunDetailPane({ runId }: { runId: string }) {
         </div>
 
         {/* Timeline tab */}
-        <TabsContent value="timeline" className="flex-1 overflow-hidden">
-          <ScrollArea className="h-full">
-            <div className="flex flex-col gap-0 px-5 py-4">
-              {/* Event timeline */}
-              <div className="relative flex flex-col gap-0">
-                {events.map((event, i) => {
-                  const isLast = i === events.length - 1
-                  const info = getEventDisplayInfo(event, turnTokenMap)
-                  return (
-                    <div key={event.seq} className="relative flex gap-3 pb-4">
-                      {/* Vertical connector line */}
-                      {!isLast && (
-                        <span className="absolute top-4 left-[7px] h-[calc(100%-8px)] w-px bg-[var(--line)]" />
-                      )}
-                      {/* Dot */}
-                      <span className="relative z-10 mt-1 flex size-[15px] shrink-0 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-strong)]">
-                        <span
-                          className={`size-[5px] rounded-full ${
-                            isLast && isLive
-                              ? 'bg-[var(--sigil-accent)]'
-                              : info.dotColorClass
-                          }`}
-                        />
-                      </span>
-                      {/* Content */}
-                      <div className="flex flex-1 flex-col gap-0.5 pt-0">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[0.62rem] font-bold uppercase tracking-[0.1em] text-[var(--muted-foreground)]">
-                            {formatTimestamp(event.ts)}
-                          </span>
-                          <span className="text-[0.68rem] font-semibold text-[var(--foreground)]">
-                            {info.label}
-                          </span>
-                        </div>
-                        {info.summary && (
-                          <p className="text-[0.6rem] leading-relaxed text-[var(--muted-foreground)]">
-                            {info.summary}
-                          </p>
-                        )}
-                        <div className="flex items-center gap-2">
-                          <span className="text-[0.55rem] font-semibold text-[var(--muted-foreground)] opacity-40">
-                            {event.type}
-                          </span>
-                          <span className="text-[0.55rem] font-semibold text-[var(--muted-foreground)] opacity-40">
-                            seq {event.seq}
-                          </span>
-                          {event.nodeId && (
-                            <span className="font-mono text-[0.55rem] text-[var(--muted-foreground)] opacity-40">
-                              {event.nodeId.slice(0, 13)}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          </ScrollArea>
+        <TabsContent
+          value="timeline"
+          forceMount
+          className="flex-1 overflow-hidden data-[state=inactive]:hidden"
+        >
+          <RunTimelineTab
+            events={events}
+            isLive={isLive}
+            runId={runId}
+            turnTokenMap={turnTokenMap}
+          />
         </TabsContent>
 
         {/* Nodes tab */}
@@ -257,7 +208,10 @@ export function RunDetailPane({ runId }: { runId: string }) {
         </TabsContent>
 
         {/* Meta tab */}
-        <TabsContent value="meta" className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <TabsContent
+          value="meta"
+          className="flex min-h-0 flex-1 flex-col overflow-hidden"
+        >
           <ScrollArea className="min-h-0 flex-1">
             <div className="flex flex-col gap-3 px-5 py-4">
               <MetaRow label="Name" value={projection.name} />

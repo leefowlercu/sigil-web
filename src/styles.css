@@ -45,13 +45,13 @@
   --header-bg: rgba(255, 255, 255, 0.84);
   --app-shell-min-height: 800px;
 
-  --sigil-accent: #FF4B2B;
-  --sigil-accent-soft: rgba(255, 75, 43, 0.10);
+  --sigil-accent: #ff4b2b;
+  --sigil-accent-soft: rgba(255, 75, 43, 0.1);
   --sigil-accent-hover: rgba(255, 75, 43, 0.05);
   --sigil-accent-border: rgba(255, 75, 43, 0.25);
-  --sigil-accent-ring: rgba(255, 75, 43, 0.20);
-  --sigil-accent-focus-border: rgba(255, 75, 43, 0.40);
-  --sigil-accent-focus-ring: rgba(255, 75, 43, 0.20);
+  --sigil-accent-ring: rgba(255, 75, 43, 0.2);
+  --sigil-accent-focus-border: rgba(255, 75, 43, 0.4);
+  --sigil-accent-focus-ring: rgba(255, 75, 43, 0.2);
 
   --sidebar-bg: #f0f4f2;
   --workspace-bg: #e8ede9;
@@ -63,41 +63,41 @@
 
   --run-status-running: #3b82f6;
   --run-status-running-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
-  --run-status-running-border: rgba(59, 130, 246, 0.30);
-  --run-status-running-bg: rgba(59, 130, 246, 0.10);
+  --run-status-running-border: rgba(59, 130, 246, 0.3);
+  --run-status-running-bg: rgba(59, 130, 246, 0.1);
   --run-status-running-text: #2563eb;
   --run-status-completed: #10b981;
-  --run-status-completed-border: rgba(16, 185, 129, 0.30);
-  --run-status-completed-bg: rgba(16, 185, 129, 0.10);
+  --run-status-completed-border: rgba(16, 185, 129, 0.3);
+  --run-status-completed-bg: rgba(16, 185, 129, 0.1);
   --run-status-completed-text: #047857;
   --run-status-failed: #dc2626;
-  --run-status-failed-border: rgba(220, 38, 38, 0.30);
-  --run-status-failed-bg: rgba(220, 38, 38, 0.10);
+  --run-status-failed-border: rgba(220, 38, 38, 0.3);
+  --run-status-failed-bg: rgba(220, 38, 38, 0.1);
   --run-status-failed-text: #b91c1c;
   --run-status-interrupted: #f59e0b;
-  --run-status-interrupted-border: rgba(245, 158, 11, 0.30);
-  --run-status-interrupted-bg: rgba(245, 158, 11, 0.10);
+  --run-status-interrupted-border: rgba(245, 158, 11, 0.3);
+  --run-status-interrupted-bg: rgba(245, 158, 11, 0.1);
   --run-status-interrupted-text: #b45309;
   --run-status-queued: #94a3b8;
-  --run-status-queued-border: rgba(148, 163, 184, 0.30);
-  --run-status-queued-bg: rgba(148, 163, 184, 0.10);
+  --run-status-queued-border: rgba(148, 163, 184, 0.3);
+  --run-status-queued-bg: rgba(148, 163, 184, 0.1);
   --run-status-queued-text: #475569;
 
   --connection-ready: #10b981;
-  --connection-ready-border: rgba(16, 185, 129, 0.30);
-  --connection-ready-bg: rgba(16, 185, 129, 0.10);
+  --connection-ready-border: rgba(16, 185, 129, 0.3);
+  --connection-ready-bg: rgba(16, 185, 129, 0.1);
   --connection-ready-text: #047857;
   --connection-degraded: #f59e0b;
-  --connection-degraded-border: rgba(245, 158, 11, 0.30);
-  --connection-degraded-bg: rgba(245, 158, 11, 0.10);
+  --connection-degraded-border: rgba(245, 158, 11, 0.3);
+  --connection-degraded-bg: rgba(245, 158, 11, 0.1);
   --connection-degraded-text: #b45309;
   --connection-reconnecting: #ef4444;
-  --connection-reconnecting-border: rgba(239, 68, 68, 0.30);
-  --connection-reconnecting-bg: rgba(239, 68, 68, 0.10);
+  --connection-reconnecting-border: rgba(239, 68, 68, 0.3);
+  --connection-reconnecting-bg: rgba(239, 68, 68, 0.1);
   --connection-reconnecting-text: #b91c1c;
   --connection-disconnected: #94a3b8;
-  --connection-disconnected-border: rgba(148, 163, 184, 0.30);
-  --connection-disconnected-bg: rgba(148, 163, 184, 0.10);
+  --connection-disconnected-border: rgba(148, 163, 184, 0.3);
+  --connection-disconnected-bg: rgba(148, 163, 184, 0.1);
   --connection-disconnected-text: #475569;
 
   --background: oklch(1 0 0);
@@ -136,59 +136,59 @@
 }
 
 .dark {
-  --sigil-accent: #FF4B2B;
+  --sigil-accent: #ff4b2b;
   --sigil-accent-soft: rgba(255, 75, 43, 0.12);
   --sigil-accent-hover: rgba(255, 75, 43, 0.06);
   --sigil-accent-border: rgba(255, 75, 43, 0.25);
-  --sigil-accent-ring: rgba(255, 75, 43, 0.20);
-  --sigil-accent-focus-border: rgba(255, 75, 43, 0.40);
-  --sigil-accent-focus-ring: rgba(255, 75, 43, 0.20);
+  --sigil-accent-ring: rgba(255, 75, 43, 0.2);
+  --sigil-accent-focus-border: rgba(255, 75, 43, 0.4);
+  --sigil-accent-focus-ring: rgba(255, 75, 43, 0.2);
 
   --sidebar-bg: #0a0b0e;
   --workspace-bg: #14161b;
   --surface-hover: rgba(255, 255, 255, 0.06);
-  --input-bg: rgba(30, 41, 59, 0.50);
+  --input-bg: rgba(30, 41, 59, 0.5);
   --input-border: rgba(141, 229, 219, 0.14);
   --input-text: #d7ece8;
   --input-placeholder: #64748b;
 
   --run-status-running: #3b82f6;
   --run-status-running-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
-  --run-status-running-border: rgba(59, 130, 246, 0.40);
+  --run-status-running-border: rgba(59, 130, 246, 0.4);
   --run-status-running-bg: rgba(59, 130, 246, 0.15);
   --run-status-running-text: #60a5fa;
   --run-status-completed: #10b981;
-  --run-status-completed-border: rgba(52, 211, 153, 0.30);
-  --run-status-completed-bg: rgba(52, 211, 153, 0.10);
+  --run-status-completed-border: rgba(52, 211, 153, 0.3);
+  --run-status-completed-bg: rgba(52, 211, 153, 0.1);
   --run-status-completed-text: #34d399;
   --run-status-failed: #ef4444;
-  --run-status-failed-border: rgba(239, 68, 68, 0.30);
-  --run-status-failed-bg: rgba(239, 68, 68, 0.10);
+  --run-status-failed-border: rgba(239, 68, 68, 0.3);
+  --run-status-failed-bg: rgba(239, 68, 68, 0.1);
   --run-status-failed-text: #f87171;
   --run-status-interrupted: #f59e0b;
-  --run-status-interrupted-border: rgba(251, 191, 36, 0.30);
-  --run-status-interrupted-bg: rgba(251, 191, 36, 0.10);
+  --run-status-interrupted-border: rgba(251, 191, 36, 0.3);
+  --run-status-interrupted-bg: rgba(251, 191, 36, 0.1);
   --run-status-interrupted-text: #fbbf24;
   --run-status-queued: #94a3b8;
-  --run-status-queued-border: rgba(148, 163, 184, 0.30);
-  --run-status-queued-bg: rgba(148, 163, 184, 0.10);
+  --run-status-queued-border: rgba(148, 163, 184, 0.3);
+  --run-status-queued-bg: rgba(148, 163, 184, 0.1);
   --run-status-queued-text: #94a3b8;
 
   --connection-ready: #10b981;
-  --connection-ready-border: rgba(52, 211, 153, 0.30);
-  --connection-ready-bg: rgba(52, 211, 153, 0.10);
+  --connection-ready-border: rgba(52, 211, 153, 0.3);
+  --connection-ready-bg: rgba(52, 211, 153, 0.1);
   --connection-ready-text: #34d399;
   --connection-degraded: #f59e0b;
-  --connection-degraded-border: rgba(251, 191, 36, 0.30);
-  --connection-degraded-bg: rgba(251, 191, 36, 0.10);
+  --connection-degraded-border: rgba(251, 191, 36, 0.3);
+  --connection-degraded-bg: rgba(251, 191, 36, 0.1);
   --connection-degraded-text: #fbbf24;
   --connection-reconnecting: #ef4444;
-  --connection-reconnecting-border: rgba(239, 68, 68, 0.30);
-  --connection-reconnecting-bg: rgba(239, 68, 68, 0.10);
+  --connection-reconnecting-border: rgba(239, 68, 68, 0.3);
+  --connection-reconnecting-bg: rgba(239, 68, 68, 0.1);
   --connection-reconnecting-text: #f87171;
   --connection-disconnected: #64748b;
-  --connection-disconnected-border: rgba(100, 116, 139, 0.30);
-  --connection-disconnected-bg: rgba(100, 116, 139, 0.10);
+  --connection-disconnected-border: rgba(100, 116, 139, 0.3);
+  --connection-disconnected-bg: rgba(100, 116, 139, 0.1);
   --connection-disconnected-text: #94a3b8;
 
   --surface: rgba(30, 30, 36, 0.8);
@@ -307,7 +307,6 @@ body {
   }
 }
 
-
 a {
   color: var(--primary);
   text-decoration-color: color-mix(in oklab, var(--primary) 40%, transparent);
@@ -351,6 +350,7 @@ pre code {
 .app-shell {
   display: flex;
   height: 100dvh;
+  min-height: var(--app-shell-min-height);
   flex-direction: column;
   overflow: hidden;
 }

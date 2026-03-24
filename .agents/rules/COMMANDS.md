@@ -13,6 +13,8 @@ Run all commands from the `sigil-web/` root unless otherwise stated.
 - `pnpm build`: build the client and server bundles.
 - `pnpm preview`: preview the production build locally.
 - `pnpm test`: run the current Vitest suite.
+- `pnpm test:acceptance`: run the browser acceptance harness with the pinned
+  `agent-browser` runner against a production preview build.
 - `pnpm lint`: run ESLint without modifying files.
 - `pnpm lint:fix`: apply ESLint fixes.
 - `pnpm format`: format the repo with Prettier.
@@ -41,6 +43,8 @@ Run all commands from the `sigil-web/` root unless otherwise stated.
 
 - Prefer `pnpm check`, `pnpm test`, and `pnpm build` as the default local
   verification trio for implementation work.
+- Use `pnpm test:acceptance` for deterministic browser verification of live
+  WebSocket UI behavior through the scripted fixture harness.
 - Run `../scripts/verify-specs --subproject sigil-web` whenever PRD, matrix,
   acceptance-title, scenario-manifest, or design-manifest structure changes.
 - Use `pnpm dev:demo` while iterating on UI layout, styling, or Paper

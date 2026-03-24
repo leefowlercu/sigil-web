@@ -1,5 +1,12 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useSyncExternalStore } from 'react'
 import type { RunSummaryView } from '#/lib/protocol'
+import {
+  getAgentSession,
+  getAgentSessionSnapshot,
+  listAllRuns,
+  runSummaryFromProjection,
+  subscribeAgentSessionStore,
+} from './appserver/store'
 import { getRunsForAgent } from './data'
 
 /* ------------------------------------------------------------------ */
@@ -29,6 +36,8 @@ export const initialState: AgentRunsState = {
   runs: [],
 }
 
+const nullSessionSnapshot = null as ReturnType<typeof getAgentSessionSnapshot>
+
 export function agentRunsReducer(
   state: AgentRunsState,
   action: AgentRunsAction,
@@ -40,8 +49,20 @@ export function agentRunsReducer(
     case 'RUNS_LOADED':
       return { runs: action.runs }
 
-    case 'RUN_STARTED':
-      return { runs: [action.run, ...state.runs] }
+    case 'RUN_STARTED': {
+      const existingRun = state.runs.find(
+        (run) => run.runId === action.run.runId,
+      )
+      if (!existingRun) {
+        return { runs: [action.run, ...state.runs] }
+      }
+      return {
+        runs: [
+          { ...existingRun, ...action.run },
+          ...state.runs.filter((run) => run.runId !== action.run.runId),
+        ],
+      }
+    }
 
     case 'RUN_STATE_CHANGED':
       return {
@@ -65,11 +86,21 @@ export function agentRunsReducer(
 /* ------------------------------------------------------------------ */
 
 export function useAgentRuns(agentId: string): RunSummaryView[] {
+  const isDemoMode = import.meta.env.VITE_DATA_SOURCE === 'demo'
   const [state, dispatch] = useReducer(agentRunsReducer, initialState)
+  const sessionSnapshot = useSyncExternalStore(
+    subscribeAgentSessionStore,
+    () => getAgentSessionSnapshot(agentId),
+    () => nullSessionSnapshot,
+  )
 
   useEffect(() => {
     dispatch({ type: 'RESET' })
     if (!agentId) return
+
+    if (!isDemoMode) {
+      return
+    }
 
     const runs = getRunsForAgent(agentId)
     if (runs.length > 0) {
@@ -77,24 +108,82 @@ export function useAgentRuns(agentId: string): RunSummaryView[] {
     }
 
     // Demo mode: simulate a running run completing after 12 seconds
-    if (import.meta.env.VITE_DATA_SOURCE === 'demo') {
-      const runningRun = runs.find((r) => r.state === 'running')
-      if (runningRun) {
-        const timeout = setTimeout(() => {
-          dispatch({
-            type: 'RUN_STATE_CHANGED',
-            runId: runningRun.runId,
-            state: 'completed',
-            terminalAt: new Date().toISOString(),
-          })
-        }, 12000)
-        return () => clearTimeout(timeout)
+    const runningRun = runs.find((r) => r.state === 'running')
+    if (runningRun) {
+      const timeout = setTimeout(() => {
+        dispatch({
+          type: 'RUN_STATE_CHANGED',
+          runId: runningRun.runId,
+          state: 'completed',
+          terminalAt: new Date().toISOString(),
+        })
+      }, 12000)
+      return () => clearTimeout(timeout)
+    }
+  }, [agentId, isDemoMode])
+
+  useEffect(() => {
+    if (isDemoMode || !agentId) {
+      return
+    }
+
+    const session = getAgentSession(agentId)
+    if (
+      session == null ||
+      sessionSnapshot == null ||
+      sessionSnapshot.connectionID < 1
+    ) {
+      return
+    }
+
+    let cancelled = false
+
+    const loadRuns = async () => {
+      try {
+        const runs = await listAllRuns(session)
+        if (!cancelled) {
+          dispatch({ type: 'RUNS_LOADED', runs })
+        }
+      } catch {
+        if (!cancelled) {
+          dispatch({ type: 'RUNS_LOADED', runs: [] })
+        }
       }
     }
 
-    // Future: live mode would subscribe to run/started and run/completed
-    // notifications for this agent and dispatch accordingly
-  }, [agentId])
+    const unsubscribeNotifications = session.subscribeNotifications(
+      (notification) => {
+        switch (notification.method) {
+          case 'run/started':
+            dispatch({
+              type: 'RUN_STARTED',
+              run: runSummaryFromProjection(notification.params.payload.run),
+            })
+            break
+          case 'run/completed':
+          case 'run/statusChanged':
+            dispatch({
+              type: 'RUN_STATE_CHANGED',
+              runId: notification.params.runId,
+              state: notification.params.payload.state,
+            })
+            if (notification.params.payload.terminal) {
+              void loadRuns()
+            }
+            break
+          default:
+            break
+        }
+      },
+    )
+
+    void loadRuns()
+
+    return () => {
+      cancelled = true
+      unsubscribeNotifications()
+    }
+  }, [agentId, isDemoMode, sessionSnapshot?.connectionID])
 
   return state.runs
 }

@@ -1,12 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
 import type { AgentInstance } from './demo-data'
-import {
-  agentFleetReducer,
-  initialState,
-  type AgentFleetAction,
-  type AgentFleetState,
-} from './use-agent-fleet'
+import { agentFleetReducer, initialState } from './use-agent-fleet'
+import type { AgentFleetAction, AgentFleetState } from './use-agent-fleet'
 
 const baseAgent: AgentInstance = {
   id: 'agent_test',
