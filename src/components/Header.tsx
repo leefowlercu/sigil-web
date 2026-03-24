@@ -2,11 +2,7 @@ import ThemeToggle from './ThemeToggle'
 
 function SigilIcon({ className }: { className?: string }) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 200"
-      className={className}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className={className}>
       <path
         d="M 70 140 Q 100 170 130 140 T 130 70 Q 100 40 70 70 T 70 140"
         fill="none"

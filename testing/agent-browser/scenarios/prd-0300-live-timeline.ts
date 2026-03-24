@@ -1,8 +1,5 @@
 import { waitFor } from '../utils.ts'
-import {
-  LIVE_TIMELINE_FINAL_SEQ,
-  LIVE_TIMELINE_RUN_ID,
-} from '../fixtures/live-timeline.ts'
+import { LIVE_TIMELINE_FINAL_SEQ, LIVE_TIMELINE_RUN_ID } from '../fixtures/live-timeline.ts'
 import type {
   AgentBrowserScenarioCase,
   AgentBrowserScenarioContext,
@@ -26,9 +23,7 @@ function measureTimelineScript(runId: string) {
     const timeline = document.querySelector('[data-testid="run-detail-timeline-tab"]');
     const viewport = timeline?.querySelector('[data-slot="scroll-area-viewport"]');
     const scrollButton = document.querySelector('[data-testid="run-detail-timeline-scroll-to-bottom"]');
-    const runItem = document.querySelector(${JSON.stringify(
-      `[data-testid="run-item-${runId}"]`,
-    )});
+    const runItem = document.querySelector(${JSON.stringify(`[data-testid="run-item-${runId}"]`)});
     const seqValues = timeline instanceof HTMLElement
       ? Array.from(timeline.querySelectorAll('span'))
           .map((element) => element.textContent?.trim() ?? '')
@@ -66,10 +61,7 @@ function measureTimelineScript(runId: string) {
   })()`
 }
 
-async function measureTimeline(
-  context: AgentBrowserScenarioContext,
-  runId: string,
-) {
+async function measureTimeline(context: AgentBrowserScenarioContext, runId: string) {
   return context.browser.evalJSON<TimelineMetrics>(measureTimelineScript(runId))
 }
 
@@ -95,10 +87,7 @@ async function clampTimelineHeight(context: AgentBrowserScenarioContext) {
   )
 }
 
-async function connectAgent(
-  context: AgentBrowserScenarioContext,
-  endpoint: string,
-) {
+async function connectAgent(context: AgentBrowserScenarioContext, endpoint: string) {
   await context.browser.evalJSON(
     `(() => {
       const input = Array.from(document.querySelectorAll('input')).find((element) => element.getAttribute('placeholder') === 'ws://host:port');
@@ -154,10 +143,7 @@ async function connectAgent(
   )
 }
 
-async function waitForRunCard(
-  context: AgentBrowserScenarioContext,
-  runId: string,
-): Promise<true> {
+async function waitForRunCard(context: AgentBrowserScenarioContext, runId: string): Promise<true> {
   return waitFor(
     async () => {
       const visible = await context.browser.evalJSON<boolean>(
@@ -213,9 +199,7 @@ async function waitForBottom(
   return waitFor(
     async () => {
       const metrics = await measureTimeline(context, runId)
-      return metrics.hasTimeline &&
-        metrics.lastSeq != null &&
-        metrics.distanceFromBottom <= 24
+      return metrics.hasTimeline && metrics.lastSeq != null && metrics.distanceFromBottom <= 24
         ? metrics
         : undefined
     },
@@ -264,9 +248,7 @@ async function waitForTerminalState(
   return waitFor(
     async () => {
       const metrics = await measureTimeline(context, runId)
-      return metrics.runState?.toLowerCase().includes('completed')
-        ? metrics
-        : undefined
+      return metrics.runState?.toLowerCase().includes('completed') ? metrics : undefined
     },
     {
       description: `run ${runId} to complete`,
@@ -275,10 +257,7 @@ async function waitForTerminalState(
   )
 }
 
-async function scrollAwayFromBottom(
-  context: AgentBrowserScenarioContext,
-  runId: string,
-) {
+async function scrollAwayFromBottom(context: AgentBrowserScenarioContext, runId: string) {
   await context.browser.evalJSON(
     `(() => {
       const viewport = document.querySelector('[data-testid="run-detail-timeline-tab"] [data-slot="scroll-area-viewport"]');
@@ -295,9 +274,7 @@ async function scrollAwayFromBottom(
   await waitFor(
     async () => {
       const metrics = await measureTimeline(context, runId)
-      return metrics.buttonVisible && metrics.distanceFromBottom > 24
-        ? metrics
-        : undefined
+      return metrics.buttonVisible && metrics.distanceFromBottom > 24 ? metrics : undefined
     },
     {
       description: 'scroll recovery control to appear',
@@ -361,9 +338,7 @@ const autoFollowScenario: AgentBrowserScenarioCase = async (context) => {
 
   const finalMetrics = await waitForBottom(context, runId)
   if (finalMetrics.buttonVisible) {
-    throw new Error(
-      'expected scroll recovery control to stay hidden at terminal bottom',
-    )
+    throw new Error('expected scroll recovery control to stay hidden at terminal bottom')
   }
 }
 
@@ -375,17 +350,11 @@ const scrollRecoveryScenario: AgentBrowserScenarioCase = async (context) => {
   await scrollAwayFromBottom(context, runId)
   const scrolledAway = await measureTimeline(context, runId)
   if (!scrolledAway.buttonVisible) {
-    throw new Error(
-      'expected scroll recovery control to be visible after scrolling away',
-    )
+    throw new Error('expected scroll recovery control to be visible after scrolling away')
   }
 
   await context.controller.advance(1000)
-  const updatedWhileDetached = await waitForSeqGreaterThan(
-    context,
-    runId,
-    initialSeq,
-  )
+  const updatedWhileDetached = await waitForSeqGreaterThan(context, runId, initialSeq)
   if (updatedWhileDetached.distanceFromBottom <= 24) {
     throw new Error(
       'expected detached timeline to remain away from bottom while live updates arrive',
@@ -395,18 +364,14 @@ const scrollRecoveryScenario: AgentBrowserScenarioCase = async (context) => {
   await clickScrollToBottom(context)
   const reattached = await waitForBottom(context, runId)
   if (reattached.buttonVisible) {
-    throw new Error(
-      'expected scroll recovery control to hide after reattaching to bottom',
-    )
+    throw new Error('expected scroll recovery control to hide after reattaching to bottom')
   }
 
   await context.controller.advance(5000)
   await waitForTerminalState(context, runId)
   const finalMetrics = await waitForBottom(context, runId)
   if (finalMetrics.buttonVisible) {
-    throw new Error(
-      'expected terminal timeline to remain pinned with hidden recovery control',
-    )
+    throw new Error('expected terminal timeline to remain pinned with hidden recovery control')
   }
 }
 

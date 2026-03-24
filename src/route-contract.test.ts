@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 const currentDir = dirname(fileURLToPath(import.meta.url))
 
@@ -58,8 +58,6 @@ describe('route contract', () => {
     expect(agentsRouteSource).toContain('search.agent.length > 0')
     expect(agentsRouteSource).toContain('agent?: string')
     expect(agentsRouteSource).toContain('data-testid="agents-workspace"')
-    expect(agentsRouteSource).toContain(
-      'data-testid="agents-workspace-scroll-region"',
-    )
+    expect(agentsRouteSource).toContain('data-testid="agents-workspace-scroll-region"')
   })
 })

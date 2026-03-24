@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vite-plus/test'
 import type { EventEnvelopeView } from './protocol'
 import {
   buildTurnTokenMap,
@@ -102,9 +102,7 @@ describe('formatDuration', () => {
 
 describe('getEventSummary', () => {
   test('run.queued with source', () => {
-    expect(getEventSummary('run.queued', { source: 'cli.run.start' })).toBe(
-      'from cli.run.start',
-    )
+    expect(getEventSummary('run.queued', { source: 'cli.run.start' })).toBe('from cli.run.start')
   })
 
   test('run.queued without source', () => {
@@ -112,15 +110,13 @@ describe('getEventSummary', () => {
   })
 
   test('run.running', () => {
-    expect(
-      getEventSummary('run.running', { executor: 'rlm', maxDepth: 3 }),
-    ).toBe('executor: rlm, max depth: 3')
+    expect(getEventSummary('run.running', { executor: 'rlm', maxDepth: 3 })).toBe(
+      'executor: rlm, max depth: 3',
+    )
   })
 
   test('run.completed with duration', () => {
-    expect(getEventSummary('run.completed', { durationMs: 20329 })).toBe(
-      '20.3s',
-    )
+    expect(getEventSummary('run.completed', { durationMs: 20329 })).toBe('20.3s')
   })
 
   test('run.failed with error', () => {
@@ -142,9 +138,7 @@ describe('getEventSummary', () => {
   })
 
   test('node.started root', () => {
-    expect(getEventSummary('node.started', { role: 'root', depth: 0 })).toBe(
-      'root node, depth 0',
-    )
+    expect(getEventSummary('node.started', { role: 'root', depth: 0 })).toBe('root node, depth 0')
   })
 
   test('node.started recursive_subcall', () => {
@@ -157,9 +151,7 @@ describe('getEventSummary', () => {
   })
 
   test('node.completed', () => {
-    expect(getEventSummary('node.completed', { durationMs: 20319 })).toBe(
-      '20.3s',
-    )
+    expect(getEventSummary('node.completed', { durationMs: 20319 })).toBe('20.3s')
   })
 
   test('node.failed', () => {
@@ -213,26 +205,18 @@ describe('getEventSummary', () => {
     const tokenMap = new Map([
       ['step-1', { inputTokens: 4084, outputTokens: 874, totalTokens: 4958 }],
     ])
-    expect(
-      getEventSummary(
-        'node.turn.user',
-        { stepId: 'step-1', role: 'user' },
-        tokenMap,
-      ),
-    ).toBe('4,084 input tokens')
+    expect(getEventSummary('node.turn.user', { stepId: 'step-1', role: 'user' }, tokenMap)).toBe(
+      '4,084 input tokens',
+    )
   })
 
   test('node.turn.user with token map but no match shows pending', () => {
     const tokenMap = new Map([
       ['other-step', { inputTokens: 100, outputTokens: 50, totalTokens: 150 }],
     ])
-    expect(
-      getEventSummary(
-        'node.turn.user',
-        { stepId: 'step-1', role: 'user' },
-        tokenMap,
-      ),
-    ).toBe('awaiting response...')
+    expect(getEventSummary('node.turn.user', { stepId: 'step-1', role: 'user' }, tokenMap)).toBe(
+      'awaiting response...',
+    )
   })
 
   test('node.turn.model with output tokens', () => {
@@ -291,42 +275,26 @@ describe('getEventSummary', () => {
 
 describe('getDotColorClass', () => {
   test('terminal run events have per-type colors', () => {
-    expect(getDotColorClass('run.completed', 'run')).toBe(
-      'bg-[var(--run-status-completed)]',
-    )
-    expect(getDotColorClass('run.failed', 'run')).toBe(
-      'bg-[var(--run-status-failed)]',
-    )
-    expect(getDotColorClass('run.interrupted', 'run')).toBe(
-      'bg-[var(--run-status-interrupted)]',
-    )
+    expect(getDotColorClass('run.completed', 'run')).toBe('bg-[var(--run-status-completed)]')
+    expect(getDotColorClass('run.failed', 'run')).toBe('bg-[var(--run-status-failed)]')
+    expect(getDotColorClass('run.interrupted', 'run')).toBe('bg-[var(--run-status-interrupted)]')
   })
 
   test('run.queued and run.running have per-type colors', () => {
-    expect(getDotColorClass('run.queued', 'run')).toBe(
-      'bg-[var(--run-status-queued)]',
-    )
-    expect(getDotColorClass('run.running', 'run')).toBe(
-      'bg-[var(--run-status-running)]',
-    )
+    expect(getDotColorClass('run.queued', 'run')).toBe('bg-[var(--run-status-queued)]')
+    expect(getDotColorClass('run.running', 'run')).toBe('bg-[var(--run-status-running)]')
   })
 
   test('node category uses blue', () => {
-    expect(getDotColorClass('node.started', 'node')).toBe(
-      'bg-[var(--run-status-running)]',
-    )
+    expect(getDotColorClass('node.started', 'node')).toBe('bg-[var(--run-status-running)]')
   })
 
   test('step category uses foreground', () => {
-    expect(getDotColorClass('node.step.started', 'step')).toBe(
-      'bg-[var(--foreground)]',
-    )
+    expect(getDotColorClass('node.step.started', 'step')).toBe('bg-[var(--foreground)]')
   })
 
   test('turn category uses muted', () => {
-    expect(getDotColorClass('node.turn.user', 'turn')).toBe(
-      'bg-[var(--muted-foreground)]',
-    )
+    expect(getDotColorClass('node.turn.user', 'turn')).toBe('bg-[var(--muted-foreground)]')
   })
 
   test('action category uses amber', () => {
@@ -440,10 +408,7 @@ describe('formatTokenCount', () => {
 /* ------------------------------------------------------------------ */
 
 describe('buildTurnTokenMap', () => {
-  const makeEvent = (
-    type: string,
-    payload: Record<string, unknown>,
-  ): EventEnvelopeView => ({
+  const makeEvent = (type: string, payload: Record<string, unknown>): EventEnvelopeView => ({
     eventId: 'test',
     schemaVersion: 'v1',
     runId: 'test',

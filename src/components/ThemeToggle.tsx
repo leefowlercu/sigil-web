@@ -13,9 +13,7 @@ function getInitialMode(): ThemeMode {
     return stored
   }
 
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 function applyThemeMode(mode: ThemeMode) {

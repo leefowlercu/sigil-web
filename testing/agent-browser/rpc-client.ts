@@ -1,7 +1,4 @@
-import type {
-  ErrorObject,
-  InitializeResult,
-} from '../../src/lib/protocol/current.generated.ts'
+import type { ErrorObject, InitializeResult } from '../../src/lib/protocol/current.generated.ts'
 import { PROTOCOL_VERSION } from '../../src/lib/protocol/current.generated.ts'
 import { WebSocket } from 'ws'
 
@@ -56,9 +53,7 @@ export class JSONRPCWebSocketClient {
   private connectPromise: Promise<void> | null = null
   private readonly endpoint: string
   private initialized = false
-  private readonly notifications = new Set<
-    (notification: JSONRPCNotificationEnvelope) => void
-  >()
+  private readonly notifications = new Set<(notification: JSONRPCNotificationEnvelope) => void>()
   private nextID = 0
   private readonly pending = new Map<string, PendingRequest>()
   private socket: WebSocket | null = null
@@ -104,17 +99,13 @@ export class JSONRPCWebSocketClient {
           return
         }
 
-        const response = parsed as Partial<
-          JSONRPCSuccessEnvelope & JSONRPCErrorEnvelope
-        >
+        const response = parsed as Partial<JSONRPCSuccessEnvelope & JSONRPCErrorEnvelope>
         if (typeof response.id === 'string') {
           const pending = this.pending.get(response.id)
           if (!pending) return
           this.pending.delete(response.id)
           if (response.error != null) {
-            pending.reject(
-              new RPCRequestError('jsonrpc.request', response.error),
-            )
+            pending.reject(new RPCRequestError('jsonrpc.request', response.error))
             return
           }
           pending.resolve(response.result)
@@ -140,9 +131,7 @@ export class JSONRPCWebSocketClient {
         })
           .then(async (result) => {
             if (result.protocolVersion !== PROTOCOL_VERSION) {
-              throw new Error(
-                `unsupported protocol version ${result.protocolVersion}`,
-              )
+              throw new Error(`unsupported protocol version ${result.protocolVersion}`)
             }
             this.sendNotification(socket, 'initialized', {})
             this.initialized = true
@@ -202,11 +191,7 @@ export class JSONRPCWebSocketClient {
     return this.sendRequest<TResult>(socket, method, params)
   }
 
-  private sendNotification(
-    socket: WebSocket,
-    method: string,
-    params?: unknown,
-  ) {
+  private sendNotification(socket: WebSocket, method: string, params?: unknown) {
     const payload: JSONRPCNotificationEnvelope = {
       jsonrpc: '2.0',
       method,
@@ -245,9 +230,7 @@ export class JSONRPCWebSocketClient {
     })
   }
 
-  subscribeNotifications(
-    listener: (notification: JSONRPCNotificationEnvelope) => void,
-  ) {
+  subscribeNotifications(listener: (notification: JSONRPCNotificationEnvelope) => void) {
     this.notifications.add(listener)
     return () => {
       this.notifications.delete(listener)

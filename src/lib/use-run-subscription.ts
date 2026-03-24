@@ -78,9 +78,7 @@ export const initialState: RunSubscriptionState = {
 const terminalStates = new Set(['completed', 'failed', 'interrupted'])
 const nullSessionSnapshot = null as ReturnType<typeof getAgentSessionSnapshot>
 
-function stateForProjection(
-  projection: RunProjectionView,
-): RunSubscriptionStatus {
+function stateForProjection(projection: RunProjectionView): RunSubscriptionStatus {
   return terminalStates.has(projection.state) ? 'terminal' : 'active'
 }
 
@@ -114,9 +112,7 @@ export function runSubscriptionReducer(
         ...state,
         status: isTerminal ? 'terminal' : state.status,
         terminal: isTerminal,
-        projection: state.projection
-          ? { ...state.projection, state: action.state }
-          : null,
+        projection: state.projection ? { ...state.projection, state: action.state } : null,
       }
     }
 
@@ -200,9 +196,7 @@ function payloadString(value: unknown): string | undefined {
   return typeof value === 'string' && value.length > 0 ? value : undefined
 }
 
-export function deriveRunSubscriptionActions(
-  event: EventEnvelopeView,
-): RunSubscriptionAction[] {
+export function deriveRunSubscriptionActions(event: EventEnvelopeView): RunSubscriptionAction[] {
   const stepId = payloadString(event.payload.stepId)
   switch (event.type) {
     case 'node.step.started': {
@@ -272,8 +266,7 @@ function applyDerivedActions(
   actions: RunSubscriptionAction[],
 ): RunSubscriptionState {
   return actions.reduce(
-    (currentState, currentAction) =>
-      runSubscriptionReducer(currentState, currentAction),
+    (currentState, currentAction) => runSubscriptionReducer(currentState, currentAction),
     state,
   )
 }
@@ -299,10 +292,7 @@ function normalizeError(error: unknown): string {
   return error instanceof Error ? error.message : 'live subscription failed'
 }
 
-function shouldLoadFullSnapshot(
-  state: RunSubscriptionState,
-  runId: string,
-): boolean {
+function shouldLoadFullSnapshot(state: RunSubscriptionState, runId: string): boolean {
   return state.projection == null || state.projection.runId !== runId
 }
 
@@ -328,10 +318,7 @@ function shouldRequestCleanupUnsubscribe(args: {
 /*  Hook                                                               */
 /* ------------------------------------------------------------------ */
 
-export function useRunSubscription(
-  agentId: string,
-  runId: string,
-): RunSubscriptionState {
+export function useRunSubscription(agentId: string, runId: string): RunSubscriptionState {
   const isDemoMode = import.meta.env.VITE_DATA_SOURCE === 'demo'
   const [state, dispatch] = useReducer(runSubscriptionReducer, initialState)
   const stateRef = useRef(state)
@@ -409,58 +396,55 @@ export function useRunSubscription(
       }
     }
 
-    const unsubscribeNotifications = session.subscribeNotifications(
-      (notification) => {
-        switch (notification.method) {
-          case 'run/eventAppended':
-            if (notification.params.runId !== runId) {
-              return
-            }
-            dispatch({
-              type: 'EVENT_APPENDED',
-              event: notification.params.payload.event,
-            })
-            break
-          case 'run/started':
-            if (notification.params.runId !== runId) {
-              return
-            }
-            dispatch({
-              type: 'PROJECTION_UPDATED',
-              projection: notification.params.payload.run,
-            })
-            break
-          case 'run/completed':
-          case 'run/statusChanged':
-            if (notification.params.runId !== runId) {
-              return
-            }
-            dispatch({
-              type: 'STATUS_CHANGED',
-              state: notification.params.payload.state,
-              terminal: notification.params.payload.terminal,
-            })
-            if (notification.params.payload.terminal) {
-              void reconcileTerminal()
-            }
-            break
-          default:
-            break
-        }
-      },
-    )
+    const unsubscribeNotifications = session.subscribeNotifications((notification) => {
+      switch (notification.method) {
+        case 'run/eventAppended':
+          if (notification.params.runId !== runId) {
+            return
+          }
+          dispatch({
+            type: 'EVENT_APPENDED',
+            event: notification.params.payload.event,
+          })
+          break
+        case 'run/started':
+          if (notification.params.runId !== runId) {
+            return
+          }
+          dispatch({
+            type: 'PROJECTION_UPDATED',
+            projection: notification.params.payload.run,
+          })
+          break
+        case 'run/completed':
+        case 'run/statusChanged':
+          if (notification.params.runId !== runId) {
+            return
+          }
+          dispatch({
+            type: 'STATUS_CHANGED',
+            state: notification.params.payload.state,
+            terminal: notification.params.payload.terminal,
+          })
+          if (notification.params.payload.terminal) {
+            void reconcileTerminal()
+          }
+          break
+        default:
+          break
+      }
+    })
 
     const attach = async () => {
       try {
         const currentState = stateRef.current
         if (shouldLoadFullSnapshot(currentState, runId)) {
-          const [runResult, treeResult, stepsResult, eventsResult] =
-            await Promise.all([
-              session.request('run/read', { runId }),
-              session.request('run/tree/read', { runId }),
-              session.request('run/steps/list', { runId }),
-              session.request('run/events/read', { runId }),
-            ])
+          const [runResult, treeResult, stepsResult, eventsResult] = await Promise.all([
+            session.request('run/read', { runId }),
+            session.request('run/tree/read', { runId }),
+            session.request('run/steps/list', { runId }),
+            session.request('run/events/read', { runId }),
+          ])
           if (isCancelled()) {
             return
           }
@@ -498,10 +482,8 @@ export function useRunSubscription(
             }
             dispatch({
               type: 'SNAPSHOT_LOADED',
-              projection:
-                subscribeResult.payload.snapshot?.run ?? runResult.payload.run,
-              tree:
-                subscribeResult.payload.snapshot?.tree ?? treeResult.payload,
+              projection: subscribeResult.payload.snapshot?.run ?? runResult.payload.run,
+              tree: subscribeResult.payload.snapshot?.tree ?? treeResult.payload,
               events: catchupEvents.payload.events,
               steps: catchupSteps.payload.steps,
             })

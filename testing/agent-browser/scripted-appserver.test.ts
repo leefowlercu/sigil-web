@@ -1,5 +1,6 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vite-plus/test'
 import { WebSocket } from 'ws'
+import type { RawData } from 'ws'
 import {
   createLiveTimelineScenario,
   LIVE_TIMELINE_FINAL_SEQ,
@@ -11,9 +12,7 @@ import { createScriptedConnectionController } from './scripted-appserver.ts'
 import { JSONRPCWebSocketClient } from './rpc-client.ts'
 import { waitFor } from './utils.ts'
 
-const controllers: Array<
-  Awaited<ReturnType<typeof createScriptedConnectionController>>
-> = []
+const controllers: Array<Awaited<ReturnType<typeof createScriptedConnectionController>>> = []
 const clients: JSONRPCWebSocketClient[] = []
 const sockets: WebSocket[] = []
 
@@ -34,9 +33,7 @@ async function startHarness() {
   await client.connect()
   await waitFor(
     () =>
-      controller
-        .getReceivedRequests()
-        .some((entry) => entry.method === 'initialized')
+      controller.getReceivedRequests().some((entry) => entry.method === 'initialized')
         ? true
         : undefined,
     {
@@ -76,7 +73,7 @@ async function readSocketJSON<T>(socket: WebSocket): Promise<T> {
       reject(error)
     }
 
-    const handleMessage = (data: WebSocket.RawData) => {
+    const handleMessage = (data: RawData) => {
       cleanup()
       try {
         const raw = typeof data === 'string' ? data : data.toString('utf8')
@@ -103,10 +100,7 @@ afterEach(async () => {
     const socket = sockets.pop()
     if (socket) {
       await new Promise<void>((resolve) => {
-        if (
-          socket.readyState === WebSocket.CLOSING ||
-          socket.readyState === WebSocket.CLOSED
-        ) {
+        if (socket.readyState === WebSocket.CLOSING || socket.readyState === WebSocket.CLOSED) {
           resolve()
           return
         }
@@ -128,9 +122,7 @@ describe('scripted app-server controller', () => {
     const controller = await startController()
     const socket = await openRawSocket(controller.endpoint)
 
-    socket.send(
-      JSON.stringify({ jsonrpc: '2.0', method: 'initialized', params: {} }),
-    )
+    socket.send(JSON.stringify({ jsonrpc: '2.0', method: 'initialized', params: {} }))
     socket.send(
       JSON.stringify({
         jsonrpc: '2.0',
@@ -188,9 +180,7 @@ describe('scripted app-server controller', () => {
       error: { data: { code: 'initialized_required' } },
     })
 
-    socket.send(
-      JSON.stringify({ jsonrpc: '2.0', method: 'initialized', params: {} }),
-    )
+    socket.send(JSON.stringify({ jsonrpc: '2.0', method: 'initialized', params: {} }))
     socket.send(
       JSON.stringify({
         jsonrpc: '2.0',
@@ -215,9 +205,7 @@ describe('scripted app-server controller', () => {
     const runList = await client.request<{
       payload: { items: Array<{ runId: string }> }
     }>('runs/list', { limit: 100 })
-    expect(runList.payload.items.map((item) => item.runId)).toEqual([
-      LIVE_TIMELINE_RUN_ID,
-    ])
+    expect(runList.payload.items.map((item) => item.runId)).toEqual([LIVE_TIMELINE_RUN_ID])
 
     const runRead = await client.request<{
       asOfSeq: number
@@ -233,9 +221,7 @@ describe('scripted app-server controller', () => {
     }>('run/events/read', {
       runId: LIVE_TIMELINE_RUN_ID,
     })
-    expect(eventsRead.payload.events.at(-1)?.seq).toBe(
-      LIVE_TIMELINE_INITIAL_SEQ,
-    )
+    expect(eventsRead.payload.events.at(-1)?.seq).toBe(LIVE_TIMELINE_INITIAL_SEQ)
   })
 
   it('advances scheduled notifications in order and replays afterSeq windows', async () => {
@@ -250,8 +236,7 @@ describe('scripted app-server controller', () => {
 
     await waitFor(
       () =>
-        notifications.filter((method) => method === 'run/eventAppended')
-          .length === 3
+        notifications.filter((method) => method === 'run/eventAppended').length === 3
           ? true
           : undefined,
       {
@@ -278,13 +263,10 @@ describe('scripted app-server controller', () => {
     })
 
     await controller.advance(1000)
-    await waitFor(
-      () => (notifications.includes('server/heartbeat') ? true : undefined),
-      {
-        description: 'heartbeat notification',
-        timeoutMs: 1_000,
-      },
-    )
+    await waitFor(() => (notifications.includes('server/heartbeat') ? true : undefined), {
+      description: 'heartbeat notification',
+      timeoutMs: 1_000,
+    })
 
     controller.pauseHeartbeats()
     notifications.length = 0
@@ -293,13 +275,10 @@ describe('scripted app-server controller', () => {
 
     controller.resumeHeartbeats()
     await controller.advance(1000)
-    await waitFor(
-      () => (notifications.includes('server/heartbeat') ? true : undefined),
-      {
-        description: 'resumed heartbeat notification',
-        timeoutMs: 1_000,
-      },
-    )
+    await waitFor(() => (notifications.includes('server/heartbeat') ? true : undefined), {
+      description: 'resumed heartbeat notification',
+      timeoutMs: 1_000,
+    })
   })
 
   it('replaces duplicate subscriptions and only delivers each event once', async () => {
@@ -336,9 +315,8 @@ describe('scripted app-server controller', () => {
       if (notification.method !== 'run/eventAppended') {
         return
       }
-      const event = (
-        notification.params as { payload?: { event?: { seq?: number } } }
-      ).payload?.event
+      const event = (notification.params as { payload?: { event?: { seq?: number } } }).payload
+        ?.event
       if (typeof event?.seq === 'number') {
         deliveredSeqs.push(event.seq)
       }

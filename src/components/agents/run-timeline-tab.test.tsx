@@ -3,7 +3,7 @@
 import { waitFor } from '@testing-library/dom'
 import * as React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import type { EventEnvelopeView } from '#/lib/protocol'
 import { buildLiveTimelineEvents } from '../../../testing/agent-browser/fixtures/live-timeline.ts'
 import { RunTimelineTab } from './run-timeline-tab'
@@ -11,10 +11,7 @@ import { RunTimelineTab } from './run-timeline-tab'
 vi.mock('#/components/ui/button', async () => {
   const ReactModule = await import('react')
   return {
-    Button({
-      children,
-      ...props
-    }: Record<string, unknown> & { children?: React.ReactNode }) {
+    Button({ children, ...props }: Record<string, unknown> & { children?: React.ReactNode }) {
       return ReactModule.createElement('button', props, children)
     },
   }
@@ -53,18 +50,9 @@ vi.mock('#/components/ui/scroll-area', async () => {
   }
 })
 
-const originalClientHeight = Object.getOwnPropertyDescriptor(
-  HTMLElement.prototype,
-  'clientHeight',
-)
-const originalScrollHeight = Object.getOwnPropertyDescriptor(
-  HTMLElement.prototype,
-  'scrollHeight',
-)
-const originalScrollTo = Object.getOwnPropertyDescriptor(
-  HTMLElement.prototype,
-  'scrollTo',
-)
+const originalClientHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'clientHeight')
+const originalScrollHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollHeight')
+const originalScrollTo = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'scrollTo')
 const actEnvironmentGlobal = globalThis as typeof globalThis & {
   IS_REACT_ACT_ENVIRONMENT?: boolean
 }
@@ -94,19 +82,13 @@ function getViewport(container: HTMLElement): HTMLDivElement {
 }
 
 function queryScrollButton(container: HTMLElement): HTMLButtonElement | null {
-  const button = container.querySelector(
-    '[data-testid="run-detail-timeline-scroll-to-bottom"]',
-  )
-  return button instanceof HTMLButtonElement &&
-    button.getAttribute('aria-hidden') !== 'true'
+  const button = container.querySelector('[data-testid="run-detail-timeline-scroll-to-bottom"]')
+  return button instanceof HTMLButtonElement && button.getAttribute('aria-hidden') !== 'true'
     ? button
     : null
 }
 
-function expectScrollButtonLabel(
-  container: HTMLElement,
-  expectedLabel: string,
-) {
+function expectScrollButtonLabel(container: HTMLElement, expectedLabel: string) {
   const button = queryScrollButton(container)
   expect(button).not.toBe(null)
   expect(button?.getAttribute('aria-label')).toBe(expectedLabel)
@@ -194,18 +176,10 @@ describe('RunTimelineTab', () => {
     actEnvironmentGlobal.IS_REACT_ACT_ENVIRONMENT = originalActEnvironment
     vi.unstubAllGlobals()
     if (originalClientHeight) {
-      Object.defineProperty(
-        HTMLElement.prototype,
-        'clientHeight',
-        originalClientHeight,
-      )
+      Object.defineProperty(HTMLElement.prototype, 'clientHeight', originalClientHeight)
     }
     if (originalScrollHeight) {
-      Object.defineProperty(
-        HTMLElement.prototype,
-        'scrollHeight',
-        originalScrollHeight,
-      )
+      Object.defineProperty(HTMLElement.prototype, 'scrollHeight', originalScrollHeight)
     }
     if (originalScrollTo) {
       Object.defineProperty(HTMLElement.prototype, 'scrollTo', originalScrollTo)

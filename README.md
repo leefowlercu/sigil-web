@@ -26,14 +26,14 @@ Siĝil app-server when it runs in WebSocket mode.
 
 ## Development Commands
 
-- `pnpm dev`: run the TanStack Start app locally on port `3000`
-- `pnpm build`: build the client and server bundles
-- `pnpm test`: run the current Vitest suite
-- `pnpm lint`: run ESLint without modifying files
-- `pnpm lint:fix`: apply ESLint fixes
-- `pnpm format`: format the repository with Prettier
-- `pnpm format:check`: verify Prettier formatting
-- `pnpm check`: run non-mutating formatting and lint verification
+- `pnpm dev`: run the TanStack Start app locally on port `3000` through Vite+
+- `pnpm build`: build the client and server bundles through Vite+
+- `pnpm test`: run the current Vite+ test suite
+- `pnpm lint`: run Vite+ linting without modifying files
+- `pnpm lint:fix`: apply Vite+ lint fixes
+- `pnpm format`: format the repository with Vite+ formatting
+- `pnpm format:check`: verify Vite+ formatting
+- `pnpm check`: run Vite+ formatting, lint, and type verification
 
 ## Route Contract
 

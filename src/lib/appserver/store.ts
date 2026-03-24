@@ -1,9 +1,5 @@
 import { PROTOCOL_VERSION } from '#/lib/protocol'
-import type {
-  InitializeResult,
-  RunProjectionView,
-  RunSummaryView,
-} from '#/lib/protocol'
+import type { InitializeResult, RunProjectionView, RunSummaryView } from '#/lib/protocol'
 import type { AgentInstance } from '#/lib/demo-data'
 import { AppServerSessionClient } from './client'
 import type { SessionSnapshot } from './client'
@@ -121,15 +117,11 @@ export function getAgentInstanceSnapshots(): AgentInstance[] {
   return agentInstanceSnapshotsCache
 }
 
-export function getAgentSession(
-  agentId: string,
-): AppServerSessionClient | null {
+export function getAgentSession(agentId: string): AppServerSessionClient | null {
   return records.get(agentId)?.client ?? null
 }
 
-export function getAgentSessionSnapshot(
-  agentId: string,
-): SessionSnapshot | null {
+export function getAgentSessionSnapshot(agentId: string): SessionSnapshot | null {
   return sessionSnapshotsCache.get(agentId) ?? null
 }
 
@@ -148,9 +140,7 @@ export function removeAgentSession(agentId: string) {
   emitStoreChange()
 }
 
-export function runSummaryFromProjection(
-  projection: RunProjectionView,
-): RunSummaryView {
+export function runSummaryFromProjection(projection: RunProjectionView): RunSummaryView {
   return {
     runId: projection.runId,
     name: projection.name,
@@ -168,9 +158,7 @@ export function runSummaryFromProjection(
   }
 }
 
-export async function listAllRuns(
-  session: AppServerSessionClient,
-): Promise<RunSummaryView[]> {
+export async function listAllRuns(session: AppServerSessionClient): Promise<RunSummaryView[]> {
   const items: RunSummaryView[] = []
   let cursor: string | undefined
   do {

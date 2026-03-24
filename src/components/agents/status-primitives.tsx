@@ -1,10 +1,4 @@
-import {
-  CircleDot,
-  CheckCircle2,
-  AlertOctagon,
-  XCircle,
-  Clock,
-} from 'lucide-react'
+import { CircleDot, CheckCircle2, AlertOctagon, XCircle, Clock } from 'lucide-react'
 import { Badge } from '#/components/ui/badge'
 import type { ConnectionState, RunState } from '#/lib/demo-data'
 
@@ -18,8 +12,7 @@ export const STATE_CONFIG: Record<
 > = {
   running: {
     label: 'Running',
-    dotClass:
-      'bg-[var(--run-status-running)] shadow-[var(--run-status-running-shadow)]',
+    dotClass: 'bg-[var(--run-status-running)] shadow-[var(--run-status-running-shadow)]',
     badgeClass:
       'border-[var(--run-status-running-border)] bg-[var(--run-status-running-bg)] text-[var(--run-status-running-text)]',
   },
@@ -49,13 +42,7 @@ export const STATE_CONFIG: Record<
   },
 }
 
-export function StateDot({
-  state,
-  pulse,
-}: {
-  state: RunState
-  pulse?: boolean
-}) {
+export function StateDot({ state, pulse }: { state: RunState; pulse?: boolean }) {
   const config = STATE_CONFIG[state]
   return (
     <span className="relative flex size-2.5">
@@ -88,17 +75,11 @@ export function StateIcon({ state }: { state: RunState }) {
     case 'running':
       return <CircleDot className={`${cls} text-[var(--run-status-running)]`} />
     case 'completed':
-      return (
-        <CheckCircle2 className={`${cls} text-[var(--run-status-completed)]`} />
-      )
+      return <CheckCircle2 className={`${cls} text-[var(--run-status-completed)]`} />
     case 'failed':
       return <XCircle className={`${cls} text-[var(--run-status-failed)]`} />
     case 'interrupted':
-      return (
-        <AlertOctagon
-          className={`${cls} text-[var(--run-status-interrupted)]`}
-        />
-      )
+      return <AlertOctagon className={`${cls} text-[var(--run-status-interrupted)]`} />
     case 'queued':
       return <Clock className={`${cls} text-[var(--run-status-queued)]`} />
   }

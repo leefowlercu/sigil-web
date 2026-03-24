@@ -9,9 +9,7 @@ import type {
 type MethodName = Extract<keyof AppServerMethodMap, string>
 
 type RequestMethodName = {
-  [TMethod in MethodName]: AppServerMethodMap[TMethod]['kind'] extends 'request'
-    ? TMethod
-    : never
+  [TMethod in MethodName]: AppServerMethodMap[TMethod]['kind'] extends 'request' ? TMethod : never
 }[MethodName]
 
 type NotificationMethodName = {
@@ -20,10 +18,8 @@ type NotificationMethodName = {
     : never
 }[MethodName]
 
-type RequestParams<TMethod extends RequestMethodName> =
-  AppServerMethodMap[TMethod]['params']
-type RequestResult<TMethod extends RequestMethodName> =
-  AppServerMethodMap[TMethod]['result']
+type RequestParams<TMethod extends RequestMethodName> = AppServerMethodMap[TMethod]['params']
+type RequestResult<TMethod extends RequestMethodName> = AppServerMethodMap[TMethod]['result']
 type NotificationParams<TMethod extends NotificationMethodName> =
   AppServerMethodMap[TMethod]['params']
 
@@ -52,11 +48,7 @@ type PendingRequest = {
   resolve: (result: unknown) => void
 }
 
-export type SessionConnectionState =
-  | 'ready'
-  | 'degraded'
-  | 'reconnecting'
-  | 'disconnected'
+export type SessionConnectionState = 'ready' | 'degraded' | 'reconnecting' | 'disconnected'
 
 export type SessionSnapshot = {
   agentId: string
@@ -117,9 +109,7 @@ export class AppServerSessionClient {
   private connectionState: SessionConnectionState = 'disconnected'
   private readonly endpoint: string
   private readonly listeners = new Set<() => void>()
-  private readonly notificationListeners = new Set<
-    (notification: AppServerNotification) => void
-  >()
+  private readonly notificationListeners = new Set<(notification: AppServerNotification) => void>()
   private connectionID = 0
   private heartbeatIntervalMs: number | null = null
   private heartbeatTimeoutID: ReturnType<typeof setTimeout> | null = null
@@ -144,8 +134,7 @@ export class AppServerSessionClient {
     this.setTimeoutFn = options.setTimeoutFn ?? setTimeout
     this.webSocketFactory =
       options.webSocketFactory ??
-      ((endpoint: string) =>
-        new WebSocket(endpoint) as unknown as WebSocketLike)
+      ((endpoint: string) => new WebSocket(endpoint) as unknown as WebSocketLike)
   }
 
   async connect(): Promise<void> {
@@ -181,8 +170,7 @@ export class AppServerSessionClient {
         void this.initializeConnection(socket)
           .then(resolveConnect)
           .catch((error) => {
-            const normalized =
-              error instanceof Error ? error : new Error(String(error))
+            const normalized = error instanceof Error ? error : new Error(String(error))
             this.recoverFromFailedOpen(socket)
             rejectConnect(normalized)
           })
@@ -280,9 +268,7 @@ export class AppServerSessionClient {
     }
   }
 
-  subscribeNotifications(
-    listener: (notification: AppServerNotification) => void,
-  ): () => void {
+  subscribeNotifications(listener: (notification: AppServerNotification) => void): () => void {
     this.notificationListeners.add(listener)
     return () => {
       this.notificationListeners.delete(listener)
@@ -339,17 +325,13 @@ export class AppServerSessionClient {
       return
     }
 
-    const response = message as Partial<
-      JsonRPCSuccessResponse & JsonRPCErrorResponse
-    >
+    const response = message as Partial<JsonRPCSuccessResponse & JsonRPCErrorResponse>
     if (typeof response.id === 'string') {
       const pending = this.pendingRequests.get(response.id)
       if (!pending) return
       this.pendingRequests.delete(response.id)
       if ('error' in response && response.error != null) {
-        pending.reject(
-          new AppServerRequestError('jsonrpc.request', response.error),
-        )
+        pending.reject(new AppServerRequestError('jsonrpc.request', response.error))
         return
       }
       pending.resolve(response.result)

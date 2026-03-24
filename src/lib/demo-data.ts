@@ -12,18 +12,9 @@ import { PROTOCOL_VERSION } from './protocol'
 /*  Client-side types                                                  */
 /* ------------------------------------------------------------------ */
 
-export type RunState =
-  | 'queued'
-  | 'running'
-  | 'completed'
-  | 'failed'
-  | 'interrupted'
+export type RunState = 'queued' | 'running' | 'completed' | 'failed' | 'interrupted'
 
-export type ConnectionState =
-  | 'ready'
-  | 'degraded'
-  | 'reconnecting'
-  | 'disconnected'
+export type ConnectionState = 'ready' | 'degraded' | 'reconnecting' | 'disconnected'
 
 export type AgentInstance = {
   id: string
@@ -230,10 +221,8 @@ const demoNodes0: RunNodeProjectionView[] = [
     startedAt: '2026-03-22T21:14:54.753029Z',
     terminalAt: '2026-03-22T21:15:19.999691Z',
     stepCount: 2,
-    resultRef:
-      'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
-    accountingRef:
-      'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/accounting.json',
+    resultRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
+    accountingRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/accounting.json',
   },
 ]
 
@@ -246,10 +235,8 @@ const demoNodes1: RunNodeProjectionView[] = [
     startedAt: '2026-03-22T21:15:20.049339Z',
     terminalAt: '2026-03-22T21:15:36.039637Z',
     stepCount: 2,
-    resultRef:
-      'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
-    accountingRef:
-      'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/accounting.json',
+    resultRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
+    accountingRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/accounting.json',
   },
 ]
 
@@ -262,10 +249,8 @@ const demoNodes2: RunNodeProjectionView[] = [
     startedAt: '2026-03-22T21:15:36.087278Z',
     terminalAt: '2026-03-22T21:16:54.884521Z',
     stepCount: 4,
-    resultRef:
-      'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
-    accountingRef:
-      'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/accounting.json',
+    resultRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
+    accountingRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/accounting.json',
   },
 ]
 
@@ -278,10 +263,8 @@ const demoNodes3: RunNodeProjectionView[] = [
     startedAt: '2026-03-22T21:14:54.756156Z',
     terminalAt: '2026-03-22T21:15:38.740836Z',
     stepCount: 3,
-    resultRef:
-      'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
-    accountingRef:
-      'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/accounting.json',
+    resultRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
+    accountingRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/accounting.json',
   },
 ]
 
@@ -294,10 +277,8 @@ const demoNodes4: RunNodeProjectionView[] = [
     startedAt: '2026-03-22T21:15:38.793178Z',
     terminalAt: '2026-03-22T21:25:25.678663Z',
     stepCount: 26,
-    resultRef:
-      'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
-    accountingRef:
-      'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/accounting.json',
+    resultRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
+    accountingRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/accounting.json',
   },
 ]
 
@@ -310,10 +291,8 @@ const demoNodes5: RunNodeProjectionView[] = [
     startedAt: '2026-03-22T21:14:54.760089Z',
     terminalAt: '2026-03-22T21:16:02.596Z',
     stepCount: 3,
-    resultRef:
-      'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
-    accountingRef:
-      'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/accounting.json',
+    resultRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
+    accountingRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/accounting.json',
   },
 ]
 
@@ -349,8 +328,7 @@ const demoDetails: Record<string, RunDetailView> = {
       maxDepth: 3,
       pidStatus: 'missing',
       stopRequested: false,
-      finalAnswerRef:
-        'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
+      finalAnswerRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
       accountingRef: 'run-artifact://run/accounting.json',
       nodeCount: 1,
       stepCount: 2,
@@ -736,8 +714,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 25246,
-          resultRef:
-            'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
+          resultRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -800,8 +777,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
-            'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/accounting.json',
+          accountingRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/accounting.json',
         },
       },
       {
@@ -904,8 +880,7 @@ const demoDetails: Record<string, RunDetailView> = {
       maxDepth: 3,
       pidStatus: 'missing',
       stopRequested: false,
-      finalAnswerRef:
-        'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
+      finalAnswerRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
       accountingRef: 'run-artifact://run/accounting.json',
       nodeCount: 1,
       stepCount: 2,
@@ -1291,8 +1266,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 15990,
-          resultRef:
-            'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
+          resultRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -1355,8 +1329,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
-            'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/accounting.json',
+          accountingRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/accounting.json',
         },
       },
       {
@@ -1459,8 +1432,7 @@ const demoDetails: Record<string, RunDetailView> = {
       maxDepth: 3,
       pidStatus: 'missing',
       stopRequested: false,
-      finalAnswerRef:
-        'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
+      finalAnswerRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
       accountingRef: 'run-artifact://run/accounting.json',
       nodeCount: 1,
       stepCount: 4,
@@ -2193,8 +2165,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 78797,
-          resultRef:
-            'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
+          resultRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -2257,8 +2228,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
-            'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/accounting.json',
+          accountingRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/accounting.json',
         },
       },
       {
@@ -2361,8 +2331,7 @@ const demoDetails: Record<string, RunDetailView> = {
       maxDepth: 4,
       pidStatus: 'missing',
       stopRequested: false,
-      finalAnswerRef:
-        'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
+      finalAnswerRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
       accountingRef: 'run-artifact://run/accounting.json',
       nodeCount: 1,
       stepCount: 3,
@@ -2920,8 +2889,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 43984,
-          resultRef:
-            'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
+          resultRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -2984,8 +2952,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
-            'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/accounting.json',
+          accountingRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/accounting.json',
         },
       },
       {
@@ -3088,8 +3055,7 @@ const demoDetails: Record<string, RunDetailView> = {
       maxDepth: 4,
       pidStatus: 'missing',
       stopRequested: false,
-      finalAnswerRef:
-        'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
+      finalAnswerRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
       accountingRef: 'run-artifact://run/accounting.json',
       nodeCount: 1,
       stepCount: 26,
@@ -7630,8 +7596,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 586885,
-          resultRef:
-            'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
+          resultRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -7694,8 +7659,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
-            'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/accounting.json',
+          accountingRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/accounting.json',
         },
       },
       {
@@ -7798,8 +7762,7 @@ const demoDetails: Record<string, RunDetailView> = {
       maxDepth: 4,
       pidStatus: 'missing',
       stopRequested: false,
-      finalAnswerRef:
-        'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
+      finalAnswerRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
       accountingRef: 'run-artifact://run/accounting.json',
       nodeCount: 1,
       stepCount: 3,
@@ -8357,8 +8320,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 67835,
-          resultRef:
-            'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
+          resultRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -8421,8 +8383,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
-            'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/accounting.json',
+          accountingRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/accounting.json',
         },
       },
       {
@@ -8890,9 +8851,7 @@ export const defaultAgentId = demoAgents[0].id
 export const defaultRunId = '019d1766-9f94-7138-b433-2ff91272295c'
 
 export function getRunsForAgent(agentId: string): RunSummaryView[] {
-  return demoRunSummaries
-    .filter((entry) => entry.agentId === agentId)
-    .map((entry) => entry.run)
+  return demoRunSummaries.filter((entry) => entry.agentId === agentId).map((entry) => entry.run)
 }
 
 export function getRunDetail(runId: string): RunDetailView | undefined {

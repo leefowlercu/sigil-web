@@ -6,20 +6,21 @@
     "#/*": "./src/*"
   },
   "scripts": {
-    "dev": "vite dev --port 3000",
-    "dev:demo": "vite dev --port 3000 --mode demo",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test": "vitest run",
-    "test:acceptance": "pnpm build && tsx ./testing/agent-browser/run.ts",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "check": "pnpm format:check && pnpm lint"
+    "dev": "vp dev --port 3000",
+    "dev:demo": "vp dev --port 3000 --mode demo",
+    "build": "vp build",
+    "preview": "vp preview",
+    "test": "vp test",
+    "test:acceptance": "vp build && vp exec tsx ./testing/agent-browser/run.ts",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
+    "format": "vp fmt",
+    "format:check": "vp fmt --check .",
+    "check": "vp check",
+    "prepare": "vp config"
   },
   "dependencies": {
-    "@tailwindcss/vite": "4.2.1",
+    "@tailwindcss/vite": "4.2.2",
     "@tanstack/react-devtools": "0.10.0",
     "@tanstack/react-router": "1.167.3",
     "@tanstack/react-router-devtools": "1.166.9",
@@ -37,31 +38,34 @@
     "tw-animate-css": "1.4.0"
   },
   "devDependencies": {
-    "agent-browser": "0.21.4",
     "@tailwindcss/typography": "0.5.19",
     "@tanstack/devtools-vite": "0.6.0",
-    "@tanstack/eslint-config": "0.4.0",
     "@testing-library/dom": "10.4.1",
     "@testing-library/react": "16.3.2",
     "@types/node": "22.19.15",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@types/ws": "8.5.13",
-    "@vitejs/plugin-react": "5.2.0",
+    "@vitejs/plugin-react": "6.0.1",
+    "agent-browser": "0.21.4",
     "jsdom": "28.1.0",
-    "prettier": "3.8.1",
     "smol-toml": "1.4.2",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
-    "vite": "7.3.1",
-    "vite-tsconfig-paths": "5.1.4",
-    "vitest": "3.2.4",
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite-plus": "latest",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@latest",
     "ws": "8.18.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",
       "lightningcss"
-    ]
-  }
+    ],
+    "overrides": {
+      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
+    }
+  },
+  "packageManager": "pnpm@10.32.1"
 }

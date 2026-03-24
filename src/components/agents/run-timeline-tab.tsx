@@ -26,10 +26,7 @@ function distanceFromBottom(viewport: HTMLDivElement): number {
   return viewport.scrollHeight - viewport.clientHeight - viewport.scrollTop
 }
 
-function scrollViewportToBottom(
-  viewport: HTMLDivElement,
-  behavior: ScrollBehavior,
-) {
+function scrollViewportToBottom(viewport: HTMLDivElement, behavior: ScrollBehavior) {
   if (typeof viewport.scrollTo === 'function') {
     viewport.scrollTo({
       top: viewport.scrollHeight,
@@ -94,8 +91,7 @@ export function RunTimelineTab({
         return
       }
 
-      const nearBottom =
-        distanceFromBottom(viewport) <= NEAR_BOTTOM_THRESHOLD_PX
+      const nearBottom = distanceFromBottom(viewport) <= NEAR_BOTTOM_THRESHOLD_PX
       const overflowing = viewport.scrollHeight > viewport.clientHeight + 1
       setIsOverflowing(overflowing)
 
@@ -139,14 +135,11 @@ export function RunTimelineTab({
         return
       }
 
-      const nearBottom =
-        distanceFromBottom(currentViewport) <= NEAR_BOTTOM_THRESHOLD_PX
+      const nearBottom = distanceFromBottom(currentViewport) <= NEAR_BOTTOM_THRESHOLD_PX
       if (nearBottom) {
         clearProgrammaticScroll(false)
         setIsNearBottom(true)
-        setIsOverflowing(
-          currentViewport.scrollHeight > currentViewport.clientHeight + 1,
-        )
+        setIsOverflowing(currentViewport.scrollHeight > currentViewport.clientHeight + 1)
         return
       }
 
@@ -249,13 +242,7 @@ export function RunTimelineTab({
     return () => {
       cancelAnimationFrame(frameID)
     }
-  }, [
-    events.length,
-    isAutoFollowEnabled,
-    isLive,
-    scrollToBottom,
-    syncScrollState,
-  ])
+  }, [events.length, isAutoFollowEnabled, isLive, scrollToBottom, syncScrollState])
 
   const showScrollControl = isOverflowing && !isNearBottom
   const scrollControlLabel = isLive ? 'Follow latest event' : 'Scroll to bottom'
@@ -309,9 +296,7 @@ export function RunTimelineTab({
                   <span className="relative z-10 mt-1 flex size-[15px] shrink-0 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface-strong)]">
                     <span
                       className={`size-[5px] rounded-full ${
-                        isLast && isLive
-                          ? 'bg-[var(--sigil-accent)]'
-                          : info.dotColorClass
+                        isLast && isLive ? 'bg-[var(--sigil-accent)]' : info.dotColorClass
                       }`}
                     />
                   </span>

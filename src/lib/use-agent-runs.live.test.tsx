@@ -3,7 +3,7 @@
 import { waitFor } from '@testing-library/dom'
 import * as React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 
 import type { InitializeResult, RunSummaryView } from '#/lib/protocol'
 import { PROTOCOL_VERSION } from '#/lib/protocol'
@@ -96,9 +96,7 @@ const originalActEnvironment = actEnvironmentGlobal.IS_REACT_ACT_ENVIRONMENT
 const mountedContainers: HTMLDivElement[] = []
 const mountedRoots: ReactDOMClient.Root[] = []
 
-function makeSessionSnapshot(
-  overrides: Partial<LiveSessionSnapshot> = {},
-): LiveSessionSnapshot {
+function makeSessionSnapshot(overrides: Partial<LiveSessionSnapshot> = {}): LiveSessionSnapshot {
   return {
     agentId: 'agent-live',
     connectionID: 1,
@@ -146,14 +144,12 @@ function createLiveSession(args: {
   const session: LiveSession = {
     getSnapshot: () => liveStore.state.snapshot as LiveSessionSnapshot,
     request,
-    subscribeNotifications: vi.fn(
-      (listener: (notification: unknown) => void) => {
-        notificationListeners.add(listener)
-        return () => {
-          notificationListeners.delete(listener)
-        }
-      },
-    ),
+    subscribeNotifications: vi.fn((listener: (notification: unknown) => void) => {
+      notificationListeners.add(listener)
+      return () => {
+        notificationListeners.delete(listener)
+      }
+    }),
   }
 
   liveStore.state.listAllRuns = listAllRuns
@@ -338,6 +334,49 @@ describe('useAgentRuns hook', () => {
       expect(request).toHaveBeenCalledTimes(2)
       expect(latestRuns[0]).toEqual(completedRun)
     })
+  })
+
+  it('applies run/statusChanged updates to an existing run summary', async () => {
+    const { emitNotification, listAllRuns, request } = createLiveSession({
+      listSnapshots: [[baseRun]],
+      subscribeSnapshots: [[baseRun]],
+    })
+
+    let latestRuns: RunSummaryView[] = []
+    await renderRunsProbe({
+      agentId: 'agent-live',
+      onRuns: (runs) => {
+        latestRuns = runs
+      },
+    })
+
+    await waitFor(() => {
+      expect(latestRuns[0]?.state).toBe('running')
+    })
+
+    await React.act(async () => {
+      emitNotification({
+        method: 'run/statusChanged',
+        params: {
+          runId: baseRun.runId,
+          seq: 10,
+          payload: {
+            state: 'completed',
+            terminal: true,
+          },
+        },
+      })
+    })
+    await flushEffects()
+
+    await waitFor(() => {
+      expect(latestRuns[0]?.state).toBe('completed')
+      expect(latestRuns[0]?.pidStatus).toBe('not_running')
+      expect(latestRuns[0]?.terminalAt).toBeTruthy()
+    })
+    expect(listAllRuns).toHaveBeenCalledTimes(1)
+    expect(request).toHaveBeenCalledTimes(1)
+    expect(request).toHaveBeenCalledWith('runs/subscribe', {})
   })
 
   it('keeps the last loaded snapshot when runs/subscribe fails', async () => {

@@ -22,8 +22,7 @@ export const Route = createRootRoute({
       },
       {
         name: 'description',
-        content:
-          'Command, control, and orchestration plane for the Sigil app-server.',
+        content: 'Command, control, and orchestration plane for the Sigil app-server.',
       },
     ],
     links: [

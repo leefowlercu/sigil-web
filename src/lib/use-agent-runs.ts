@@ -9,13 +9,19 @@ import {
 import { getRunsForAgent } from './data'
 
 /* ------------------------------------------------------------------ */
-/*  Types                                                              */
+/*  Types                                                             */
 /* ------------------------------------------------------------------ */
 
 export type AgentRunsAction =
   | { type: 'RUNS_RESET' }
   | { type: 'RUNS_SNAPSHOT_LOADED'; runs: RunSummaryView[] }
   | { type: 'RUN_UPSERTED'; run: RunSummaryView }
+  | {
+      type: 'RUN_STATUS_CHANGED'
+      runId: string
+      state: RunSummaryView['state']
+      terminal: boolean
+    }
   | { type: 'RUN_REMOVED'; runId: string }
 
 export type AgentRunsState = {
@@ -23,7 +29,7 @@ export type AgentRunsState = {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Reducer                                                            */
+/*  Reducer                                                           */
 /* ------------------------------------------------------------------ */
 
 export const initialState: AgentRunsState = {
@@ -33,10 +39,7 @@ export const initialState: AgentRunsState = {
 const nullSessionSnapshot = null as ReturnType<typeof getAgentSessionSnapshot>
 const terminalStates = new Set(['completed', 'failed', 'interrupted'])
 
-export function agentRunsReducer(
-  state: AgentRunsState,
-  action: AgentRunsAction,
-): AgentRunsState {
+export function agentRunsReducer(state: AgentRunsState, action: AgentRunsAction): AgentRunsState {
   switch (action.type) {
     case 'RUNS_RESET':
       return initialState
@@ -49,9 +52,27 @@ export function agentRunsReducer(
     case 'RUN_UPSERTED':
       return {
         runs: sortRunsNewestFirst(
-          state.runs
-            .filter((run) => run.runId !== action.run.runId)
-            .concat(action.run),
+          state.runs.filter((run) => run.runId !== action.run.runId).concat(action.run),
+        ),
+      }
+
+    case 'RUN_STATUS_CHANGED':
+      return {
+        runs: sortRunsNewestFirst(
+          state.runs.map((run) => {
+            if (run.runId !== action.runId) {
+              return run
+            }
+
+            const nextRun: RunSummaryView = {
+              ...run,
+              state: action.state,
+              terminalAt:
+                action.terminal && !run.terminalAt ? new Date().toISOString() : run.terminalAt,
+            }
+
+            return normalizeRunSummary(nextRun)
+          }),
         ),
       }
 
@@ -145,11 +166,7 @@ export function useAgentRuns(agentId: string): RunSummaryView[] {
     }
 
     const session = getAgentSession(agentId)
-    if (
-      session == null ||
-      sessionSnapshot == null ||
-      sessionSnapshot.connectionID < 1
-    ) {
+    if (session == null || sessionSnapshot == null || sessionSnapshot.connectionID < 1) {
       return
     }
 
@@ -200,38 +217,47 @@ export function useAgentRuns(agentId: string): RunSummaryView[] {
         })
     }
 
-    const unsubscribeNotifications = session.subscribeNotifications(
-      (notification) => {
-        if (notification.method !== 'runs/changed') {
-          return
-        }
-
-        switch (notification.params.payload.kind) {
-          case 'upsert':
-            if (notification.params.payload.run != null) {
-              dispatch({
-                type: 'RUN_UPSERTED',
-                run: normalizeRunSummary(notification.params.payload.run),
-              })
-            }
-            break
-          case 'remove':
-            if (notification.params.payload.runId != null) {
-              dispatch({
-                type: 'RUN_REMOVED',
-                runId: notification.params.payload.runId,
-              })
-            }
-            break
-          case 'reset':
-            dispatch({ type: 'RUNS_RESET' })
-            queueRunsSubscription()
-            break
-          default:
-            break
-        }
-      },
-    )
+    const unsubscribeNotifications = session.subscribeNotifications((notification) => {
+      switch (notification.method) {
+        case 'runs/changed':
+          switch (notification.params.payload.kind) {
+            case 'upsert':
+              if (notification.params.payload.run != null) {
+                dispatch({
+                  type: 'RUN_UPSERTED',
+                  run: normalizeRunSummary(notification.params.payload.run),
+                })
+              }
+              break
+            case 'remove':
+              if (notification.params.payload.runId != null) {
+                dispatch({
+                  type: 'RUN_REMOVED',
+                  runId: notification.params.payload.runId,
+                })
+              }
+              break
+            case 'reset':
+              dispatch({ type: 'RUNS_RESET' })
+              queueRunsSubscription()
+              break
+            default:
+              break
+          }
+          break
+        case 'run/statusChanged':
+        case 'run/completed':
+          dispatch({
+            type: 'RUN_STATUS_CHANGED',
+            runId: notification.params.runId,
+            state: notification.params.payload.state,
+            terminal: notification.params.payload.terminal,
+          })
+          break
+        default:
+          break
+      }
+    })
 
     queueRunsSubscription()
 

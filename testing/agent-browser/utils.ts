@@ -20,6 +20,31 @@ export async function sleep(ms: number) {
   })
 }
 
+export async function withTimeout<T>(
+  promise: Promise<T>,
+  options: {
+    description: string
+    timeoutMs: number
+  },
+): Promise<T> {
+  let timer: NodeJS.Timeout | null = null
+
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timer = setTimeout(() => {
+          reject(new Error(`timed out waiting for ${options.description}`))
+        }, options.timeoutMs)
+      }),
+    ])
+  } finally {
+    if (timer != null) {
+      clearTimeout(timer)
+    }
+  }
+}
+
 export async function findFreePort(): Promise<number> {
   return new Promise((resolve, reject) => {
     const server = net.createServer()
@@ -95,8 +120,7 @@ export function sanitizeForPath(value: string) {
 export async function waitForHTTPReady(
   url: string,
   timeoutMs = 10_000,
-  isReady: (statusCode: number) => boolean = (statusCode) =>
-    statusCode >= 200 && statusCode < 500,
+  isReady: (statusCode: number) => boolean = (statusCode) => statusCode >= 200 && statusCode < 500,
 ) {
   await waitFor(
     async () => {
@@ -165,9 +189,17 @@ export function spawnLoggedProcess(options: {
       }
       child.kill('SIGTERM')
       try {
-        await once(child, 'exit')
+        await withTimeout(once(child, 'exit'), {
+          description: `${options.command} shutdown`,
+          timeoutMs: 5_000,
+        })
       } catch {
-        // Ignore race during teardown.
+        child.kill('SIGKILL')
+        try {
+          await once(child, 'exit')
+        } catch {
+          // Ignore race during teardown.
+        }
       }
     },
     stdout() {

@@ -22,18 +22,20 @@ async function execAgentBrowser(
   sessionName: string,
   args: string[],
   stdin?: string,
+  timeoutMs = 30_000,
 ): Promise<string> {
   const commandLogLine = `${agentBrowserBinPath()} --session ${sessionName} ${args.join(' ')}`
-  const child = spawn(
-    agentBrowserBinPath(),
-    ['--session', sessionName, ...args],
-    {
-      stdio: ['pipe', 'pipe', 'pipe'],
-    },
-  )
+  const child = spawn(agentBrowserBinPath(), ['--session', sessionName, ...args], {
+    stdio: ['pipe', 'pipe', 'pipe'],
+  })
 
   const stdoutChunks: string[] = []
   const stderrChunks: string[] = []
+  let timedOut = false
+  const timeout = setTimeout(() => {
+    timedOut = true
+    child.kill('SIGKILL')
+  }, timeoutMs)
 
   child.stdout.on('data', (chunk: Buffer) => {
     stdoutChunks.push(chunk.toString('utf8'))
@@ -51,9 +53,15 @@ async function execAgentBrowser(
     child.on('error', reject)
     child.on('exit', (code) => resolve(code ?? 1))
   })
+  clearTimeout(timeout)
 
   const stdout = stdoutChunks.join('').trim()
   const stderr = stderrChunks.join('').trim()
+  if (timedOut) {
+    throw new Error(
+      `agent-browser command timed out after ${timeoutMs}ms (${commandLogLine})\nstdout:\n${stdout}\nstderr:\n${stderr}`,
+    )
+  }
   if (exitCode !== 0) {
     throw new Error(
       `agent-browser command failed (${commandLogLine})\nstdout:\n${stdout}\nstderr:\n${stderr}`,
@@ -63,20 +71,18 @@ async function execAgentBrowser(
   return stdout
 }
 
-export function createAgentBrowserSession(
-  sessionName: string,
-): AgentBrowserSession {
+export function createAgentBrowserSession(sessionName: string): AgentBrowserSession {
   const commandLog: string[] = []
 
-  async function run(args: string[], stdin?: string) {
+  async function run(args: string[], stdin?: string, timeoutMs?: number) {
     const logLine = `agent-browser --session ${sessionName} ${args.join(' ')}`
     commandLog.push(logLine)
-    return execAgentBrowser(sessionName, args, stdin)
+    return execAgentBrowser(sessionName, args, stdin, timeoutMs)
   }
 
   return {
     async close() {
-      await run(['close'])
+      await run(['close'], undefined, 2_000)
     },
     async click(ref: string) {
       await run(['click', ref])
@@ -85,27 +91,25 @@ export function createAgentBrowserSession(
       return [...commandLog]
     },
     async evalJSON<T>(script: string) {
-      const output = await run(['eval', '--stdin'], script)
+      const output = await run(['eval', '--stdin'], script, 10_000)
       return JSON.parse(output) as T
     },
     async fill(ref: string, value: string) {
       await run(['fill', ref, value])
     },
     async open(url: string) {
-      await run(['open', url])
+      await run(['open', url], undefined, 15_000)
     },
     async saveCommandLog(filePath: string) {
       await fs.mkdir(path.dirname(filePath), { recursive: true })
       await fs.writeFile(filePath, `${commandLog.join('\n')}\n`, 'utf8')
     },
     async screenshot(filePath: string) {
-      await run(['screenshot', filePath])
+      await run(['screenshot', filePath], undefined, 5_000)
     },
     async snapshotInteractive() {
-      const output = await run(['snapshot', '-i', '--json'])
-      const parsed = JSON.parse(
-        output,
-      ) as AgentBrowserResponse<AgentBrowserSnapshot>
+      const output = await run(['snapshot', '-i', '--json'], undefined, 5_000)
+      const parsed = JSON.parse(output) as AgentBrowserResponse<AgentBrowserSnapshot>
       if (!parsed.success) {
         throw new Error(parsed.error ?? 'agent-browser snapshot failed')
       }
@@ -115,7 +119,7 @@ export function createAgentBrowserSession(
       await run(['wait', String(value)])
     },
     async waitForLoad(state = 'networkidle') {
-      await run(['wait', '--load', state])
+      await run(['wait', '--load', state], undefined, 15_000)
     },
   }
 }

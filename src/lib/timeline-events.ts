@@ -22,16 +22,8 @@ export function getEventCategory(eventType: string): EventCategory {
   if (eventType.startsWith('run.')) return 'run'
   if (eventType.startsWith('node.step.')) return 'step'
   if (eventType.startsWith('node.turn.')) return 'turn'
-  if (
-    eventType.startsWith('node.action.') ||
-    eventType.startsWith('node.subcall.')
-  )
-    return 'action'
-  if (
-    eventType === 'node.started' ||
-    eventType === 'node.completed' ||
-    eventType === 'node.failed'
-  )
+  if (eventType.startsWith('node.action.') || eventType.startsWith('node.subcall.')) return 'action'
+  if (eventType === 'node.started' || eventType === 'node.completed' || eventType === 'node.failed')
     return 'node'
   return 'step'
 }
@@ -86,9 +78,7 @@ export type TurnTokens = {
  * Builds a lookup from stepId to model turn token data. Used to correlate
  * input token counts back to user turn events via shared stepId.
  */
-export function buildTurnTokenMap(
-  events: EventEnvelopeView[],
-): Map<string, TurnTokens> {
+export function buildTurnTokenMap(events: EventEnvelopeView[]): Map<string, TurnTokens> {
   const map = new Map<string, TurnTokens>()
   for (const event of events) {
     if (event.type !== 'node.turn.model') continue
@@ -100,8 +90,7 @@ export function buildTurnTokenMap(
       inputTokens: Number(p.inputTokens ?? 0),
       outputTokens: Number(p.outputTokens ?? 0),
       totalTokens: Number(p.totalTokens ?? 0),
-      reasoningTokens:
-        p.reasoningTokens != null ? Number(p.reasoningTokens) : undefined,
+      reasoningTokens: p.reasoningTokens != null ? Number(p.reasoningTokens) : undefined,
     })
   }
   return map
@@ -141,8 +130,7 @@ export function getEventSummary(
     case 'run.running': {
       const parts: string[] = []
       if (payload.executor) parts.push(`executor: ${str(payload.executor)}`)
-      if (payload.maxDepth != null)
-        parts.push(`max depth: ${str(payload.maxDepth)}`)
+      if (payload.maxDepth != null) parts.push(`max depth: ${str(payload.maxDepth)}`)
       return parts.join(', ')
     }
     case 'run.completed': {
@@ -255,10 +243,7 @@ const DOT_COLOR_BY_CATEGORY: Record<EventCategory, string> = {
   action: 'bg-[var(--run-status-interrupted)]',
 }
 
-export function getDotColorClass(
-  eventType: string,
-  category: EventCategory,
-): string {
+export function getDotColorClass(eventType: string, category: EventCategory): string {
   return DOT_COLOR_BY_TYPE[eventType] ?? DOT_COLOR_BY_CATEGORY[category]
 }
 
@@ -266,11 +251,7 @@ export function getDotColorClass(
 /*  Terminal detection                                                 */
 /* ------------------------------------------------------------------ */
 
-const TERMINAL_TYPES = new Set([
-  'run.completed',
-  'run.failed',
-  'run.interrupted',
-])
+const TERMINAL_TYPES = new Set(['run.completed', 'run.failed', 'run.interrupted'])
 
 /* ------------------------------------------------------------------ */
 /*  Compositor                                                         */

@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { RunDetailPane } from './run-detail-pane'
 
 vi.mock('#/lib/use-run-subscription', () => ({

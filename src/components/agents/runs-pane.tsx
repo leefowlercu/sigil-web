@@ -49,10 +49,7 @@ function RunCard({
   const elapsed = useElapsed(run.startedAt, isActive)
   const duration =
     !isActive && run.startedAt && run.terminalAt
-      ? formatDuration(
-          new Date(run.terminalAt).getTime() -
-            new Date(run.startedAt).getTime(),
-        )
+      ? formatDuration(new Date(run.terminalAt).getTime() - new Date(run.startedAt).getTime())
       : null
   const timeLabel = elapsed ?? duration
 
@@ -68,9 +65,7 @@ function RunCard({
       }`}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-bold leading-tight text-[var(--foreground)]">
-          {run.name}
-        </span>
+        <span className="text-sm font-bold leading-tight text-[var(--foreground)]">{run.name}</span>
         <StateBadge state={state} />
       </div>
 
@@ -103,9 +98,7 @@ export function RunsPane({
   return (
     <div className="flex w-[360px] shrink-0 flex-col border-r border-[var(--line)]">
       <div className="flex items-center justify-between border-b border-[var(--line)] px-4 py-[15px]">
-        <span className="text-sm font-bold uppercase text-[var(--foreground)]">
-          Runs
-        </span>
+        <span className="text-sm font-bold uppercase text-[var(--foreground)]">Runs</span>
         <Badge
           variant="outline"
           className="border-[var(--border)] bg-[var(--secondary)] text-[0.58rem] font-bold text-[var(--muted-foreground)]"

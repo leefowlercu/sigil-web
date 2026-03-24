@@ -3,7 +3,7 @@
 import { waitFor } from '@testing-library/dom'
 import * as React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 
 import type {
   EventEnvelopeView,
@@ -19,10 +19,7 @@ import {
   runSubscriptionReducer,
   useRunSubscription,
 } from './use-run-subscription'
-import type {
-  RunSubscriptionAction,
-  RunSubscriptionState,
-} from './use-run-subscription'
+import type { RunSubscriptionAction, RunSubscriptionState } from './use-run-subscription'
 
 type LiveSessionSnapshot = {
   agentId: string
@@ -39,10 +36,7 @@ type LiveSession = {
   getSnapshot: ReturnType<typeof vi.fn<() => LiveSessionSnapshot>>
   request: ReturnType<
     typeof vi.fn<
-      (
-        method: string,
-        params?: { runId?: string; afterSeq?: number },
-      ) => Promise<unknown>
+      (method: string, params?: { runId?: string; afterSeq?: number }) => Promise<unknown>
     >
   >
   subscribeNotifications: ReturnType<
@@ -151,9 +145,7 @@ function reduce(
   return actions.reduce(runSubscriptionReducer, state)
 }
 
-function makeSessionSnapshot(
-  overrides: Partial<LiveSessionSnapshot> = {},
-): LiveSessionSnapshot {
+function makeSessionSnapshot(overrides: Partial<LiveSessionSnapshot> = {}): LiveSessionSnapshot {
   return {
     agentId: 'agent-live',
     connectionID: 1,
@@ -204,19 +196,14 @@ function makeRunFixture(
   }
 }
 
-function createLiveSession(
-  fixtures: Record<string, ReturnType<typeof makeRunFixture>>,
-): {
+function createLiveSession(fixtures: Record<string, ReturnType<typeof makeRunFixture>>): {
   emitNotification: (notification: unknown) => void
   request: LiveSession['request']
   session: LiveSession
 } {
   const notificationListeners = new Set<(notification: unknown) => void>()
   const request = vi.fn<
-    (
-      method: string,
-      params?: { runId?: string; afterSeq?: number },
-    ) => Promise<unknown>
+    (method: string, params?: { runId?: string; afterSeq?: number }) => Promise<unknown>
   >(async (method, params) => {
     const runId = params?.runId
     const fixture = runId != null ? fixtures[runId] : undefined
@@ -264,9 +251,7 @@ function createLiveSession(
                 : undefined,
             replayEvents:
               params?.afterSeq != null
-                ? (fixture?.events ?? []).filter(
-                    (event) => event.seq > params.afterSeq!,
-                  )
+                ? (fixture?.events ?? []).filter((event) => event.seq > params.afterSeq!)
                 : undefined,
             terminal: false,
           },
@@ -290,14 +275,12 @@ function createLiveSession(
       return liveStore.state.snapshot
     }),
     request,
-    subscribeNotifications: vi.fn(
-      (listener: (notification: unknown) => void) => {
-        notificationListeners.add(listener)
-        return () => {
-          notificationListeners.delete(listener)
-        }
-      },
-    ),
+    subscribeNotifications: vi.fn((listener: (notification: unknown) => void) => {
+      notificationListeners.add(listener)
+      return () => {
+        notificationListeners.delete(listener)
+      }
+    }),
   }
 
   liveStore.state.session = session
@@ -439,14 +422,12 @@ describe('useRunSubscription hook', () => {
 
     expect(
       request.mock.calls.some(
-        ([method, params]) =>
-          method === 'run/read' && params?.runId === runB.projection.runId,
+        ([method, params]) => method === 'run/read' && params?.runId === runB.projection.runId,
       ),
     ).toBe(true)
 
     const runBSubscribeCall = request.mock.calls.find(
-      ([method, params]) =>
-        method === 'run/subscribe' && params?.runId === runB.projection.runId,
+      ([method, params]) => method === 'run/subscribe' && params?.runId === runB.projection.runId,
     )
     expect(runBSubscribeCall?.[1]).toEqual({ runId: runB.projection.runId })
   })
@@ -568,15 +549,9 @@ describe('useRunSubscription hook', () => {
 
     await waitFor(() => {
       expect(latestState.projection?.state).toBe('running')
-      expect(latestState.projection?.startedAt).toBe(
-        startedProjection.startedAt,
-      )
-      expect(latestState.projection?.pidStatus).toBe(
-        startedProjection.pidStatus,
-      )
-      expect(latestState.projection?.nodeCount).toBe(
-        startedProjection.nodeCount,
-      )
+      expect(latestState.projection?.startedAt).toBe(startedProjection.startedAt)
+      expect(latestState.projection?.pidStatus).toBe(startedProjection.pidStatus)
+      expect(latestState.projection?.nodeCount).toBe(startedProjection.nodeCount)
     })
   })
 })

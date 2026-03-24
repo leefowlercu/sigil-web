@@ -20,6 +20,12 @@ type ScriptedRunState = {
   currentSeq: number
 }
 
+type InboundRequest = {
+  id: string
+  method: string
+  params?: unknown
+}
+
 type ConnectionRecord = {
   connectionID: number
   initialized: boolean
@@ -72,9 +78,7 @@ function normalizeData(data: unknown): string {
 }
 
 function objectRecord(value: unknown): Record<string, unknown> | null {
-  return value != null && typeof value === 'object'
-    ? (value as Record<string, unknown>)
-    : null
+  return value != null && typeof value === 'object' ? (value as Record<string, unknown>) : null
 }
 
 function runFixtureByID(
@@ -125,9 +129,7 @@ export async function createScriptedConnectionController(options: {
     )
     .sort(
       (left, right) =>
-        left.atMs - right.atMs ||
-        left.runId.localeCompare(right.runId) ||
-        left.order - right.order,
+        left.atMs - right.atMs || left.runId.localeCompare(right.runId) || left.order - right.order,
     )
 
   async function appendTranscript(
@@ -243,9 +245,7 @@ export async function createScriptedConnectionController(options: {
       method: 'server/heartbeat',
       params: {
         instanceId: options.scenario.server.instanceId,
-        serverTime: new Date(
-          Date.parse('2026-03-22T18:00:00Z') + currentTimeMs,
-        ).toISOString(),
+        serverTime: new Date(Date.parse('2026-03-22T18:00:00Z') + currentTimeMs).toISOString(),
         heartbeatIntervalMs: options.scenario.heartbeatIntervalMs,
       },
     }
@@ -274,22 +274,14 @@ export async function createScriptedConnectionController(options: {
     }
   }
 
-  async function handleRequest(
-    connection: ConnectionRecord,
-    request: JsonRPCRequestEnvelope,
-  ) {
+  async function handleRequest(connection: ConnectionRecord, request: InboundRequest) {
     const { id, method, params } = request
 
     if (method === 'initialize') {
       if (connection.initialized) {
         sendMessage(
           connection,
-          errorEnvelope(
-            id,
-            -32600,
-            'connection already initialized',
-            'already_initialized',
-          ),
+          errorEnvelope(id, -32600, 'connection already initialized', 'already_initialized'),
         )
         return
       }
@@ -332,9 +324,7 @@ export async function createScriptedConnectionController(options: {
           serverVersion: options.scenario.server.serverVersion,
           instanceId: options.scenario.server.instanceId,
           protocolVersion: options.scenario.server.protocolVersion,
-          serverTime: new Date(
-            Date.parse('2026-03-22T18:00:00Z') + currentTimeMs,
-          ).toISOString(),
+          serverTime: new Date(Date.parse('2026-03-22T18:00:00Z') + currentTimeMs).toISOString(),
         }),
       )
       return
@@ -404,18 +394,12 @@ export async function createScriptedConnectionController(options: {
       case 'run/unsubscribe': {
         const runId = runIDFromParams(params)
         if (runId == null) {
-          sendMessage(
-            connection,
-            errorEnvelope(id, -32602, 'runId is required', 'invalid_params'),
-          )
+          sendMessage(connection, errorEnvelope(id, -32602, 'runId is required', 'invalid_params'))
           return
         }
         const snapshot = stateForRun(runId)
         if (snapshot == null) {
-          sendMessage(
-            connection,
-            errorEnvelope(id, -32602, 'run not found', 'run_not_found'),
-          )
+          sendMessage(connection, errorEnvelope(id, -32602, 'run not found', 'run_not_found'))
           return
         }
 
@@ -490,9 +474,7 @@ export async function createScriptedConnectionController(options: {
 
         const paramsRecord = objectRecord(params)
         const afterSeq =
-          typeof paramsRecord?.afterSeq === 'number'
-            ? paramsRecord.afterSeq
-            : undefined
+          typeof paramsRecord?.afterSeq === 'number' ? paramsRecord.afterSeq : undefined
         if (afterSeq == null) {
           connection.subscriptions.set(runId, {
             attachedSeq: snapshot.events.at(-1)?.seq ?? 0,
@@ -518,12 +500,7 @@ export async function createScriptedConnectionController(options: {
         if (afterSeq > (snapshot.events.at(-1)?.seq ?? 0)) {
           sendMessage(
             connection,
-            errorEnvelope(
-              id,
-              -32602,
-              'afterSeq exceeds run watermark',
-              'invalid_resume_cursor',
-            ),
+            errorEnvelope(id, -32602, 'afterSeq exceeds run watermark', 'invalid_resume_cursor'),
           )
           return
         }
@@ -537,9 +514,7 @@ export async function createScriptedConnectionController(options: {
             runId,
             snapshotAsOfSeq: snapshot.events.at(-1)?.seq ?? 0,
             payload: {
-              replayEvents: snapshot.events.filter(
-                (event) => event.seq > afterSeq,
-              ),
+              replayEvents: snapshot.events.filter((event) => event.seq > afterSeq),
               terminal: snapshot.terminal,
             },
           }),
@@ -548,10 +523,7 @@ export async function createScriptedConnectionController(options: {
       }
 
       default:
-        sendMessage(
-          connection,
-          errorEnvelope(id, -32601, 'method not found', 'method_not_found'),
-        )
+        sendMessage(connection, errorEnvelope(id, -32601, 'method not found', 'method_not_found'))
     }
   }
 
@@ -647,13 +619,14 @@ export async function createScriptedConnectionController(options: {
           }
 
           const request = parsed as Partial<JsonRPCRequestEnvelope>
-          if (
-            typeof request.id !== 'string' ||
-            typeof request.method !== 'string'
-          ) {
+          if (typeof request.id !== 'string' || typeof request.method !== 'string') {
             return
           }
-          void handleRequest(connection, request)
+          void handleRequest(connection, {
+            id: request.id,
+            method: request.method,
+            params: request.params,
+          })
         })
       })
     },

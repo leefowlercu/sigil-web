@@ -71,9 +71,7 @@ export function agentFleetReducer(
     case 'AGENT_STATE_CHANGED':
       return {
         agents: state.agents.map((a) =>
-          a.id === action.agentId
-            ? { ...a, connectionState: action.connectionState }
-            : a,
+          a.id === action.agentId ? { ...a, connectionState: action.connectionState } : a,
         ),
       }
   }

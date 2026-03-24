@@ -1,12 +1,4 @@
-import {
-  Activity,
-  Layers,
-  ArrowUpRight,
-  Zap,
-  FileText,
-  Box,
-  Terminal,
-} from 'lucide-react'
+import { Activity, Layers, ArrowUpRight, Zap, FileText, Box, Terminal } from 'lucide-react'
 import { useMemo } from 'react'
 import { ScrollArea } from '#/components/ui/scroll-area'
 import { Separator } from '#/components/ui/separator'
@@ -16,15 +8,7 @@ import type { RunState } from '#/lib/demo-data'
 import { buildTurnTokenMap } from '#/lib/timeline-events'
 import { useRunSubscription } from '#/lib/use-run-subscription'
 
-function MetaRow({
-  label,
-  value,
-  mono,
-}: {
-  label: string
-  value: string
-  mono?: boolean
-}) {
+function MetaRow({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
   return (
     <div className="flex flex-col gap-1">
       <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-[var(--muted-foreground)]">
@@ -39,17 +23,8 @@ function MetaRow({
   )
 }
 
-export function RunDetailPane({
-  agentId,
-  runId,
-}: {
-  agentId: string
-  runId: string
-}) {
-  const { status, projection, events, steps, terminal } = useRunSubscription(
-    agentId,
-    runId,
-  )
+export function RunDetailPane({ agentId, runId }: { agentId: string; runId: string }) {
+  const { status, projection, events, steps, terminal } = useRunSubscription(agentId, runId)
   const turnTokenMap = useMemo(() => buildTurnTokenMap(events), [events])
 
   if (status === 'error') {
@@ -74,10 +49,7 @@ export function RunDetailPane({
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden">
       {/* Tabbed detail content */}
-      <Tabs
-        defaultValue="timeline"
-        className="flex min-h-0 flex-1 flex-col overflow-hidden gap-0"
-      >
+      <Tabs defaultValue="timeline" className="flex min-h-0 flex-1 flex-col overflow-hidden gap-0">
         <div className="flex shrink-0 items-center border-b border-[var(--line)] px-4 py-[7px]">
           <TabsList variant="line" className="h-auto gap-0">
             <TabsTrigger value="timeline" className="gap-1 text-xs">
@@ -193,12 +165,8 @@ export function RunDetailPane({
                     </span>
                   </div>
                   <div className="flex items-center gap-3 text-[0.6rem] font-semibold text-[var(--muted-foreground)]">
-                    <span className="font-mono">
-                      {step.stepId.slice(0, 13)}
-                    </span>
-                    {step.durationMs != null && (
-                      <span>{step.durationMs}ms</span>
-                    )}
+                    <span className="font-mono">{step.stepId.slice(0, 13)}</span>
+                    {step.durationMs != null && <span>{step.durationMs}ms</span>}
                     <span>step #{step.nodeStepIndex}</span>
                   </div>
                 </div>
@@ -208,31 +176,21 @@ export function RunDetailPane({
         </TabsContent>
 
         {/* Meta tab */}
-        <TabsContent
-          value="meta"
-          className="flex min-h-0 flex-1 flex-col overflow-hidden"
-        >
+        <TabsContent value="meta" className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <ScrollArea className="min-h-0 flex-1">
             <div className="flex flex-col gap-3 px-5 py-4">
               <MetaRow label="Name" value={projection.name} />
               <MetaRow label="Run ID" value={projection.runId} mono />
               <MetaRow label="State" value={projection.state} />
-              {projection.source && (
-                <MetaRow label="Source" value={projection.source} mono />
-              )}
-              {projection.executor && (
-                <MetaRow label="Executor" value={projection.executor} mono />
-              )}
+              {projection.source && <MetaRow label="Source" value={projection.source} mono />}
+              {projection.executor && <MetaRow label="Executor" value={projection.executor} mono />}
               <MetaRow label="PID Status" value={projection.pidStatus} />
               <MetaRow label="Max Depth" value={String(projection.maxDepth)} />
               <Separator />
               <MetaRow label="Nodes" value={String(projection.nodeCount)} />
               <MetaRow label="Steps" value={String(projection.stepCount)} />
               <MetaRow label="Actions" value={String(projection.actionCount)} />
-              <MetaRow
-                label="Subcalls"
-                value={String(projection.subcallCount)}
-              />
+              <MetaRow label="Subcalls" value={String(projection.subcallCount)} />
               <Separator />
               {projection.queuedAt && (
                 <MetaRow label="Queued At" value={projection.queuedAt} mono />
@@ -241,11 +199,7 @@ export function RunDetailPane({
                 <MetaRow label="Started At" value={projection.startedAt} mono />
               )}
               {projection.terminalAt && (
-                <MetaRow
-                  label="Terminal At"
-                  value={projection.terminalAt}
-                  mono
-                />
+                <MetaRow label="Terminal At" value={projection.terminalAt} mono />
               )}
               {projection.stopRequest && (
                 <>
@@ -255,18 +209,11 @@ export function RunDetailPane({
                     value={projection.stopRequest.requestedBy}
                     mono
                   />
-                  <MetaRow
-                    label="Stop Signal"
-                    value={projection.stopRequest.signal}
-                  />
+                  <MetaRow label="Stop Signal" value={projection.stopRequest.signal} />
                 </>
               )}
               {projection.finalAnswerRef && (
-                <MetaRow
-                  label="Final Answer Ref"
-                  value={projection.finalAnswerRef}
-                  mono
-                />
+                <MetaRow label="Final Answer Ref" value={projection.finalAnswerRef} mono />
               )}
             </div>
           </ScrollArea>

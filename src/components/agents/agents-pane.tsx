@@ -6,10 +6,7 @@ import { Input } from '#/components/ui/input'
 import { ScrollArea } from '#/components/ui/scroll-area'
 import { Separator } from '#/components/ui/separator'
 import type { AgentInstance } from '#/lib/demo-data'
-import {
-  CONNECTION_STATE_CONFIG,
-  ConnectionStateDot,
-} from './status-primitives'
+import { CONNECTION_STATE_CONFIG, ConnectionStateDot } from './status-primitives'
 
 /* ------------------------------------------------------------------ */
 /*  Agent Card (file-local)                                            */
@@ -62,9 +59,7 @@ function AgentCard({
             <ConnectionStateDot state={agent.connectionState} />
             <span
               className={`text-sm font-bold tracking-tight ${
-                isSelected
-                  ? 'text-[var(--foreground)]'
-                  : 'text-[var(--foreground)]'
+                isSelected ? 'text-[var(--foreground)]' : 'text-[var(--foreground)]'
               }`}
             >
               {agent.server.instanceName}
@@ -163,9 +158,7 @@ export function AgentsPane({
           <div className="flex size-7 items-center justify-center rounded-md bg-[var(--sigil-accent-soft)]">
             <Radio className="size-3.5 text-[var(--sigil-accent)]" />
           </div>
-          <span className="text-sm font-bold uppercase text-[var(--foreground)]">
-            Agent Fleet
-          </span>
+          <span className="text-sm font-bold uppercase text-[var(--foreground)]">Agent Fleet</span>
           <Badge
             variant="outline"
             className="ml-auto border-[var(--border)] bg-[var(--secondary)] text-[0.58rem] font-bold text-[var(--muted-foreground)]"

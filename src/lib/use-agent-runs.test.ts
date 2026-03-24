@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 import type { RunSummaryView } from '#/lib/protocol'
 import { agentRunsReducer, initialState } from './use-agent-runs'
@@ -16,10 +16,7 @@ const baseRun: RunSummaryView = {
   stopRequested: false,
 }
 
-function reduce(
-  state: AgentRunsState,
-  ...actions: AgentRunsAction[]
-): AgentRunsState {
+function reduce(state: AgentRunsState, ...actions: AgentRunsAction[]): AgentRunsState {
   return actions.reduce(agentRunsReducer, state)
 }
 
@@ -36,10 +33,7 @@ describe('agentRunsReducer', () => {
     const runs = [baseRun, { ...baseRun, runId: 'run-2' }]
     const result = reduce(initialState, { type: 'RUNS_SNAPSHOT_LOADED', runs })
     expect(result.runs).toHaveLength(2)
-    expect(result.runs.map((run) => run.runId)).toEqual([
-      'run-2',
-      baseRun.runId,
-    ])
+    expect(result.runs.map((run) => run.runId)).toEqual(['run-2', baseRun.runId])
   })
 
   it('RUN_UPSERTED prepends a new run', () => {

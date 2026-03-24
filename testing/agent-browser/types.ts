@@ -114,9 +114,7 @@ export type AgentBrowserScenarioContext = AgentBrowserContextCommon & {
   controller: ScriptedConnectionController
 }
 
-export type AgentBrowserScenarioCase = (
-  context: AgentBrowserScenarioContext,
-) => Promise<void>
+export type AgentBrowserScenarioCase = (context: AgentBrowserScenarioContext) => Promise<void>
 
 export type AgentBrowserScenarioModule = {
   cases: Record<string, AgentBrowserScenarioCase>
@@ -158,7 +156,5 @@ export interface AgentBrowserSession {
   screenshot: (filePath: string) => Promise<void>
   snapshotInteractive: () => Promise<AgentBrowserSnapshot>
   wait: (value: number | string) => Promise<void>
-  waitForLoad: (
-    state?: 'domcontentloaded' | 'load' | 'networkidle',
-  ) => Promise<void>
+  waitForLoad: (state?: 'domcontentloaded' | 'load' | 'networkidle') => Promise<void>
 }

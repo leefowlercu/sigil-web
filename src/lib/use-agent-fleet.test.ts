@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vite-plus/test'
 
 import type { AgentInstance } from './demo-data'
 import { agentFleetReducer, initialState } from './use-agent-fleet'
@@ -26,10 +26,7 @@ const baseAgent: AgentInstance = {
   },
 }
 
-function reduce(
-  state: AgentFleetState,
-  ...actions: AgentFleetAction[]
-): AgentFleetState {
+function reduce(state: AgentFleetState, ...actions: AgentFleetAction[]): AgentFleetState {
   return actions.reduce(agentFleetReducer, state)
 }
 

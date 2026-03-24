@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vite-plus/test'
 import { promises as fs } from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -8,9 +8,7 @@ import { projectRoot } from './utils.ts'
 const tempDirs: string[] = []
 
 async function writeTempManifest(contents: string) {
-  const tempDir = await fs.mkdtemp(
-    path.join(os.tmpdir(), 'sigil-web-agent-browser-manifest-'),
-  )
+  const tempDir = await fs.mkdtemp(path.join(os.tmpdir(), 'sigil-web-agent-browser-manifest-'))
   tempDirs.push(tempDir)
   const manifestPath = path.join(tempDir, 'manifest.toml')
   await fs.writeFile(manifestPath, contents, 'utf8')
@@ -19,9 +17,7 @@ async function writeTempManifest(contents: string) {
 
 afterEach(async () => {
   await Promise.all(
-    tempDirs
-      .splice(0)
-      .map((tempDir) => fs.rm(tempDir, { recursive: true, force: true })),
+    tempDirs.splice(0).map((tempDir) => fs.rm(tempDir, { recursive: true, force: true })),
   )
 })
 

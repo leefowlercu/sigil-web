@@ -268,9 +268,7 @@ function buildProjection(seq: number): RunProjectionView {
         role: 'root',
         state: terminal ? 'completed' : 'running',
         startedAt: timestampFor(2),
-        terminalAt: terminal
-          ? timestampFor(LIVE_TIMELINE_FINAL_SEQ)
-          : undefined,
+        terminalAt: terminal ? timestampFor(LIVE_TIMELINE_FINAL_SEQ) : undefined,
         stepCount: 1,
       },
     ],
@@ -306,9 +304,7 @@ function buildTree(seq: number): RunTreeReadPayload {
         state: seq >= LIVE_TIMELINE_FINAL_SEQ ? 'completed' : 'running',
         startedAt: timestampFor(2),
         terminalAt:
-          seq >= LIVE_TIMELINE_FINAL_SEQ
-            ? timestampFor(LIVE_TIMELINE_FINAL_SEQ)
-            : undefined,
+          seq >= LIVE_TIMELINE_FINAL_SEQ ? timestampFor(LIVE_TIMELINE_FINAL_SEQ) : undefined,
         stepCount: 1,
       },
     ],

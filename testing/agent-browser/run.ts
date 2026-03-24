@@ -4,10 +4,7 @@ import { createAgentBrowserSession } from './browser.ts'
 import { createLiveTimelineScenario } from './fixtures/live-timeline.ts'
 import { createScriptedConnectionController } from './scripted-appserver.ts'
 import { loadAgentBrowserManifest } from './manifest.ts'
-import type {
-  AgentBrowserManifestEvidence,
-  AgentBrowserScenarioModule,
-} from './types.ts'
+import type { AgentBrowserManifestEvidence, AgentBrowserScenarioModule } from './types.ts'
 import {
   ensureCleanDir,
   ensureDir,
@@ -16,12 +13,21 @@ import {
   sigilWebRoot,
   spawnLoggedProcess,
   waitForHTTPReady,
+  withTimeout,
   writeJSONFile,
 } from './utils.ts'
 
 type PreviewHandle = {
   appURL: string
   stop: () => Promise<void>
+}
+
+async function settleBestEffort(description: string, work: () => Promise<void>, timeoutMs = 5_000) {
+  try {
+    await withTimeout(work(), { description, timeoutMs })
+  } catch (error) {
+    console.warn(error instanceof Error ? error.message : String(error))
+  }
 }
 
 function parseArgs(argv: string[]) {
@@ -52,23 +58,11 @@ async function startPreviewServer(): Promise<PreviewHandle> {
 
   const port = await findFreePort()
   const appURL = `http://127.0.0.1:${port}`
-  const previewLogPath = path.join(
-    sigilWebRoot,
-    '.artifacts',
-    'agent-browser',
-    'preview.log',
-  )
+  const previewLogPath = path.join(sigilWebRoot, '.artifacts', 'agent-browser', 'preview.log')
   await ensureDir(path.dirname(previewLogPath))
   const preview = spawnLoggedProcess({
     command: 'pnpm',
-    args: [
-      'preview',
-      '--host',
-      '127.0.0.1',
-      '--port',
-      String(port),
-      '--strictPort',
-    ],
+    args: ['preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort'],
     cwd: sigilWebRoot,
     logPath: previewLogPath,
   })
@@ -83,13 +77,9 @@ async function startPreviewServer(): Promise<PreviewHandle> {
 }
 
 async function loadScenarioCase(evidence: AgentBrowserManifestEvidence) {
-  const imported = (await import(
-    pathToFileURL(evidence.file).href
-  )) as AgentBrowserScenarioModule
+  const imported = (await import(pathToFileURL(evidence.file).href)) as AgentBrowserScenarioModule
   if (!Object.hasOwn(imported.cases, evidence.match)) {
-    throw new Error(
-      `scenario module ${evidence.file} does not export case ${evidence.match}`,
-    )
+    throw new Error(`scenario module ${evidence.file} does not export case ${evidence.match}`)
   }
   const scenarioCase = imported.cases[evidence.match]
   return scenarioCase
@@ -97,12 +87,7 @@ async function loadScenarioCase(evidence: AgentBrowserManifestEvidence) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2))
-  const manifestPath = path.join(
-    sigilWebRoot,
-    'verification',
-    'scenarios',
-    'manifest.toml',
-  )
+  const manifestPath = path.join(sigilWebRoot, 'verification', 'scenarios', 'manifest.toml')
   const allEvidence = await loadAgentBrowserManifest(manifestPath)
   const selectedEvidence = allEvidence.filter((evidence) => {
     if (args.scenario != null) {
@@ -123,24 +108,15 @@ async function main() {
 
   try {
     for (const evidence of selectedEvidence) {
-      const slug = sanitizeForPath(
-        `${evidence.prd}-${evidence.scenarioID}-${evidence.title}`,
-      )
-      const artifactDir = path.join(
-        sigilWebRoot,
-        '.artifacts',
-        'agent-browser',
-        slug,
-      )
+      const slug = sanitizeForPath(`${evidence.prd}-${evidence.scenarioID}-${evidence.title}`)
+      const artifactDir = path.join(sigilWebRoot, '.artifacts', 'agent-browser', slug)
       await ensureCleanDir(artifactDir)
       await writeJSONFile(path.join(artifactDir, 'evidence.json'), evidence)
 
       const browser = createAgentBrowserSession(
         `sw-${evidence.prd.toLowerCase()}-${evidence.scenarioID.toLowerCase()}-${Date.now().toString(36)}`,
       )
-      let controller: Awaited<
-        ReturnType<typeof createScriptedConnectionController>
-      > | null = null
+      let controller: Awaited<ReturnType<typeof createScriptedConnectionController>> | null = null
 
       try {
         const scenarioCase = await loadScenarioCase(evidence)
@@ -157,42 +133,44 @@ async function main() {
           evidence,
         })
       } catch (error) {
-        const normalized =
-          error instanceof Error ? error : new Error(String(error))
+        const normalized = error instanceof Error ? error : new Error(String(error))
         failures.push({ evidence, error: normalized })
-        try {
+        await settleBestEffort('failure screenshot capture', async () => {
           await browser.screenshot(path.join(artifactDir, 'failure.png'))
-        } catch {
-          // Best effort only.
-        }
+        })
       } finally {
         try {
-          const snapshot = await browser.snapshotInteractive()
-          await writeJSONFile(
-            path.join(artifactDir, 'browser-snapshot.json'),
-            snapshot,
-          )
+          const snapshot = await withTimeout(browser.snapshotInteractive(), {
+            description: 'interactive browser snapshot',
+            timeoutMs: 5_000,
+          })
+          await writeJSONFile(path.join(artifactDir, 'browser-snapshot.json'), snapshot)
         } catch {
           // Best effort only.
         }
-        await browser.saveCommandLog(
-          path.join(artifactDir, 'browser-commands.log'),
-        )
+        await browser.saveCommandLog(path.join(artifactDir, 'browser-commands.log'))
         if (controller != null) {
           await controller.writeArtifacts()
         }
-        try {
+        await settleBestEffort('agent-browser session teardown', async () => {
           await browser.close()
-        } catch {
-          // Ignore close races during teardown.
-        }
+        })
         if (controller != null) {
-          await controller.close()
+          const activeController = controller
+          await settleBestEffort(
+            'scripted controller teardown',
+            async () => {
+              await activeController.close()
+            },
+            2_000,
+          )
         }
       }
     }
   } finally {
-    await preview.stop()
+    await settleBestEffort('preview server teardown', async () => {
+      await preview.stop()
+    })
   }
 
   if (failures.length > 0) {
@@ -204,9 +182,7 @@ async function main() {
     throw new Error(`${failures.length} agent-browser scenario(s) failed`)
   }
 
-  console.log(
-    `[agent-browser] completed ${selectedEvidence.length} scenario evidence item(s)`,
-  )
+  console.log(`[agent-browser] completed ${selectedEvidence.length} scenario evidence item(s)`)
 }
 
 void main().catch((error) => {

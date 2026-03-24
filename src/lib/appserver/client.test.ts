@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import type { InitializeResult } from '#/lib/protocol'
 import { AppServerRequestError, AppServerSessionClient } from './client'
 import type { WebSocketLike } from './client'
@@ -90,10 +90,7 @@ function createClientHarness() {
   return { client, sockets }
 }
 
-async function connectClient(
-  client: AppServerSessionClient,
-  sockets: FakeWebSocket[],
-) {
+async function connectClient(client: AppServerSessionClient, sockets: FakeWebSocket[]) {
   const connectPromise = client.connect()
   const socket = sockets[0]
   socket.open()
@@ -133,9 +130,7 @@ describe('AppServerSessionClient', () => {
     }
 
     expect(initializeRequest.method).toBe('initialize')
-    expect(initializeRequest.params.protocolVersions).toEqual([
-      'sigil.appserver.v1alpha1',
-    ])
+    expect(initializeRequest.params.protocolVersions).toEqual(['sigil.appserver.v1alpha1'])
     expect(initializedNotification.method).toBe('initialized')
     expect(client.getSnapshot().connectionState).toBe('ready')
     expect(client.getSnapshot().connectionID).toBe(1)

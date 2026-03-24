@@ -1,7 +1,4 @@
-export {
-  PROTOCOL_VERSION,
-  SUPPORTED_PROTOCOL_VERSIONS,
-} from './current.generated'
+export { PROTOCOL_VERSION, SUPPORTED_PROTOCOL_VERSIONS } from './current.generated'
 
 export type {
   AppServerMethodMap,

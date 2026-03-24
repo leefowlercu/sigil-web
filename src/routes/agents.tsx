@@ -14,17 +14,13 @@ type AgentsSearch = {
 
 export const Route = createFileRoute('/agents')({
   validateSearch: (search: Record<string, unknown>): AgentsSearch => ({
-    agent:
-      typeof search.agent === 'string' && search.agent.length > 0
-        ? search.agent
-        : undefined,
+    agent: typeof search.agent === 'string' && search.agent.length > 0 ? search.agent : undefined,
   }),
   component: AgentsRoute,
 })
 
 function AgentsRoute() {
-  const { agents, connectAgent, disconnectAgent, reconnectAgent, removeAgent } =
-    useAgentFleet()
+  const { agents, connectAgent, disconnectAgent, reconnectAgent, removeAgent } = useAgentFleet()
 
   const [selectedAgentId, setSelectedAgentId] = useState('')
   const effectiveAgentId =
@@ -66,16 +62,9 @@ function AgentsRoute() {
         {selectedAgent && <AgentContextPane agent={selectedAgent} />}
 
         {/* Split pane: run list | run detail */}
-        <div
-          data-testid="agents-workspace-scroll-region"
-          className="flex flex-1 overflow-hidden"
-        >
+        <div data-testid="agents-workspace-scroll-region" className="flex flex-1 overflow-hidden">
           {/* Left: Run list */}
-          <RunsPane
-            runs={agentRuns}
-            activeRunId={activeRunId}
-            onSelectRun={setSelectedRunId}
-          />
+          <RunsPane runs={agentRuns} activeRunId={activeRunId} onSelectRun={setSelectedRunId} />
 
           {/* Right: Run detail */}
           <div className="flex flex-1 flex-col overflow-hidden">
