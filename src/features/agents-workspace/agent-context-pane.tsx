@@ -1,4 +1,4 @@
-import { Bot, Hash } from 'lucide-react'
+import { Bot } from 'lucide-react'
 import { Separator } from '#/components/ui/separator'
 import type { AgentInstance } from '#/lib/demo-data'
 import { ConnectionStateBadge } from './status-primitives'
@@ -29,11 +29,6 @@ export function AgentContextPane({ agent }: { agent: AgentInstance }) {
 
       <span className="font-mono text-[0.62rem] font-medium text-muted-foreground">
         {agent.endpoint}
-      </span>
-
-      <span className="ml-auto inline-flex items-center gap-1 text-[0.58rem] font-semibold text-muted-foreground">
-        <Hash className="size-2.5" />
-        {agent.server.instanceId}
       </span>
     </div>
   )
