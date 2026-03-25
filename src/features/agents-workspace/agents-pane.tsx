@@ -39,10 +39,10 @@ function AgentCard({
         }
       }}
       data-testid={`sidebar-agent-${agent.id}`}
-      className={`group relative flex w-full cursor-pointer flex-col gap-2.5 rounded-lg px-3 py-2.5 text-left transition-all ${
+      className={`group relative flex w-full cursor-pointer flex-col gap-2.5 rounded-lg border px-3 py-2.5 text-left transition-all ${
         isSelected
-          ? 'bg-(--sigil-accent-soft) ring-1 ring-(--sigil-accent-border)'
-          : 'hover:bg-(--surface-hover)'
+          ? 'border-(--sigil-accent-border) bg-(--sigil-accent-soft)'
+          : 'border-(--line) hover:border-border hover:bg-(--surface-hover)'
       }`}
     >
       {/* Active edge indicator -- color matches connection state */}
