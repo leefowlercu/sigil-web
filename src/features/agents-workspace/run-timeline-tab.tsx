@@ -290,9 +290,7 @@ export function RunTimelineTab({
               const info = getEventDisplayInfo(event, turnTokenMap)
               return (
                 <div key={event.seq} className="relative flex gap-3 pb-4">
-                  {!isLast && (
-                    <span className="absolute top-4 left-1.75 h-[calc(100%-8px)] w-px bg-(--line)" />
-                  )}
+                  {!isLast && <span className="absolute top-4 left-1.75 h-[calc(100%-8px)] w-px bg-(--line)" />}
                   <span className="relative z-10 mt-1 flex size-3.75 shrink-0 items-center justify-center rounded-full border border-(--line) bg-(--surface-strong)">
                     <span
                       className={`size-1.25 rounded-full ${
@@ -305,19 +303,11 @@ export function RunTimelineTab({
                       <span className="text-xs font-bold tracking-[0.14em] text-muted-foreground uppercase">
                         {formatTimestamp(event.ts)}
                       </span>
-                      <span className="text-sm leading-tight font-semibold text-foreground">
-                        {info.label}
-                      </span>
+                      <span className="text-sm leading-tight font-semibold text-foreground">{info.label}</span>
                     </div>
-                    {info.summary && (
-                      <p className="text-xs leading-relaxed text-muted-foreground">
-                        {info.summary}
-                      </p>
-                    )}
+                    {info.summary && <p className="text-xs leading-relaxed text-muted-foreground">{info.summary}</p>}
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-medium text-muted-foreground/70">
-                        {event.type}
-                      </span>
+                      <span className="text-xs font-medium text-muted-foreground/70">{event.type}</span>
                       <span className="font-mono text-xs whitespace-nowrap text-muted-foreground/70">
                         {event.eventId}
                       </span>
@@ -334,6 +324,7 @@ export function RunTimelineTab({
         <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
           <Button
             type="button"
+            variant="workspace"
             size="icon-sm"
             aria-label={scrollControlLabel}
             aria-hidden={!isScrollControlVisible}
@@ -341,7 +332,7 @@ export function RunTimelineTab({
             tabIndex={isScrollControlVisible ? 0 : -1}
             data-testid="run-detail-timeline-scroll-to-bottom"
             className={cn(
-              'size-10 rounded-full border border-(--sigil-accent-border) bg-(--surface-strong) text-foreground shadow-lg transition-all duration-150 ease-out hover:border-(--sigil-accent-focus-border) hover:bg-(--sigil-accent-hover) hover:text-(--sigil-accent)',
+              'size-10 rounded-full shadow-lg duration-150 ease-out',
               isScrollControlVisible
                 ? 'pointer-events-auto translate-y-0 opacity-100'
                 : 'pointer-events-none translate-y-1 opacity-0',

@@ -1,15 +1,37 @@
 import { useEffect, useState } from 'react'
-import { Activity } from 'lucide-react'
+import { Activity, Plus } from 'lucide-react'
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
+import { Button } from '#/components/ui/button'
 import { AgentContextPane } from '#/features/agents-workspace/agent-context-pane'
 import { AgentsPane } from '#/features/agents-workspace/agents-pane'
 import { RunDetailPane } from '#/features/agents-workspace/run-detail-pane'
 import { RunsPane } from '#/features/agents-workspace/runs-pane'
+import type { AgentInstance } from '#/lib/demo-data'
 import { useAgentFleet } from '#/lib/use-agent-fleet'
 import { useAgentRuns } from '#/lib/use-agent-runs'
 
 type IndexSearch = {
   agent?: string
+}
+
+const agentUrlPrefix = 'agent_'
+
+function toAgentSearchValue(agentId: string): string {
+  return agentId.startsWith(agentUrlPrefix) ? agentId.slice(agentUrlPrefix.length) : agentId
+}
+
+function resolveAgentId(agentSearchValue: string | undefined, agents: AgentInstance[]): string | undefined {
+  if (!agentSearchValue) {
+    return undefined
+  }
+
+  const exactMatch = agents.find((agent) => agent.id === agentSearchValue)
+  if (exactMatch) {
+    return exactMatch.id
+  }
+
+  const canonicalMatch = agents.find((agent) => toAgentSearchValue(agent.id) === agentSearchValue)
+  return canonicalMatch?.id
 }
 
 export const Route = createFileRoute('/')({
@@ -24,10 +46,8 @@ function IndexRoute() {
   const search = useSearch({ from: '/' })
   const { agents, connectAgent, disconnectAgent, reconnectAgent, removeAgent } = useAgentFleet()
 
-  const selectedAgentId =
-    search.agent && agents.some((agent) => agent.id === search.agent)
-      ? search.agent
-      : (agents[0]?.id ?? '')
+  const selectedAgentId = resolveAgentId(search.agent, agents) ?? agents[0]?.id ?? ''
+  const selectedAgentSearchValue = selectedAgentId ? toAgentSearchValue(selectedAgentId) : ''
 
   const selectedAgent = agents.find((agent) => agent.id === selectedAgentId)
   const agentRuns = useAgentRuns(selectedAgentId)
@@ -44,7 +64,11 @@ function IndexRoute() {
   }, [selectedAgentId])
 
   useEffect(() => {
-    const normalizedAgent = selectedAgentId || undefined
+    if (agents.length === 0) {
+      return
+    }
+
+    const normalizedAgent = selectedAgentId ? toAgentSearchValue(selectedAgentId) : undefined
     if (search.agent === normalizedAgent) {
       return
     }
@@ -56,7 +80,7 @@ function IndexRoute() {
       }),
       replace: true,
     })
-  }, [navigate, search.agent, selectedAgentId])
+  }, [agents.length, navigate, search.agent, selectedAgentId])
 
   function handleAgentSelect(id: string) {
     if (id === selectedAgentId) {
@@ -67,14 +91,14 @@ function IndexRoute() {
     void navigate({
       search: (prev) => ({
         ...prev,
-        agent: id,
+        agent: toAgentSearchValue(id),
       }),
     })
   }
 
   return (
     <main data-testid="agents-workspace" className="workspace-route">
-      <input data-testid="agent-search-param" type="hidden" readOnly value={selectedAgentId} />
+      <input data-testid="agent-search-param" type="hidden" readOnly value={selectedAgentSearchValue} />
 
       <AgentsPane
         agents={agents}
@@ -89,7 +113,21 @@ function IndexRoute() {
       <div className="flex flex-1 flex-col overflow-hidden bg-(--workspace-bg)">
         {selectedAgent && (
           <div data-testid="selected-agent-panel">
-            <AgentContextPane agent={selectedAgent} />
+            <AgentContextPane
+              agent={selectedAgent}
+              action={
+                <Button
+                  data-testid="new-run-button"
+                  type="button"
+                  variant="workspace"
+                  size="toolbar"
+                  className="uppercase"
+                >
+                  New Run
+                  <Plus className="size-3" />
+                </Button>
+              }
+            />
           </div>
         )}
 
@@ -104,9 +142,7 @@ function IndexRoute() {
                 <div className="flex size-12 items-center justify-center rounded-xl border border-(--line) bg-(--surface)">
                   <Activity className="size-5 text-muted-foreground opacity-40" />
                 </div>
-                <span className="text-xs font-semibold text-muted-foreground">
-                  Select a run to view details.
-                </span>
+                <span className="text-xs font-semibold text-muted-foreground">Select a run to view details.</span>
               </div>
             )}
           </div>

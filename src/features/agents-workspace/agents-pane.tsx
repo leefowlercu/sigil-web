@@ -57,17 +57,11 @@ function AgentCard({
         <div className="flex min-w-0 flex-1 flex-col gap-2.5">
           <div className="flex items-center gap-2">
             <ConnectionStateDot state={agent.connectionState} />
-            <span
-              className={`text-sm font-bold tracking-tight ${
-                isSelected ? 'text-foreground' : 'text-foreground'
-              }`}
-            >
+            <span className={`text-sm font-bold tracking-tight ${isSelected ? 'text-foreground' : 'text-foreground'}`}>
               {agent.server.instanceName}
             </span>
           </div>
-          <span className="truncate pl-4 font-mono text-xs font-medium text-muted-foreground">
-            {agent.endpoint}
-          </span>
+          <span className="truncate pl-4 font-mono text-xs font-medium text-muted-foreground">{agent.endpoint}</span>
         </div>
 
         {/* Right: action buttons stacked */}
@@ -178,10 +172,10 @@ export function AgentsPane({
             />
           </div>
           <Button
-            variant="secondary"
+            variant="workspace"
             size="sm"
             disabled={!connectEndpoint.trim()}
-            className="h-8 shrink-0 px-2.5 text-[0.65rem] font-semibold tracking-widest uppercase"
+            className="h-8 shrink-0 px-2.5 text-xs uppercase"
             onClick={() => {
               onConnect(connectEndpoint.trim())
               setConnectEndpoint('')
@@ -220,9 +214,7 @@ export function AgentsPane({
           ))}
 
           {filtered.length === 0 && (
-            <div className="px-3 py-6 text-center text-xs text-muted-foreground">
-              No agents match filter.
-            </div>
+            <div className="px-3 py-6 text-center text-xs text-muted-foreground">No agents match filter.</div>
           )}
         </div>
       </ScrollArea>

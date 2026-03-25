@@ -15,7 +15,7 @@ const config = defineConfig({
     semi: false,
     singleQuote: true,
     trailingComma: 'all',
-    printWidth: 100,
+    printWidth: 120,
     sortPackageJson: false,
     sortTailwindcss: {
       functions: ['cn', 'clsx', 'classNames', 'twMerge', 'cva'],
