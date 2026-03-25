@@ -126,7 +126,7 @@ export function RunDetailPane({ agentId, runId }: { agentId: string; runId: stri
         {/* Nodes tab */}
         <TabsContent value="nodes" className="flex-1 overflow-hidden">
           <ScrollArea className="h-full">
-            <div className="flex flex-col gap-2 px-5 py-4">
+            <div className="flex flex-col gap-2 p-3">
               {projection.nodes.map((node) => {
                 const nodeState = node.state as RunState
                 return (
@@ -179,11 +179,11 @@ export function RunDetailPane({ agentId, runId }: { agentId: string; runId: stri
         {/* Steps tab */}
         <TabsContent value="steps" className="flex-1 overflow-hidden">
           <ScrollArea className="h-full">
-            <div className="flex flex-col gap-2 px-5 py-4">
+            <div className="flex flex-col gap-2 p-3">
               {steps.map((step) => (
                 <div
                   key={step.stepId}
-                  className="flex flex-col gap-1.5 rounded-lg border border-(--line) p-3"
+                  className="flex flex-col gap-2.5 rounded-lg border border-(--line) p-3"
                 >
                   <div className="flex items-center gap-2">
                     <span className="rounded-md bg-secondary px-1.5 py-0.5 text-[0.58rem] font-bold tracking-widest text-muted-foreground uppercase">

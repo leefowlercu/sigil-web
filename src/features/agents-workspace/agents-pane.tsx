@@ -39,7 +39,7 @@ function AgentCard({
         }
       }}
       data-testid={`sidebar-agent-${agent.id}`}
-      className={`group relative flex w-full cursor-pointer flex-col gap-1.5 rounded-lg px-3 py-2.5 text-left transition-all ${
+      className={`group relative flex w-full cursor-pointer flex-col gap-2.5 rounded-lg px-3 py-2.5 text-left transition-all ${
         isSelected
           ? 'bg-(--sigil-accent-soft) ring-1 ring-(--sigil-accent-border)'
           : 'hover:bg-(--surface-hover)'
@@ -54,7 +54,7 @@ function AgentCard({
 
       <div className="flex items-start gap-2">
         {/* Left: name + endpoint */}
-        <div className="flex min-w-0 flex-1 flex-col gap-3">
+        <div className="flex min-w-0 flex-1 flex-col gap-2.5">
           <div className="flex items-center gap-2">
             <ConnectionStateDot state={agent.connectionState} />
             <span
@@ -206,7 +206,7 @@ export function AgentsPane({
 
       {/* Agent list */}
       <ScrollArea className="flex-1">
-        <div className="flex flex-col gap-2 p-2">
+        <div className="flex flex-col gap-2 p-3">
           {filtered.map((agent) => (
             <AgentCard
               key={agent.id}
