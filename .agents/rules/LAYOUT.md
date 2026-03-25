@@ -1,8 +1,7 @@
 # Layout
 
 This submodule follows a small TanStack Start application layout with routed
-workflows under `src/routes/`, shared UI primitives under `src/components/`,
-and routed-state governance in checked-in design and acceptance artifacts.
+workflows under `src/routes/` and shared UI primitives under `src/components/`.
 
 ## Top-Level Directories
 
@@ -15,19 +14,14 @@ and routed-state governance in checked-in design and acceptance artifacts.
   agent workspace and embedded run inspection surfaces.
 - `src/lib/`: client-side types, data access, protocol bindings, and helpers.
 - `public/`: static assets served by Vite and TanStack Start.
-- `verification/scenarios/`: the checked-in routed scenario registry and
-  evidence lanes.
-- `verification/design/`: the checked-in Paper-backed visual contract for
-  scenarios with Paper evidence.
-- `acceptance/features/`: Gherkin feature source of truth for web behavior.
 - `.tanstack/`: generated framework state and temp files that should remain out
   of commits.
 - `dist/`: generated production build output that should remain out of commits.
 
 ## Data and Type Layer (`src/lib/`)
 
-- `protocol/`: versioned protocol type system. All imports use `#/lib/protocol`
-  (the barrel `index.ts`), never internal paths.
+- `protocol/`: versioned protocol type system. All imports use
+  `#/lib/protocol` (the barrel `index.ts`), never internal paths.
   - `current.generated.ts`: canonical TypeScript interfaces generated from the
     `sigil` Go binary via `sigil app-server generate-ts`. This file is the
     single source of truth for the current protocol version's wire types. Do
@@ -49,7 +43,6 @@ and routed-state governance in checked-in design and acceptance artifacts.
   `VITE_DATA_SOURCE` environment variable. All route and component code imports
   data values from this module, never from `demo-data.ts` directly. Type-only
   imports may reference `demo-data.ts` for client-side type definitions.
-- `demo-data.test.ts`: Vitest assertions for demo data structural invariants.
 
 ## Protocol Version Strategy
 
@@ -118,9 +111,3 @@ hierarchy:
 - Start from `protocol.generated.ts` (via `sigil app-server generate-ts`) when
   upstream protocol types change; then update client-side types and demo data
   to match.
-- Start from `verification/scenarios/manifest.toml` when routed scenario
-  identity, fixtures, or verification lanes change.
-- Start from `verification/design/manifest.toml` when Paper artboard mappings,
-  viewport requirements, or required `data-testid` values change.
-- Start from `acceptance/features/web_ui.feature` when behavior is
-  acceptance-driven or route-state wording changes.

@@ -1,14 +1,14 @@
 # Changes
 
 Work inside `sigil-web/` as an implementation submodule of the `project-sigil`
-superproject. Keep local code changes aligned with the superproject specs and
-avoid unrelated repo-state churn.
+superproject. Keep local code changes focused and avoid unrelated repo-state
+churn.
 
 ## Boundary Rules
 
-- Treat `sigil-web/` as the implementation layer for `docs/sigil-web/`.
-- Keep spec updates in the superproject docs when behavior changes require
-  them.
+- Treat `sigil-web/` as the implementation layer for the current product.
+- Do not recreate superproject specs or acceptance assets unless the task
+  explicitly calls for starting a new `sigil-web` spec suite.
 - Do not modify `sigil/` or unrelated superproject docs unless the task
   requires coordinated cross-repo work.
 
@@ -25,9 +25,9 @@ avoid unrelated repo-state churn.
 
 - Keep generated build output and transient workspace artifacts out of commits,
   including `dist/`, `.tanstack/`, and `node_modules/`.
-- Keep exploratory design variants either in Paper or in short-lived local code
-  branches until a direction is selected.
-- Prefer targeted route and component changes over broad visual rewrites when
-  the routed behavior contract is already narrow.
-- State any intentional spec, design, or implementation gaps explicitly in the
+- Keep exploratory design variants in short-lived local code branches until a
+  direction is selected.
+- Prefer targeted route and component changes over broad rewrites unless the
+  task is explicitly a reset or redesign.
+- State any intentional documentation or implementation gaps explicitly in the
   final handoff.

@@ -1,34 +1,30 @@
 # AGENTS.md
 
 Siĝil Web is the browser-based command, control, and orchestration plane for
-the Siĝil Agent Harness in App Server Mode. This subproject contains the production web
-implementation that must stay aligned with the `docs/sigil-web/` ADR, PRD, and
-acceptance traceability contracts in the superproject.
+the Siĝil Agent Harness in App Server Mode. This subproject currently has no
+active superproject ADR, PRD, acceptance, or verification contract. Treat it as
+an implementation baseline until a new spec suite is introduced.
 
 ## Table of Contents
 
 - [Development Commands](#development-commands)
 - [Repository Layout](#repository-layout)
 - [Implementation Standards](#implementation-standards)
-- [Design Workflow](#design-workflow)
-- [Specifications](#specifications)
-- [Testing](#testing)
 - [Change Control](#change-control)
 
 ## Development Commands
 
-Use the documented local command surface before inventing ad hoc frontend or
-verification flows. Run commands from the `sigil-web/` subproject root unless a
-document says otherwise. Prefer the native `vp` command surface over equivalent
-`pnpm` script wrappers when both exist.
+Use the documented local command surface before inventing ad hoc maintenance
+flows. Run commands from the `sigil-web/` subproject root unless a document
+says otherwise. Prefer the native `vp` command surface over equivalent `pnpm`
+script wrappers when both exist.
 
 - [Development Commands Reference](.agents/rules/COMMANDS.md)
 
 ## Repository Layout
 
-Use the layout guide to find the route shell, UI primitives, client-side
-service seams, acceptance artifacts, and Paper design contract before changing
-code.
+Use the layout guide to find the route shell, UI primitives, and client-side
+service seams before changing code.
 
 - [Repository Layout Reference](.agents/rules/LAYOUT.md)
 
@@ -39,11 +35,11 @@ state boundaries, Tailwind and ShadCN usage, and selector stability. This keeps
 the web UI aligned with the repo's route and design contracts instead of
 generic React defaults. This includes writing canonical Tailwind class forms at
 authoring time instead of relying on arbitrary-value equivalents when a
-canonical utility exists. When a token is exported through
-`src/styles.css` `@theme inline`, prefer the named utility such as
-`text-foreground`, `text-muted-foreground`, `bg-secondary`, or
-`border-border`; reserve `text-(--token)` and similar forms for bespoke
-repo-local variables such as `--sigil-accent`, `--surface`, or `--line`.
+canonical utility exists. When a token is exported through `src/styles.css`
+`@theme inline`, prefer the named utility such as `text-foreground`,
+`text-muted-foreground`, `bg-secondary`, or `border-border`; reserve
+`text-(--token)` and similar forms for bespoke repo-local variables such as
+`--sigil-accent`, `--surface`, or `--line`.
 
 - [Implementation Standards Reference](.agents/rules/STANDARDS.md)
 
@@ -65,31 +61,6 @@ and how to run the application with or without demo data.
   `vp dev --mode demo`, canonical Tailwind lint/fmt workflows, Tailwind
   canonical-class limits that still require manual cleanup, and protocol type
   regeneration.
-
-## Design Workflow
-
-Use the design workflow guide when changing routed UI states or iterating on
-Paper prototypes. It explains how PRDs, the scenario manifest, the design
-manifest, Paper artboards, and implementation should move together.
-
-- [Design Workflow Reference](.agents/rules/DESIGN.md)
-
-## Specifications
-
-Treat the superproject specs as the behavioral source of truth for this
-submodule. Use the spec guide to see which ADR, PRD, matrix, acceptance, and
-manifest files must move together when behavior changes.
-
-- [Specification Reference](.agents/rules/SPECS.md)
-
-## Testing
-
-Use the testing guide to keep implementation checks, spec verification, and the
-scripted browser acceptance harness separate and deterministic. Update the
-failing contract first, then run the smallest relevant verification path before
-broader suites.
-
-- [Testing Reference](.agents/rules/TESTING.md)
 
 ## Change Control
 

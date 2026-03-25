@@ -12,8 +12,7 @@ place for ad hoc route, state, or design conventions.
 - Keep `/runs/$runId` as the dedicated run-detail workspace route.
 - Keep session health as one shared application concern rather than
   reimplementing connection state independently per page.
-- Keep ShadCN, Lucide, and Tailwind as the implementation palette, not the
-  visual source of truth.
+- Keep ShadCN, Lucide, and Tailwind as the implementation palette.
 - Preserve stable `data-testid` values when iterating on layout or styling.
 - Prefer shared client and service layers in `src/lib/` over embedding ad hoc
   protocol or transport logic directly inside route components.
@@ -49,17 +48,12 @@ place for ad hoc route, state, or design conventions.
 - Keep the root route responsible for fleet visibility, selected-agent detail,
   and selected-agent run discovery.
 - Keep new-run authoring scoped to a selected-agent dialog in the root route
-  workspace until the specs say otherwise.
+  workspace until the product direction says otherwise.
 - Keep run-detail inspection, live updates, and stop outcomes in the
   `/runs/$runId` workspace rather than splitting them across multiple pages.
-- Preserve current scenario-manifest route IDs and state IDs plus
-  design-manifest paper-artboard naming conventions unless the superproject
-  specs change them in the same task.
 
 ## Source Documents
 
 - Superproject agent rules: `../../AGENTS.md`
-- Architecture decisions: `../../docs/sigil-web/ADR/README.md`
-- Product requirements: `../../docs/sigil-web/PRD/README.md`
-- Scenario contract: `../../sigil-web/verification/scenarios/manifest.toml`
-- Paper design contract: `../../sigil-web/verification/design/manifest.toml`
+- Superproject placeholder doc: `../../docs/sigil-web/README.md`
+- Local submodule overview: `../../sigil-web/README.md`

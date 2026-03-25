@@ -15,10 +15,6 @@ when both exist.
   with seeded agent instances, runs, and detail views.
 - `vp build`: build the client and server bundles.
 - `vp preview`: preview the production build locally.
-- `vp test`: run the current Vite+ test suite.
-- `pnpm test:acceptance`: run the browser acceptance harness with the pinned
-  `agent-browser` runner against a production preview build. No `vp`
-  equivalent exists for this custom package script today.
 - `vp lint`: run Oxlint without modifying files.
 - `vp lint --fix`: apply safe Oxlint fixes.
 - `vp lint --fix --fix-suggestions`: apply Tailwind canonical-class rewrites
@@ -39,28 +35,21 @@ when both exist.
   After regenerating, verify that existing version adapters in
   `src/lib/protocol/adapters/` still compile against the new types.
 
-## Design and Spec Verification
+## Component Generation
 
-- `../scripts/verify-specs --subproject sigil-web`: verify PRD, matrix,
-  acceptance-title, scenario-manifest, and design-manifest consistency from the
-  superproject root.
 - `pnpm dlx shadcn@latest add <component>`: add new ShadCN components when the
   design requires them.
 
 ## Working Guidance
 
-- Prefer `vp check`, `vp test`, and `vp build` as the default local
-  verification trio for implementation work.
+- Prefer `vp check` and `vp build` as the default local maintenance pair for
+  implementation work.
 - Use `vp lint --fix --fix-suggestions` after broad Tailwind edits; canonical
   class rewrites are suggestion fixes rather than plain safe fixes.
 - Do not rely on `vp lint --fix --fix-suggestions` to rewrite every VSCode
   Tailwind canonical-class suggestion; theme-alias cases such as
   `text-(--foreground)` to `text-foreground` may still need manual cleanup.
-- Use `pnpm test:acceptance` for deterministic browser verification of live
-  WebSocket UI behavior through the scripted fixture harness.
-- Run `../scripts/verify-specs --subproject sigil-web` whenever PRD, matrix,
-  acceptance-title, scenario-manifest, or design-manifest structure changes.
-- Use `vp dev --mode demo` while iterating on UI layout, styling, or Paper
-  prototypes where seeded data is needed.
+- Use `vp dev --mode demo` while iterating on UI layout or styling where
+  seeded data is needed.
 - Use `vp dev` when testing against a real `sigil` app-server instance over
   WebSocket.
