@@ -1,10 +1,6 @@
 import { useEffect, useState, useSyncExternalStore } from 'react'
 import type { RunArtifactReadPayload } from '#/lib/protocol'
-import {
-  getAgentSession,
-  getAgentSessionSnapshot,
-  subscribeAgentSessionStore,
-} from './appserver/store'
+import { getAgentSession, getAgentSessionSnapshot, subscribeAgentSessionStore } from './appserver/store'
 import { getRunArtifact } from './data'
 
 export type RunArtifactStatus = 'idle' | 'loading' | 'ready' | 'error'
@@ -25,11 +21,7 @@ function normalizeError(error: unknown): string {
   return error instanceof Error ? error.message : 'artifact load failed'
 }
 
-export function useRunArtifact(
-  agentId: string,
-  runId: string,
-  artifactRef?: string,
-): RunArtifactState {
+export function useRunArtifact(agentId: string, runId: string, artifactRef?: string): RunArtifactState {
   const isDemoMode = import.meta.env.VITE_DATA_SOURCE === 'demo'
   const [state, setState] = useState<RunArtifactState>(initialState)
   const sessionSnapshot = useSyncExternalStore(

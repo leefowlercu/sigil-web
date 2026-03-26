@@ -21,7 +21,7 @@ const config = defineConfig({
       functions: ['cn', 'clsx', 'classNames', 'twMerge', 'cva'],
       stylesheet: tailwindStylesheetPath,
     },
-    ignorePatterns: ['package-lock.json', 'pnpm-lock.yaml', 'yarn.lock'],
+    ignorePatterns: ['package-lock.json', 'pnpm-lock.yaml', 'yarn.lock', 'src/routeTree.gen.ts'],
   },
   lint: {
     plugins: ['import', 'typescript'],

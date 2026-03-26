@@ -1,11 +1,6 @@
 import { useEffect, useReducer, useSyncExternalStore } from 'react'
 import type { RunSummaryView } from '#/lib/protocol'
-import {
-  getAgentSession,
-  getAgentSessionSnapshot,
-  listAllRuns,
-  subscribeAgentSessionStore,
-} from './appserver/store'
+import { getAgentSession, getAgentSessionSnapshot, listAllRuns, subscribeAgentSessionStore } from './appserver/store'
 import { getRunsForAgent } from './data'
 
 /* ------------------------------------------------------------------ */
@@ -51,9 +46,7 @@ export function agentRunsReducer(state: AgentRunsState, action: AgentRunsAction)
 
     case 'RUN_UPSERTED':
       return {
-        runs: sortRunsNewestFirst(
-          state.runs.filter((run) => run.runId !== action.run.runId).concat(action.run),
-        ),
+        runs: sortRunsNewestFirst(state.runs.filter((run) => run.runId !== action.run.runId).concat(action.run)),
       }
 
     case 'RUN_STATUS_CHANGED':
@@ -67,8 +60,7 @@ export function agentRunsReducer(state: AgentRunsState, action: AgentRunsAction)
             const nextRun: RunSummaryView = {
               ...run,
               state: action.state,
-              terminalAt:
-                action.terminal && !run.terminalAt ? new Date().toISOString() : run.terminalAt,
+              terminalAt: action.terminal && !run.terminalAt ? new Date().toISOString() : run.terminalAt,
             }
 
             return normalizeRunSummary(nextRun)

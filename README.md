@@ -13,20 +13,24 @@ Siĝil app-server when it runs in WebSocket mode.
 
 ## Current State
 
-- There is currently no active committed ADR, PRD, acceptance, or verification
-  suite for `sigil-web`.
-- [`../docs/sigil-web/README.md`](../docs/sigil-web/README.md) is the
-  superproject placeholder for a future rebuild.
+- `sigil-web` is governed by the active ADR, PRD, and traceability suite in
+  [`../docs/sigil-web/`](../docs/sigil-web/README.md).
+- Gherkin feature files under `acceptance/features/` are the behavioral source
+  of truth for browser acceptance.
 
 ## Development Commands
 
 - `pnpm dev`: run the TanStack Start app locally on port `3000` through Vite+
+- `pnpm dev:demo`: run the app with seeded demo agents and runs
 - `pnpm build`: build the client and server bundles through Vite+
 - `pnpm lint`: run Vite+ linting without modifying files
 - `pnpm lint:fix`: apply Vite+ lint fixes
 - `pnpm format`: format the repository with Vite+ formatting
 - `pnpm format:check`: verify Vite+ formatting
 - `pnpm check`: run Vite+ formatting, lint, and type verification
+- `pnpm test:unit`: run fast implementation-focused TypeScript tests
+- `pnpm test:acceptance`: run browser-first Gherkin acceptance through
+  `agent-browser`
 
 ## Route Surface
 
@@ -38,6 +42,12 @@ Siĝil app-server when it runs in WebSocket mode.
 
 ## Workflow
 
-- Treat the current repository as an implementation baseline.
+- Update the owning PRD scenarios before or alongside behavior changes.
+- Keep `../docs/sigil-web/PRD/MATRIX.md` and `acceptance/features/*.feature`
+  titles mechanically aligned with PRD scenario titles.
+- Run `../scripts/verify-specs --subproject sigil-web` after structural PRD,
+  matrix, or acceptance-title edits.
 - Keep route semantics and stable `data-testid` values intact unless the task
   explicitly changes them.
+- Mark visible but unimplemented affordances as deferred in specs instead of
+  inventing behavior.

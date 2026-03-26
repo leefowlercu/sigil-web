@@ -452,8 +452,7 @@ const demoDetails: Record<string, RunDetailView> = {
       runId: '019d1766-9f94-7138-b433-2ff91272295c',
       name: 'run-start-templated',
       state: 'completed',
-      runDir:
-        '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-b433-2ff91272295c',
+      runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-b433-2ff91272295c',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-b433-2ff91272295c/events.jsonl',
       source: 'cli.run.start',
@@ -930,8 +929,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 25258,
-          finalAnswerRef:
-            'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
+          finalAnswerRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -1004,8 +1002,7 @@ const demoDetails: Record<string, RunDetailView> = {
       runId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
       name: 'run-start-templated',
       state: 'completed',
-      runDir:
-        '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-0268-7d98-9ee7-05e4b04ed44c',
+      runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-0268-7d98-9ee7-05e4b04ed44c',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-0268-7d98-9ee7-05e4b04ed44c/events.jsonl',
       source: 'cli.run.start',
@@ -1482,8 +1479,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 15999,
-          finalAnswerRef:
-            'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
+          finalAnswerRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -1556,8 +1552,7 @@ const demoDetails: Record<string, RunDetailView> = {
       runId: '019d1767-410f-7659-8f98-5657c78271de',
       name: 'run-start-templated',
       state: 'completed',
-      runDir:
-        '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-410f-7659-8f98-5657c78271de',
+      runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-410f-7659-8f98-5657c78271de',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-410f-7659-8f98-5657c78271de/events.jsonl',
       source: 'cli.run.start',
@@ -1914,8 +1909,7 @@ const demoDetails: Record<string, RunDetailView> = {
           actionRef:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-870c-700b-9818-15f8bb186dba/action-1.json',
           errorCode: 'repl_execution_compile',
-          errorMessage:
-            'repl_execution_compile: repl execution failed at compile stage: 2:5: constant definition loop',
+          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:5: constant definition loop',
         },
       },
       {
@@ -2381,8 +2375,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 78806,
-          finalAnswerRef:
-            'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
+          finalAnswerRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -2455,8 +2448,7 @@ const demoDetails: Record<string, RunDetailView> = {
       runId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
       name: 'mrcr-2needle',
       state: 'completed',
-      runDir:
-        '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
+      runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-71f4-bc7f-0a6726b7d5f8/events.jsonl',
       source: 'cli.run.start',
@@ -3105,8 +3097,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 43996,
-          finalAnswerRef:
-            'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
+          finalAnswerRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -3179,8 +3170,7 @@ const demoDetails: Record<string, RunDetailView> = {
       runId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
       name: 'mrcr-2needle',
       state: 'completed',
-      runDir:
-        '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-4ba2-71ff-96e6-e50807a3d03f',
+      runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-4ba2-71ff-96e6-e50807a3d03f',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-4ba2-71ff-96e6-e50807a3d03f/events.jsonl',
       source: 'cli.run.start',
@@ -4360,8 +4350,7 @@ const demoDetails: Record<string, RunDetailView> = {
           actionRef:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-457f-7a64-b4f9-5d62e7e22646/action-1.json',
           errorCode: 'repl_execution_compile',
-          errorMessage:
-            'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
+          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
         },
       },
       {
@@ -4990,8 +4979,7 @@ const demoDetails: Record<string, RunDetailView> = {
           actionRef:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-b107-78d1-8b8c-40a69e167eb3/action-1.json',
           errorCode: 'repl_execution_compile',
-          errorMessage:
-            'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
+          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
         },
       },
       {
@@ -5935,8 +5923,7 @@ const demoDetails: Record<string, RunDetailView> = {
           actionRef:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-223d-709c-846f-4b5937249f53/action-1.json',
           errorCode: 'repl_execution_compile',
-          errorMessage:
-            'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
+          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
         },
       },
       {
@@ -6562,8 +6549,7 @@ const demoDetails: Record<string, RunDetailView> = {
           actionRef:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-46d3-7109-ad6a-f7e1e53de67d/action-1.json',
           errorCode: 'repl_execution_compile',
-          errorMessage:
-            'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
+          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
         },
       },
       {
@@ -7812,8 +7798,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 586893,
-          finalAnswerRef:
-            'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
+          finalAnswerRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -7886,8 +7871,7 @@ const demoDetails: Record<string, RunDetailView> = {
       runId: '019d1766-9f94-7138-827c-5226fc9d6144',
       name: 'mrcr-4needle',
       state: 'completed',
-      runDir:
-        '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-827c-5226fc9d6144',
+      runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-827c-5226fc9d6144',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-827c-5226fc9d6144/events.jsonl',
       source: 'cli.run.start',
@@ -8536,8 +8520,7 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           status: 'completed',
           durationMs: 67851,
-          finalAnswerRef:
-            'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
+          finalAnswerRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
@@ -8610,8 +8593,7 @@ const demoDetails: Record<string, RunDetailView> = {
       runId: '019d1770-4e3e-7474-8d54-464b1e695147',
       name: 'mrcr-4needle',
       state: 'interrupted',
-      runDir:
-        '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1770-4e3e-7474-8d54-464b1e695147',
+      runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1770-4e3e-7474-8d54-464b1e695147',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1770-4e3e-7474-8d54-464b1e695147/events.jsonl',
       source: 'cli.run.start',
@@ -9015,10 +8997,7 @@ function parseFinalAnswerNodeId(artifactRef: string): string | undefined {
   return match?.[1]
 }
 
-export function getRunArtifact(
-  runId: string,
-  artifactRef: string,
-): RunArtifactReadPayload | undefined {
+export function getRunArtifact(runId: string, artifactRef: string): RunArtifactReadPayload | undefined {
   const detail = demoDetails[runId]
   if (detail?.projection.finalAnswerRef !== artifactRef) {
     return undefined

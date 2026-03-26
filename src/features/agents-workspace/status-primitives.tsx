@@ -6,15 +6,11 @@ import type { ConnectionState, RunState } from '#/lib/demo-data'
 /*  Run state                                                          */
 /* ------------------------------------------------------------------ */
 
-export const STATE_CONFIG: Record<
-  RunState,
-  { label: string; dotClass: string; badgeClass: string }
-> = {
+export const STATE_CONFIG: Record<RunState, { label: string; dotClass: string; badgeClass: string }> = {
   running: {
     label: 'Running',
     dotClass: 'bg-(--run-status-running) shadow-(--run-status-running-shadow)',
-    badgeClass:
-      'border-(--run-status-running-border) bg-(--run-status-running-bg) text-(--run-status-running-text)',
+    badgeClass: 'border-(--run-status-running-border) bg-(--run-status-running-bg) text-(--run-status-running-text)',
   },
   completed: {
     label: 'Completed',
@@ -25,8 +21,7 @@ export const STATE_CONFIG: Record<
   failed: {
     label: 'Failed',
     dotClass: 'bg-(--run-status-failed)',
-    badgeClass:
-      'border-(--run-status-failed-border) bg-(--run-status-failed-bg) text-(--run-status-failed-text)',
+    badgeClass: 'border-(--run-status-failed-border) bg-(--run-status-failed-bg) text-(--run-status-failed-text)',
   },
   interrupted: {
     label: 'Interrupted',
@@ -37,8 +32,7 @@ export const STATE_CONFIG: Record<
   queued: {
     label: 'Queued',
     dotClass: 'bg-(--run-status-queued)',
-    badgeClass:
-      'border-(--run-status-queued-border) bg-(--run-status-queued-bg) text-(--run-status-queued-text)',
+    badgeClass: 'border-(--run-status-queued-border) bg-(--run-status-queued-bg) text-(--run-status-queued-text)',
   },
 }
 
@@ -46,11 +40,7 @@ export function StateDot({ state, pulse }: { state: RunState; pulse?: boolean })
   const config = STATE_CONFIG[state]
   return (
     <span className="relative flex size-2.5">
-      {pulse && (
-        <span
-          className={`absolute inset-0 rounded-full ${config.dotClass} animate-ping opacity-60`}
-        />
-      )}
+      {pulse && <span className={`absolute inset-0 rounded-full ${config.dotClass} animate-ping opacity-60`} />}
       <span className={`relative size-2.5 rounded-full ${config.dotClass}`} />
     </span>
   )
@@ -96,15 +86,13 @@ export const CONNECTION_STATE_CONFIG: Record<
   ready: {
     label: 'Ready',
     dotClass: 'bg-(--connection-ready)',
-    badgeClass:
-      'border-(--connection-ready-border) bg-(--connection-ready-bg) text-(--connection-ready-text)',
+    badgeClass: 'border-(--connection-ready-border) bg-(--connection-ready-bg) text-(--connection-ready-text)',
     pulse: false,
   },
   degraded: {
     label: 'Degraded',
     dotClass: 'bg-(--connection-degraded)',
-    badgeClass:
-      'border-(--connection-degraded-border) bg-(--connection-degraded-bg) text-(--connection-degraded-text)',
+    badgeClass: 'border-(--connection-degraded-border) bg-(--connection-degraded-bg) text-(--connection-degraded-text)',
     pulse: false,
   },
   reconnecting: {
@@ -127,11 +115,7 @@ export function ConnectionStateDot({ state }: { state: ConnectionState }) {
   const config = CONNECTION_STATE_CONFIG[state]
   return (
     <span className="relative flex size-2">
-      {config.pulse && (
-        <span
-          className={`absolute inset-0 rounded-full ${config.dotClass} animate-ping opacity-60`}
-        />
-      )}
+      {config.pulse && <span className={`absolute inset-0 rounded-full ${config.dotClass} animate-ping opacity-60`} />}
       <span className={`relative size-2 rounded-full ${config.dotClass}`} />
     </span>
   )

@@ -75,30 +75,33 @@ export function RunDetailPane({ agentId, runId }: { agentId: string; runId: stri
   const isLive = state === 'running' && !terminal
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden bg-(--workspace-bg)">
+    <div
+      data-testid="run-detail-pane"
+      className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden bg-(--workspace-bg)"
+    >
       {/* Tabbed detail content */}
       <Tabs defaultValue="timeline" className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden">
         <div className="flex shrink-0 items-center border-b border-(--line) py-1.75 pr-3 pl-4">
-          <TabsList variant="line" className="h-auto gap-0">
-            <TabsTrigger value="timeline" className="gap-1 text-xs">
+          <TabsList data-testid="run-detail-tabs" variant="line" className="h-auto gap-0">
+            <TabsTrigger data-testid="run-detail-tab-timeline" value="timeline" className="gap-1 text-xs">
               <Activity className="size-3" />
               Timeline
             </TabsTrigger>
-            <TabsTrigger value="nodes" className="gap-1 text-xs">
+            <TabsTrigger data-testid="run-detail-tab-nodes" value="nodes" className="gap-1 text-xs">
               <Layers className="size-3" />
               Nodes
             </TabsTrigger>
-            <TabsTrigger value="steps" className="gap-1 text-xs">
+            <TabsTrigger data-testid="run-detail-tab-steps" value="steps" className="gap-1 text-xs">
               <FileText className="size-3" />
               Steps
             </TabsTrigger>
-            <TabsTrigger value="meta" className="gap-1 text-xs">
+            <TabsTrigger data-testid="run-detail-tab-meta" value="meta" className="gap-1 text-xs">
               <Terminal className="size-3" />
               Meta
             </TabsTrigger>
           </TabsList>
           <Button asChild variant="workspace" size="toolbar" className="ml-auto uppercase">
-            <Link to="/runs/$runId" params={{ runId }}>
+            <Link data-testid="open-run-detail" to="/runs/$runId" params={{ runId }}>
               Open Detail
               <ArrowUpRight className="size-3" />
             </Link>
@@ -185,7 +188,11 @@ export function RunDetailPane({ agentId, runId }: { agentId: string; runId: stri
         </TabsContent>
 
         {/* Meta tab */}
-        <TabsContent value="meta" className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <TabsContent
+          data-testid="run-detail-meta-panel"
+          value="meta"
+          className="flex min-h-0 flex-1 flex-col overflow-hidden"
+        >
           <ScrollArea className="min-h-0 flex-1">
             <div className="flex flex-col gap-3 px-5 py-4">
               <MetaRow label="Name" value={projection.name} />

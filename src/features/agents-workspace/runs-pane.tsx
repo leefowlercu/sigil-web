@@ -91,7 +91,11 @@ export function RunsPane({
     <div className="flex w-90 shrink-0 flex-col border-r border-(--line) bg-(--workspace-bg)">
       <div className="flex items-center justify-between border-b border-(--line) px-4 py-3.75">
         <span className="text-sm font-bold text-foreground uppercase">Runs</span>
-        <Badge variant="outline" className="border-border bg-secondary text-[0.58rem] font-bold text-muted-foreground">
+        <Badge
+          data-testid="runs-count"
+          variant="outline"
+          className="border-border bg-secondary text-[0.58rem] font-bold text-muted-foreground"
+        >
           {runs.length}
         </Badge>
       </div>
@@ -108,7 +112,7 @@ export function RunsPane({
           ))}
 
           {runs.length === 0 && (
-            <div className="flex flex-col items-center gap-2 py-12 text-center">
+            <div data-testid="runs-empty-state" className="flex flex-col items-center gap-2 py-12 text-center">
               <Terminal className="size-6 text-muted-foreground opacity-40" />
               <span className="text-xs font-semibold text-muted-foreground">No runs for this agent.</span>
             </div>

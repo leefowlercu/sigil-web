@@ -40,10 +40,7 @@ export const initialState: AgentFleetState = {
   agents: [],
 }
 
-export function agentFleetReducer(
-  state: AgentFleetState,
-  action: AgentFleetAction,
-): AgentFleetState {
+export function agentFleetReducer(state: AgentFleetState, action: AgentFleetAction): AgentFleetState {
   switch (action.type) {
     case 'RESET':
       return initialState
@@ -57,9 +54,7 @@ export function agentFleetReducer(
     case 'AGENT_DISCONNECTED':
       return {
         agents: state.agents.map((a) =>
-          a.id === action.agentId
-            ? { ...a, connectionState: 'disconnected' as ConnectionState }
-            : a,
+          a.id === action.agentId ? { ...a, connectionState: 'disconnected' as ConnectionState } : a,
         ),
       }
 

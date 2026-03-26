@@ -7,8 +7,8 @@ churn.
 ## Boundary Rules
 
 - Treat `sigil-web/` as the implementation layer for the current product.
-- Do not recreate superproject specs or acceptance assets unless the task
-  explicitly calls for starting a new `sigil-web` spec suite.
+- Keep `sigil-web/` implementation changes aligned with the active
+  `docs/sigil-web/` ADR, PRD, matrix, and acceptance suite.
 - Do not modify `sigil/` or unrelated superproject docs unless the task
   requires coordinated cross-repo work.
 
@@ -25,6 +25,7 @@ churn.
 
 - Keep generated build output and transient workspace artifacts out of commits,
   including `dist/`, `.tanstack/`, and `node_modules/`.
+- Keep acceptance temp files and browser artifacts out of commits.
 - Keep exploratory design variants in short-lived local code branches until a
   direction is selected.
 - Prefer targeted route and component changes over broad rewrites unless the

@@ -23,8 +23,7 @@ export function getEventCategory(eventType: string): EventCategory {
   if (eventType.startsWith('node.step.')) return 'step'
   if (eventType.startsWith('node.turn.')) return 'turn'
   if (eventType.startsWith('node.action.') || eventType.startsWith('node.subcall.')) return 'action'
-  if (eventType === 'node.started' || eventType === 'node.completed' || eventType === 'node.failed')
-    return 'node'
+  if (eventType === 'node.started' || eventType === 'node.completed' || eventType === 'node.failed') return 'node'
   return 'step'
 }
 

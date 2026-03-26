@@ -22,8 +22,19 @@ when both exist.
 - `vp fmt . --write`: format the repo with Oxfmt and sort Tailwind classes.
 - `vp fmt . --check`: verify formatting without modifying files.
 - `vp check`: run non-mutating formatting, lint, and type verification.
+- `pnpm test:unit`: run fast TypeScript unit tests with Vitest.
+- `pnpm test:acceptance`: run browser-first Gherkin acceptance with
+  `agent-browser`.
 - `pnpm <script>` wrappers remain available for compatibility, but use them
   only when a documented `vp` equivalent does not exist.
+
+## Acceptance Prerequisites
+
+- `agent-browser` must be installed globally or otherwise available on `PATH`.
+- Set `AGENT_BROWSER_BIN` when the executable is not named `agent-browser` on
+  the current machine.
+- Run `agent-browser install` once on a workstation before the first acceptance
+  run if browser binaries have not already been installed.
 
 ## Protocol Type Generation
 
@@ -44,6 +55,8 @@ when both exist.
 
 - Prefer `vp check` and `vp build` as the default local maintenance pair for
   implementation work.
+- Use `pnpm test:unit` for reducer, protocol, and session-client loops.
+- Use `pnpm test:acceptance` for browser-visible behavior changes.
 - Use `vp lint --fix --fix-suggestions` after broad Tailwind edits; canonical
   class rewrites are suggestion fixes rather than plain safe fixes.
 - Do not rely on `vp lint --fix --fix-suggestions` to rewrite every VSCode
@@ -53,3 +66,5 @@ when both exist.
   seeded data is needed.
 - Use `vp dev` when testing against a real `sigil` app-server instance over
   WebSocket.
+- Use `../scripts/verify-specs --subproject sigil-web` whenever PRD, matrix, or
+  acceptance-title structure changes.

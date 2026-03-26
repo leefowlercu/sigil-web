@@ -16,11 +16,11 @@ type IndexSearch = {
 
 const agentUrlPrefix = 'agent_'
 
-function toAgentSearchValue(agentId: string): string {
+export function toAgentSearchValue(agentId: string): string {
   return agentId.startsWith(agentUrlPrefix) ? agentId.slice(agentUrlPrefix.length) : agentId
 }
 
-function resolveAgentId(agentSearchValue: string | undefined, agents: AgentInstance[]): string | undefined {
+export function resolveAgentId(agentSearchValue: string | undefined, agents: AgentInstance[]): string | undefined {
   if (!agentSearchValue) {
     return undefined
   }
@@ -138,7 +138,10 @@ function IndexRoute() {
             {activeRunId ? (
               <RunDetailPane agentId={selectedAgentId} runId={activeRunId} />
             ) : (
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
+              <div
+                data-testid="run-detail-empty-state"
+                className="flex flex-1 flex-col items-center justify-center gap-3 text-center"
+              >
                 <div className="flex size-12 items-center justify-center rounded-xl border border-(--line) bg-(--surface)">
                   <Activity className="size-5 text-muted-foreground opacity-40" />
                 </div>

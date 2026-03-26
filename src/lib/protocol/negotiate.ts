@@ -10,9 +10,7 @@ export const supportedVersions = Object.keys(adapterRegistry)
 export function negotiateAdapter(serverVersion: string): ProtocolAdapter {
   const adapter = adapterRegistry[serverVersion]
   if (!adapter) {
-    throw new Error(
-      `unsupported protocol version "${serverVersion}"; supported: ${supportedVersions.join(', ')}`,
-    )
+    throw new Error(`unsupported protocol version "${serverVersion}"; supported: ${supportedVersions.join(', ')}`)
   }
   return adapter
 }

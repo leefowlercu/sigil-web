@@ -1,15 +1,17 @@
 # AGENTS.md
 
 Siĝil Web is the browser-based command, control, and orchestration plane for
-the Siĝil Agent Harness in App Server Mode. This subproject currently has no
-active superproject ADR, PRD, acceptance, or verification contract. Treat it as
-an implementation baseline until a new spec suite is introduced.
+the Siĝil Agent Harness in App Server Mode. This subproject is governed by the
+active `docs/sigil-web/` ADR, PRD, and acceptance traceability suite in the
+superproject.
 
 ## Table of Contents
 
 - [Development Commands](#development-commands)
 - [Repository Layout](#repository-layout)
 - [Implementation Standards](#implementation-standards)
+- [Specifications](#specifications)
+- [Testing](#testing)
 - [Change Control](#change-control)
 
 ## Development Commands
@@ -43,6 +45,22 @@ canonical utility exists. When a token is exported through `src/styles.css`
 
 - [Implementation Standards Reference](.agents/rules/STANDARDS.md)
 
+## Specifications
+
+Treat the superproject `sigil-web` specs as the behavioral source of truth for
+this submodule. Use the spec guide to see which ADR, PRD, matrix, and
+acceptance files must move together when behavior changes.
+
+- [Specification Reference](.agents/rules/SPECS.md)
+
+## Testing
+
+Use the testing guide to keep fast TypeScript checks separate from browser-first
+acceptance coverage. Update the failing contract first, then run the narrowest
+relevant verification path before broader suites.
+
+- [Testing Reference](.agents/rules/TESTING.md)
+
 ## Protocol Types and Data
 
 Use the protocol and data guide to understand how upstream `sigil` app-server
@@ -55,12 +73,14 @@ and how to run the application with or without demo data.
   never fabricate fields absent from the wire types.
 - Data values are gated behind `VITE_DATA_SOURCE` and accessed through
   `src/lib/data.ts`.
+- Browser acceptance uses the external `agent-browser` CLI and must not vendor a
+  second browser driver inside this repo.
 - See [Layout Reference](.agents/rules/LAYOUT.md) for the type hierarchy and
   file responsibilities.
 - See [Commands Reference](.agents/rules/COMMANDS.md) for `vp dev` vs
-  `vp dev --mode demo`, canonical Tailwind lint/fmt workflows, Tailwind
-  canonical-class limits that still require manual cleanup, and protocol type
-  regeneration.
+  `vp dev --mode demo`, `pnpm test:unit`, `pnpm test:acceptance`,
+  `agent-browser` prerequisites, canonical Tailwind lint/fmt workflows, and
+  protocol type regeneration.
 
 ## Change Control
 

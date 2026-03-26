@@ -27,7 +27,7 @@ export function AgentContextPane({ agent, action }: AgentContextPaneProps) {
 
         <Separator orientation="vertical" className="h-4 shrink-0" />
 
-        <div className="shrink-0">
+        <div data-testid="selected-agent-connection-state" className="shrink-0">
           <ConnectionStateBadge state={agent.connectionState} />
         </div>
 

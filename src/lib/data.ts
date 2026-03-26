@@ -26,9 +26,6 @@ export function getRunSnapshot(runId: string): RunDetailView | undefined {
   return isDemoMode ? demo.getRunDetail(runId) : undefined
 }
 
-export function getRunArtifact(
-  runId: string,
-  artifactRef: string,
-): RunArtifactReadPayload | undefined {
+export function getRunArtifact(runId: string, artifactRef: string): RunArtifactReadPayload | undefined {
   return isDemoMode ? demo.getRunArtifact(runId, artifactRef) : undefined
 }

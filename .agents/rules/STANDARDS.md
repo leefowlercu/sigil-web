@@ -55,5 +55,7 @@ place for ad hoc route, state, or design conventions.
 ## Source Documents
 
 - Superproject agent rules: `../../AGENTS.md`
-- Superproject placeholder doc: `../../docs/sigil-web/README.md`
+- Superproject ADR index: `../../docs/sigil-web/ADR/README.md`
+- Superproject PRD index: `../../docs/sigil-web/PRD/README.md`
+- Superproject traceability matrix: `../../docs/sigil-web/PRD/MATRIX.md`
 - Local submodule overview: `../../sigil-web/README.md`

@@ -1,15 +1,6 @@
 import { useEffect, useReducer, useRef, useSyncExternalStore } from 'react'
-import type {
-  EventEnvelopeView,
-  RunProjectionView,
-  RunStepSummaryView,
-  RunTreeReadPayload,
-} from '#/lib/protocol'
-import {
-  getAgentSession,
-  getAgentSessionSnapshot,
-  subscribeAgentSessionStore,
-} from './appserver/store'
+import type { EventEnvelopeView, RunProjectionView, RunStepSummaryView, RunTreeReadPayload } from '#/lib/protocol'
+import { getAgentSession, getAgentSessionSnapshot, subscribeAgentSessionStore } from './appserver/store'
 import { getRunSnapshot } from './data'
 
 /* ------------------------------------------------------------------ */
@@ -261,20 +252,11 @@ export function deriveRunSubscriptionActions(event: EventEnvelopeView): RunSubsc
   }
 }
 
-function applyDerivedActions(
-  state: RunSubscriptionState,
-  actions: RunSubscriptionAction[],
-): RunSubscriptionState {
-  return actions.reduce(
-    (currentState, currentAction) => runSubscriptionReducer(currentState, currentAction),
-    state,
-  )
+function applyDerivedActions(state: RunSubscriptionState, actions: RunSubscriptionAction[]): RunSubscriptionState {
+  return actions.reduce((currentState, currentAction) => runSubscriptionReducer(currentState, currentAction), state)
 }
 
-function appendEventEnvelope(
-  state: RunSubscriptionState,
-  event: EventEnvelopeView,
-): RunSubscriptionState {
+function appendEventEnvelope(state: RunSubscriptionState, event: EventEnvelopeView): RunSubscriptionState {
   if (state.events.some((existingEvent) => existingEvent.seq === event.seq)) {
     return state
   }
@@ -496,10 +478,7 @@ export function useRunSubscription(agentId: string, runId: string): RunSubscript
         }
 
         const afterSeq = currentState.events.at(-1)?.seq ?? 0
-        const subscribeResult = await session.request(
-          'run/subscribe',
-          afterSeq > 0 ? { runId, afterSeq } : { runId },
-        )
+        const subscribeResult = await session.request('run/subscribe', afterSeq > 0 ? { runId, afterSeq } : { runId })
         if (isCancelled()) {
           return
         }

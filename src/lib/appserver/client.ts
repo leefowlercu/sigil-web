@@ -1,10 +1,5 @@
 import { SUPPORTED_PROTOCOL_VERSIONS, negotiateAdapter } from '#/lib/protocol'
-import type {
-  AppServerMethodMap,
-  ErrorObject,
-  InitializeResult,
-  ServerHeartbeatParams,
-} from '#/lib/protocol'
+import type { AppServerMethodMap, ErrorObject, InitializeResult, ServerHeartbeatParams } from '#/lib/protocol'
 
 type MethodName = Extract<keyof AppServerMethodMap, string>
 
@@ -13,15 +8,12 @@ type RequestMethodName = {
 }[MethodName]
 
 type NotificationMethodName = {
-  [TMethod in MethodName]: AppServerMethodMap[TMethod]['kind'] extends 'notification'
-    ? TMethod
-    : never
+  [TMethod in MethodName]: AppServerMethodMap[TMethod]['kind'] extends 'notification' ? TMethod : never
 }[MethodName]
 
 type RequestParams<TMethod extends RequestMethodName> = AppServerMethodMap[TMethod]['params']
 type RequestResult<TMethod extends RequestMethodName> = AppServerMethodMap[TMethod]['result']
-type NotificationParams<TMethod extends NotificationMethodName> =
-  AppServerMethodMap[TMethod]['params']
+type NotificationParams<TMethod extends NotificationMethodName> = AppServerMethodMap[TMethod]['params']
 
 type JsonRPCID = string
 
@@ -69,10 +61,7 @@ export type AppServerNotification = {
 }[NotificationMethodName]
 
 export interface WebSocketLike {
-  addEventListener: (
-    type: 'close' | 'error' | 'message' | 'open',
-    listener: EventListenerOrEventListenerObject,
-  ) => void
+  addEventListener: (type: 'close' | 'error' | 'message' | 'open', listener: EventListenerOrEventListenerObject) => void
   close: (code?: number, reason?: string) => void
   readyState: number
   send: (data: string) => void
@@ -127,14 +116,13 @@ export class AppServerSessionClient {
 
   constructor(options: SessionClientOptions) {
     this.agentId = options.agentId
-    this.clearTimeoutFn = options.clearTimeoutFn ?? clearTimeout
+    this.clearTimeoutFn = options.clearTimeoutFn ?? globalThis.clearTimeout.bind(globalThis)
     this.endpoint = options.endpoint
     this.reconnectDelayMs = options.reconnectDelayMs ?? 1000
     this.server = options.server
-    this.setTimeoutFn = options.setTimeoutFn ?? setTimeout
+    this.setTimeoutFn = options.setTimeoutFn ?? globalThis.setTimeout.bind(globalThis)
     this.webSocketFactory =
-      options.webSocketFactory ??
-      ((endpoint: string) => new WebSocket(endpoint) as unknown as WebSocketLike)
+      options.webSocketFactory ?? ((endpoint: string) => new WebSocket(endpoint) as unknown as WebSocketLike)
   }
 
   async connect(): Promise<void> {
@@ -242,6 +230,9 @@ export class AppServerSessionClient {
     if (socket) {
       this.socket = null
       socket.close()
+      void this.connect().catch(() => {
+        // The scheduled reconnect path will continue trying.
+      })
       return
     }
     void this.connect().catch(() => {

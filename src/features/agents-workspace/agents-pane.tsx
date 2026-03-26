@@ -154,6 +154,7 @@ export function AgentsPane({
           </div>
           <span className="text-sm font-bold text-foreground uppercase">Agent Fleet</span>
           <Badge
+            data-testid="fleet-count"
             variant="outline"
             className="ml-auto border-border bg-secondary text-[0.58rem] font-bold text-muted-foreground"
           >
@@ -165,6 +166,7 @@ export function AgentsPane({
           <div className="relative flex-1">
             <Cable className="absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
             <Input
+              data-testid="connect-agent-endpoint"
               placeholder="ws://host:port"
               value={connectEndpoint}
               onChange={(e) => setConnectEndpoint(e.target.value)}
@@ -172,6 +174,7 @@ export function AgentsPane({
             />
           </div>
           <Button
+            data-testid="connect-agent-button"
             variant="workspace"
             size="sm"
             disabled={!connectEndpoint.trim()}
@@ -188,6 +191,7 @@ export function AgentsPane({
         <div className="relative">
           <Search className="absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
           <Input
+            data-testid="fleet-filter"
             placeholder="Filter agents..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
