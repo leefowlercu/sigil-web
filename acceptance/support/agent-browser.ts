@@ -6,6 +6,58 @@ import { AGENT_BROWSER_SOCKET_DIR, SIGIL_WEB_ROOT } from './paths'
 
 const execFileAsync = promisify(execFile)
 const agentBrowserBin = process.env.AGENT_BROWSER_BIN || 'agent-browser'
+const agentBrowserStepDelayMs = parseDelayMs(process.env.AGENT_BROWSER_STEP_DELAY_MS)
+
+function parseDelayMs(value: string | undefined): number {
+  if (value == null || value.trim().length === 0) {
+    return 0
+  }
+
+  const parsed = Number.parseInt(value, 10)
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 0
+}
+
+function pause(ms: number) {
+  return new Promise<void>((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
+
+function shouldPauseAfterCommand(command: string): boolean {
+  return new Set([
+    'back',
+    'check',
+    'click',
+    'dblclick',
+    'drag',
+    'fill',
+    'focus',
+    'forward',
+    'hover',
+    'keyboard',
+    'open',
+    'press',
+    'reload',
+    'scroll',
+    'scrollintoview',
+    'select',
+    'type',
+    'uncheck',
+    'upload',
+  ]).has(command)
+}
+
+export function hasAcceptanceReviewDelay() {
+  return agentBrowserStepDelayMs > 0
+}
+
+export async function pauseBetweenReviewSteps() {
+  if (agentBrowserStepDelayMs < 1) {
+    return
+  }
+
+  await pause(agentBrowserStepDelayMs)
+}
 
 export async function assertAgentBrowserAvailable() {
   await execFileAsync(agentBrowserBin, ['--version'], {
@@ -102,6 +154,9 @@ export class AgentBrowserSession {
         maxBuffer: 10_000_000,
         timeout: options?.timeoutMs ?? 15_000,
       })
+      if (shouldPauseAfterCommand(args[0] ?? '')) {
+        await pauseBetweenReviewSteps()
+      }
       return stdout
     } catch (error) {
       if (options?.allowFailure) {

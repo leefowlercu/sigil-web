@@ -31,6 +31,12 @@ Siĝil app-server when it runs in WebSocket mode.
 - `pnpm test:unit`: run fast implementation-focused TypeScript tests
 - `pnpm test:acceptance`: run browser-first Gherkin acceptance through
   `agent-browser`
+- `pnpm test:acceptance -- "Scenario name"`: run one acceptance scenario by
+  title
+- `pnpm test:acceptance:headed -- "Scenario name"`: run one acceptance
+  scenario by title in a visible browser window for visual review
+- `pnpm test:acceptance:review -- "Scenario name"`: run one acceptance
+  scenario by title in a visible browser window with small review pauses
 
 ## Route Surface
 

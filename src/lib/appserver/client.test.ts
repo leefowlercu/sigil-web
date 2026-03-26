@@ -95,7 +95,7 @@ describe('AppServerSessionClient', () => {
 
     const sockets: MockSocket[] = []
     const client = new AppServerSessionClient({
-      agentId: 'agent-live',
+      connectionKey: 'connection-live',
       endpoint: 'ws://127.0.0.1:8765/app-server',
       reconnectDelayMs: 25,
       server: createInitializeResult(),
@@ -125,7 +125,7 @@ describe('AppServerSessionClient', () => {
 
     const sockets: MockSocket[] = []
     const client = new AppServerSessionClient({
-      agentId: 'agent-live',
+      connectionKey: 'connection-live',
       endpoint: 'ws://127.0.0.1:8765/app-server',
       reconnectDelayMs: 25,
       server: createInitializeResult(),

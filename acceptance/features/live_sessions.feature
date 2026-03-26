@@ -2,9 +2,12 @@ Feature: Sigil-web live app-server session contracts
   Live mode reflects app-server session state and run notifications through the
   browser workspace.
 
-  Scenario: Connects a live agent endpoint and exposes a ready agent session in the fleet
+  Scenario: Connects a live agent endpoint only after initialize resolves a canonical Agent Instance ID
     Given sigil-web is running in live mode
+    And the mock live agent initialize response is delayed
     When the user connects the mock live agent endpoint
+    Then the visible fleet card count is 0
+    When the mock live agent initialize response resumes
     Then the live agent named "live-agent" becomes ready
 
   Scenario: Marks a live agent session degraded after missed heartbeats and recovers on reconnect
@@ -30,3 +33,12 @@ Feature: Sigil-web live app-server session contracts
     Then the live agent named "live-agent" becomes ready
     When the user removes the live agent session
     Then the fleet no longer shows the live agent named "live-agent"
+
+  Scenario: Rejects a duplicate live agent connection that resolves to an already-visible Agent Instance ID
+    Given sigil-web is running in live mode
+    When the user connects the mock live agent endpoint
+    Then the live agent named "live-agent" becomes ready
+    When the user connects the mock live agent endpoint
+    Then the visible fleet card count is 1
+    And the selected agent name is "live-agent"
+    And a warning toast says "Agent with ID \"live-agent\" is already connected. Duplicate Agent ID connections are not supported."

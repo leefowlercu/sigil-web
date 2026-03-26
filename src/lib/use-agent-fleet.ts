@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useReducer, useSyncExternalStore } from 'react'
+import { toast } from 'sonner'
 import type { AgentInstance, ConnectionState } from './demo-data'
 import type { InitializeResult } from './protocol'
 import { PROTOCOL_VERSION } from './protocol'
@@ -86,6 +87,10 @@ export type AgentFleetHandle = {
 
 const emptyAgentInstances: AgentInstance[] = []
 
+function duplicateAgentMessage(agentId: string) {
+  return `Agent with ID "${agentId}" is already connected. Duplicate Agent ID connections are not supported.`
+}
+
 export function useAgentFleet(): AgentFleetHandle {
   const isDemoMode = import.meta.env.VITE_DATA_SOURCE === 'demo'
   const [state, dispatch] = useReducer(agentFleetReducer, initialState)
@@ -132,11 +137,16 @@ export function useAgentFleet(): AgentFleetHandle {
   const connectAgent = useCallback(
     (endpoint: string) => {
       if (!isDemoMode) {
-        connectAgentSession(`agent_${Date.now()}`, endpoint)
+        void connectAgentSession(endpoint).then((result) => {
+          if (result.status === 'duplicate') {
+            toast.warning(duplicateAgentMessage(result.agentId))
+          }
+        })
         return
       }
-      // Demo mode: create a synthetic agent from the endpoint
-      // Live mode (future): initiate WebSocket, perform initialize handshake
+
+      // Demo mode: create a synthetic agent from the endpoint using the same
+      // canonical instance ID contract as live mode.
       let instanceName = endpoint
       try {
         const url = new URL(endpoint)
@@ -162,17 +172,22 @@ export function useAgentFleet(): AgentFleetHandle {
         },
       }
 
+      if (state.agents.some((agent) => agent.id === server.instanceId)) {
+        toast.warning(duplicateAgentMessage(server.instanceId))
+        return
+      }
+
       dispatch({
         type: 'AGENT_CONNECTED',
         agent: {
-          id: `agent_${Date.now()}`,
+          id: server.instanceId,
           endpoint,
           connectionState: 'ready',
           server,
         },
       })
     },
-    [isDemoMode],
+    [isDemoMode, state.agents],
   )
 
   const disconnectAgent = useCallback(

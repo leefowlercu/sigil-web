@@ -182,7 +182,7 @@ const serverCapabilities = {
 
 export const demoAgents: AgentInstance[] = [
   {
-    id: 'agent_needle_search',
+    id: 'needle-search',
     endpoint: 'ws://10.0.1.12:8765/app-server',
     connectionState: 'ready',
     server: {
@@ -196,7 +196,7 @@ export const demoAgents: AgentInstance[] = [
     },
   },
   {
-    id: 'agent_mrcr_2needle',
+    id: 'mrcr-2needle',
     endpoint: 'ws://10.0.1.13:8765/app-server',
     connectionState: 'ready',
     server: {
@@ -210,7 +210,7 @@ export const demoAgents: AgentInstance[] = [
     },
   },
   {
-    id: 'agent_mrcr_4needle',
+    id: 'mrcr-4needle',
     endpoint: 'ws://10.0.1.14:8765/app-server',
     connectionState: 'degraded',
     server: {
@@ -233,7 +233,7 @@ type AgentRunSummary = { agentId: string; run: RunSummaryView }
 
 const demoRunSummaries: AgentRunSummary[] = [
   {
-    agentId: 'agent_needle_search',
+    agentId: 'needle-search',
     run: {
       runId: '019d1766-9f94-7138-b433-2ff91272295c',
       name: 'run-start-templated',
@@ -249,7 +249,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     },
   },
   {
-    agentId: 'agent_needle_search',
+    agentId: 'needle-search',
     run: {
       runId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
       name: 'run-start-templated',
@@ -265,7 +265,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     },
   },
   {
-    agentId: 'agent_needle_search',
+    agentId: 'needle-search',
     run: {
       runId: '019d1767-410f-7659-8f98-5657c78271de',
       name: 'run-start-templated',
@@ -281,7 +281,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     },
   },
   {
-    agentId: 'agent_mrcr_2needle',
+    agentId: 'mrcr-2needle',
     run: {
       runId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
       name: 'mrcr-2needle',
@@ -297,7 +297,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     },
   },
   {
-    agentId: 'agent_mrcr_2needle',
+    agentId: 'mrcr-2needle',
     run: {
       runId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
       name: 'mrcr-2needle',
@@ -313,7 +313,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     },
   },
   {
-    agentId: 'agent_mrcr_4needle',
+    agentId: 'mrcr-4needle',
     run: {
       runId: '019d1766-9f94-7138-827c-5226fc9d6144',
       name: 'mrcr-4needle',
@@ -329,7 +329,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     },
   },
   {
-    agentId: 'agent_mrcr_4needle',
+    agentId: 'mrcr-4needle',
     run: {
       runId: '019d1770-4e3e-7474-8d54-464b1e695147',
       name: 'mrcr-4needle',

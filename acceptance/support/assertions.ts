@@ -39,6 +39,22 @@ export async function waitForSelectorText(
   )
 }
 
+export async function waitForBodyText(browser: AgentBrowserSession, expected: string, timeoutMs = 10_000) {
+  const normalizedExpected = normalizeWhitespace(expected).toLowerCase()
+  await waitForCondition(
+    async () => {
+      try {
+        const text = await browser.getText('body')
+        return normalizeWhitespace(text).toLowerCase().includes(normalizedExpected)
+      } catch {
+        return false
+      }
+    },
+    `Timed out waiting for the page body to contain ${expected}`,
+    timeoutMs,
+  )
+}
+
 export async function waitForUrlSuffix(browser: AgentBrowserSession, expectedSuffix: string, timeoutMs = 10_000) {
   await waitForCondition(
     async () => {

@@ -43,7 +43,7 @@ type PendingRequest = {
 export type SessionConnectionState = 'ready' | 'degraded' | 'reconnecting' | 'disconnected'
 
 export type SessionSnapshot = {
-  agentId: string
+  connectionKey: string
   connectionID: number
   endpoint: string
   connectionState: SessionConnectionState
@@ -70,7 +70,7 @@ export interface WebSocketLike {
 export type WebSocketFactory = (endpoint: string) => WebSocketLike
 
 export type SessionClientOptions = {
-  agentId: string
+  connectionKey: string
   endpoint: string
   reconnectDelayMs?: number
   server: InitializeResult
@@ -92,7 +92,7 @@ export class AppServerRequestError extends Error {
 }
 
 export class AppServerSessionClient {
-  private readonly agentId: string
+  private readonly connectionKey: string
   private readonly clearTimeoutFn: typeof clearTimeout
   private connectPromise: Promise<void> | null = null
   private connectionState: SessionConnectionState = 'disconnected'
@@ -115,7 +115,7 @@ export class AppServerSessionClient {
   private readonly webSocketFactory: WebSocketFactory
 
   constructor(options: SessionClientOptions) {
-    this.agentId = options.agentId
+    this.connectionKey = options.connectionKey
     this.clearTimeoutFn = options.clearTimeoutFn ?? globalThis.clearTimeout.bind(globalThis)
     this.endpoint = options.endpoint
     this.reconnectDelayMs = options.reconnectDelayMs ?? 1000
@@ -212,7 +212,7 @@ export class AppServerSessionClient {
 
   getSnapshot(): SessionSnapshot {
     return {
-      agentId: this.agentId,
+      connectionKey: this.connectionKey,
       connectionID: this.connectionID,
       endpoint: this.endpoint,
       connectionState: this.connectionState,
@@ -417,7 +417,7 @@ export class AppServerSessionClient {
     if (socket.readyState !== 1) {
       return Promise.reject(new Error('connection is not ready'))
     }
-    const id = `${this.agentId}:${this.nextRequestID++}`
+    const id = `${this.connectionKey}:${this.nextRequestID++}`
     return new Promise<RequestResult<TMethod>>((resolve, reject) => {
       this.pendingRequests.set(id, {
         resolve: (result) => resolve(result as RequestResult<TMethod>),

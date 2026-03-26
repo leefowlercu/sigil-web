@@ -18,7 +18,7 @@ function buildAgent(id: string, instanceName: string): AgentInstance {
 
 describe('agentFleetReducer', () => {
   it('loads the initial fleet snapshot', () => {
-    const agents = [buildAgent('agent_alpha', 'alpha'), buildAgent('agent_beta', 'beta')]
+    const agents = [buildAgent('alpha', 'alpha'), buildAgent('beta', 'beta')]
 
     const nextState = agentFleetReducer(initialState, {
       type: 'FLEET_LOADED',
@@ -29,8 +29,8 @@ describe('agentFleetReducer', () => {
   })
 
   it('updates and removes agents without mutating unrelated entries', () => {
-    const alpha = buildAgent('agent_alpha', 'alpha')
-    const beta = buildAgent('agent_beta', 'beta')
+    const alpha = buildAgent('alpha', 'alpha')
+    const beta = buildAgent('beta', 'beta')
     const loaded = agentFleetReducer(initialState, {
       type: 'FLEET_LOADED',
       agents: [alpha, beta],

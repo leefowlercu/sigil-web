@@ -41,6 +41,8 @@ export class MockSigilAppServer {
   private readonly heartbeatTimers = new Map<WebSocket, NodeJS.Timeout>()
   private heartbeatsEnabled = true
   private readonly httpServer = createServer()
+  private initializePaused = false
+  private readonly pendingInitializeReplies: Array<{ id: string; socket: WebSocket }> = []
   private lastSeq = 0
   private port = 0
   private readonly state: FixtureState = {
@@ -86,6 +88,7 @@ export class MockSigilAppServer {
       this.stopHeartbeat(socket)
       socket.close()
     }
+    this.pendingInitializeReplies.length = 0
     await new Promise<void>((resolve) => {
       this.wss.close(() => resolve())
     })
@@ -105,10 +108,22 @@ export class MockSigilAppServer {
     }
   }
 
+  pauseInitializeResponses() {
+    this.initializePaused = true
+  }
+
   resumeHeartbeats() {
     this.heartbeatsEnabled = true
     for (const socket of this.wss.clients) {
       this.startHeartbeats(socket)
+    }
+  }
+
+  resumeInitializeResponses() {
+    this.initializePaused = false
+    const pendingReplies = this.pendingInitializeReplies.splice(0)
+    for (const pending of pendingReplies) {
+      this.reply(pending.socket, pending.id, createInitializeResult())
     }
   }
 
@@ -177,6 +192,10 @@ export class MockSigilAppServer {
 
     switch (message.method) {
       case 'initialize':
+        if (this.initializePaused) {
+          this.pendingInitializeReplies.push({ id: message.id, socket })
+          return
+        }
         this.reply(socket, message.id, createInitializeResult())
         return
       case 'runs/list':
@@ -278,6 +297,9 @@ export class MockSigilAppServer {
   }
 
   private reply(socket: WebSocket, id: string, result: unknown) {
+    if (socket.readyState !== 1) {
+      return
+    }
     socket.send(
       JSON.stringify({
         jsonrpc: '2.0',

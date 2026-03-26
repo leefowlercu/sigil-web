@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { Given, Then, When } from '@cucumber/cucumber'
-import { waitForCondition, waitForSelectorText } from '../support/assertions'
+import { waitForBodyText, waitForCondition, waitForSelectorText } from '../support/assertions'
 import type { SigilWebWorld } from '../support/world'
 
 Given('sigil-web is running in live mode', async function (this: SigilWebWorld) {
@@ -18,9 +18,19 @@ When('the user connects the mock live agent endpoint', async function (this: Sig
   await this.browser.click('[data-testid="connect-agent-button"]')
 })
 
+Given('the mock live agent initialize response is delayed', async function (this: SigilWebWorld) {
+  const mockServer = await this.ensureMockServer()
+  mockServer.pauseInitializeResponses()
+})
+
 Then('the live agent named {string} becomes ready', async function (this: SigilWebWorld, agentName: string) {
   await waitForSelectorText(this.browser, '[data-testid="selected-agent-name"]', agentName)
   await waitForSelectorText(this.browser, '[data-testid="selected-agent-connection-state"]', 'Ready')
+})
+
+When('the mock live agent initialize response resumes', async function (this: SigilWebWorld) {
+  const mockServer = await this.ensureMockServer()
+  mockServer.resumeInitializeResponses()
 })
 
 When('heartbeats stop for the live agent', async function (this: SigilWebWorld) {
@@ -61,3 +71,7 @@ Then(
     assert.ok(!fleetText.includes(agentName))
   },
 )
+
+Then('a warning toast says {string}', async function (this: SigilWebWorld, message: string) {
+  await waitForBodyText(this.browser, message)
+})

@@ -25,6 +25,18 @@ when both exist.
 - `pnpm test:unit`: run fast TypeScript unit tests with Vitest.
 - `pnpm test:acceptance`: run browser-first Gherkin acceptance with
   `agent-browser`.
+- `pnpm test:acceptance -- "Scenario name"`: run one acceptance scenario by
+  title in headless mode.
+- `pnpm test:acceptance:headed -- "Scenario name"`: run one acceptance
+  scenario by title in headed mode so the browser window stays visible during
+  review.
+- `pnpm test:acceptance:review -- "Scenario name"`: run one acceptance
+  scenario by title in headed mode with small action and teardown pauses for
+  visual review.
+- `AGENT_BROWSER_STEP_DELAY_MS=<ms>`: optional delay after user-like browser
+  actions such as `open`, `click`, and `fill`.
+- `AGENT_BROWSER_SCENARIO_PAUSE_MS=<ms>`: optional delay before browser
+  teardown at the end of each scenario.
 - `pnpm <script>` wrappers remain available for compatibility, but use them
   only when a documented `vp` equivalent does not exist.
 
@@ -57,6 +69,10 @@ when both exist.
   implementation work.
 - Use `pnpm test:unit` for reducer, protocol, and session-client loops.
 - Use `pnpm test:acceptance` for browser-visible behavior changes.
+- Use `pnpm test:acceptance:headed -- "Scenario name"` when reviewing a single
+  scenario visually in a real browser window.
+- Use `pnpm test:acceptance:review -- "Scenario name"` when you want that same
+  single-scenario headed run to play a little slower for human inspection.
 - Use `vp lint --fix --fix-suggestions` after broad Tailwind edits; canonical
   class rewrites are suggestion fixes rather than plain safe fixes.
 - Do not rely on `vp lint --fix --fix-suggestions` to rewrite every VSCode

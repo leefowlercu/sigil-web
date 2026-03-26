@@ -2,7 +2,7 @@ import { PROTOCOL_VERSION } from '#/lib/protocol'
 import type { InitializeResult, RunProjectionView, RunSummaryView } from '#/lib/protocol'
 import type { AgentInstance } from '#/lib/demo-data'
 import { AppServerSessionClient } from './client'
-import type { SessionSnapshot } from './client'
+import type { SessionClientOptions, SessionSnapshot } from './client'
 
 type SessionRecord = {
   client: AppServerSessionClient
@@ -10,9 +10,17 @@ type SessionRecord = {
 }
 
 const records = new Map<string, SessionRecord>()
+const pendingClients = new Set<AppServerSessionClient>()
 const storeListeners = new Set<() => void>()
 let agentInstanceSnapshotsCache: AgentInstance[] = []
 const sessionSnapshotsCache = new Map<string, SessionSnapshot>()
+let nextConnectionOrdinal = 0
+let sessionClientFactory = (options: SessionClientOptions) => new AppServerSessionClient(options)
+
+export type ConnectAgentSessionResult =
+  | { status: 'connected'; agentId: string }
+  | { status: 'duplicate'; agentId: string }
+  | { status: 'failed'; error: Error }
 
 function buildPlaceholderServer(endpoint: string): InitializeResult {
   let instanceName = endpoint
@@ -69,42 +77,72 @@ function emitStoreChange() {
   }
 }
 
-function createSession(agentId: string, endpoint: string) {
-  const client = new AppServerSessionClient({
-    agentId,
+function nextConnectionKey() {
+  nextConnectionOrdinal += 1
+  return `connection-${nextConnectionOrdinal}`
+}
+
+function createSession(endpoint: string) {
+  return sessionClientFactory({
+    connectionKey: nextConnectionKey(),
     endpoint,
     server: buildPlaceholderServer(endpoint),
   })
-  const unsubscribe = client.subscribe(() => {
-    emitStoreChange()
-  })
-  return { client, unsubscribe }
 }
 
 export function clearAgentSessionsForTests() {
   for (const [agentId] of records) {
     removeAgentSession(agentId)
   }
+  for (const client of pendingClients) {
+    client.disconnect()
+  }
+  pendingClients.clear()
+  nextConnectionOrdinal = 0
 }
 
-export function connectAgentSession(agentId: string, endpoint: string) {
-  const existing = records.get(agentId)
-  if (existing && existing.client.getSnapshot().endpoint === endpoint) {
-    existing.client.reconnect()
-    return
-  }
-  if (existing) {
-    existing.unsubscribe()
-    existing.client.disconnect()
-    records.delete(agentId)
+export function setSessionClientFactoryForTests(
+  factory: ((options: SessionClientOptions) => AppServerSessionClient) | null,
+) {
+  sessionClientFactory = factory ?? ((options) => new AppServerSessionClient(options))
+}
+
+export async function connectAgentSession(endpoint: string): Promise<ConnectAgentSessionResult> {
+  const client = createSession(endpoint)
+  pendingClients.add(client)
+
+  try {
+    await client.connect()
+  } catch (error) {
+    pendingClients.delete(client)
+    client.disconnect()
+    return {
+      status: 'failed',
+      error: error instanceof Error ? error : new Error(String(error)),
+    }
   }
 
-  const record = createSession(agentId, endpoint)
-  records.set(agentId, record)
-  emitStoreChange()
-  void record.client.connect().catch(() => {
-    // The session stays visible and will continue reconnecting.
+  pendingClients.delete(client)
+
+  const agentId = client.getSnapshot().server.instanceId
+  if (records.has(agentId)) {
+    client.disconnect()
+    return {
+      status: 'duplicate',
+      agentId,
+    }
+  }
+
+  const unsubscribe = client.subscribe(() => {
+    emitStoreChange()
   })
+  records.set(agentId, { client, unsubscribe })
+  emitStoreChange()
+
+  return {
+    status: 'connected',
+    agentId,
+  }
 }
 
 export function disconnectAgentSession(agentId: string) {
