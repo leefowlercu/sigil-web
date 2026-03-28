@@ -9,6 +9,7 @@ import type {
   RunSummaryView,
   RunTreeReadPayload,
 } from '#/lib/protocol'
+import { parseRunConfigMetadataFromYaml } from '#/lib/run-config'
 import {
   LIVE_AGENT_INSTANCE_ID,
   LIVE_RUN_ID,
@@ -30,10 +31,108 @@ type JsonRpcMessage = {
 type FixtureState = {
   events: EventEnvelopeView[]
   projection: RunProjectionView
-  revision: number
   runSummary: RunSummaryView
   steps: RunStepSummaryView[]
   tree: RunTreeReadPayload
+}
+
+type JsonRpcError = {
+  code: number
+  data?: Record<string, unknown>
+  message: string
+}
+
+function createDefaultFixtureState(state: 'running' | 'completed'): FixtureState {
+  return {
+    events: createLiveRunEvents(),
+    projection: createLiveRunProjection(state),
+    runSummary: createLiveRunSummary(state),
+    steps: createLiveRunSteps(state),
+    tree: createLiveRunTree(state),
+  }
+}
+
+function createStartedRunFixture(runId: string, name: string, maxDepth: number): FixtureState {
+  const queuedAt = new Date().toISOString()
+  const rootNodeId = `${runId}-root`
+  const projection: RunProjectionView = {
+    runId,
+    name,
+    state: 'running',
+    runDir: `/tmp/sigil-web-live/runs/${runId}`,
+    eventsPath: `/tmp/sigil-web-live/runs/${runId}/events.jsonl`,
+    source: 'app-server.fixture',
+    queuedAt,
+    startedAt: queuedAt,
+    executor: 'fixture',
+    maxDepth,
+    pidStatus: 'current',
+    stopRequested: false,
+    nodeCount: 1,
+    stepCount: 0,
+    actionCount: 0,
+    subcallCount: 0,
+    nodes: [
+      {
+        nodeId: rootNodeId,
+        depth: 0,
+        role: 'root',
+        state: 'running',
+        startedAt: queuedAt,
+        stepCount: 0,
+      },
+    ],
+  }
+
+  return {
+    events: [],
+    projection,
+    runSummary: {
+      runId,
+      name,
+      state: 'running',
+      source: 'app-server.fixture',
+      queuedAt,
+      startedAt: queuedAt,
+      eventsPath: projection.eventsPath,
+      pidStatus: 'current',
+      stopRequested: false,
+    },
+    steps: [],
+    tree: {
+      rootNodeId,
+      nodes: projection.nodes,
+    },
+  }
+}
+
+function readRunID(params: unknown): string | null {
+  if (params == null || typeof params !== 'object' || Array.isArray(params)) {
+    return null
+  }
+
+  const runId = (params as Record<string, unknown>).runId
+  return typeof runId === 'string' && runId.length > 0 ? runId : null
+}
+
+function readRunConfigYAML(params: unknown): string | null {
+  if (params == null || typeof params !== 'object' || Array.isArray(params)) {
+    return null
+  }
+
+  const runConfigYaml = (params as Record<string, unknown>).runConfigYaml
+  return typeof runConfigYaml === 'string' ? runConfigYaml : null
+}
+
+function sortRunsNewestFirst(runs: RunSummaryView[]): RunSummaryView[] {
+  return [...runs].sort((left, right) => {
+    const leftTime = left.queuedAt ?? left.startedAt ?? left.terminalAt ?? ''
+    const rightTime = right.queuedAt ?? right.startedAt ?? right.terminalAt ?? ''
+    if (leftTime === rightTime) {
+      return right.runId.localeCompare(left.runId)
+    }
+    return rightTime.localeCompare(leftTime)
+  })
 }
 
 export class MockSigilAppServer {
@@ -42,17 +141,13 @@ export class MockSigilAppServer {
   private heartbeatsEnabled = true
   private readonly httpServer = createServer()
   private initializePaused = false
-  private readonly pendingInitializeReplies: Array<{ id: string; socket: WebSocket }> = []
+  private latestStartedRunID: string | null = null
   private lastSeq = 0
+  private nextStartedRunOrdinal = 2
+  private readonly pendingInitializeReplies: Array<{ id: string; socket: WebSocket }> = []
   private port = 0
-  private readonly state: FixtureState = {
-    events: createLiveRunEvents(),
-    projection: createLiveRunProjection('running'),
-    revision: 1,
-    runSummary: createLiveRunSummary('running'),
-    steps: createLiveRunSteps('running'),
-    tree: createLiveRunTree('running'),
-  }
+  private readonly runFixtures = new Map<string, FixtureState>([[LIVE_RUN_ID, createDefaultFixtureState('running')]])
+  private runsRevision = 1
   private readonly wss = new WebSocketServer({ noServer: true })
 
   constructor() {
@@ -101,6 +196,10 @@ export class MockSigilAppServer {
     return `ws://127.0.0.1:${this.port}/app-server`
   }
 
+  latestStartedRunId(): string | null {
+    return this.latestStartedRunID
+  }
+
   pauseHeartbeats() {
     this.heartbeatsEnabled = false
     for (const socket of this.wss.clients) {
@@ -128,21 +227,19 @@ export class MockSigilAppServer {
   }
 
   completeRun() {
-    this.state.runSummary = createLiveRunSummary('completed')
-    this.state.projection = createLiveRunProjection('completed')
-    this.state.tree = createLiveRunTree('completed')
-    this.state.steps = createLiveRunSteps('completed')
-    this.state.revision += 1
+    const completedFixture = createDefaultFixtureState('completed')
+    this.runFixtures.set(LIVE_RUN_ID, completedFixture)
+    this.runsRevision += 1
     this.lastSeq += 1
 
     this.broadcast({
       jsonrpc: '2.0',
       method: 'runs/changed',
       params: {
-        revision: this.state.revision,
+        revision: this.runsRevision,
         payload: {
           kind: 'upsert',
-          run: this.state.runSummary,
+          run: completedFixture.runSummary,
         },
       },
     })
@@ -181,6 +278,17 @@ export class MockSigilAppServer {
     }
   }
 
+  private fixtureForRun(runId: string | null): FixtureState | null {
+    if (runId == null) {
+      return null
+    }
+    return this.runFixtures.get(runId) ?? null
+  }
+
+  private listRunSummaries(): RunSummaryView[] {
+    return sortRunsNewestFirst([...this.runFixtures.values()].map((fixture) => fixture.runSummary))
+  }
+
   private async handleMessage(socket: WebSocket, raw: string) {
     const message = JSON.parse(raw) as JsonRpcMessage
     if (!message.id || !message.method) {
@@ -201,15 +309,15 @@ export class MockSigilAppServer {
       case 'runs/list':
         this.reply(socket, message.id, {
           payload: {
-            items: [this.state.runSummary],
+            items: this.listRunSummaries(),
           },
         })
         return
       case 'runs/subscribe':
         this.reply(socket, message.id, {
           payload: {
-            items: [this.state.runSummary],
-            revision: this.state.revision,
+            items: this.listRunSummaries(),
+            revision: this.runsRevision,
           },
         })
         return
@@ -220,61 +328,165 @@ export class MockSigilAppServer {
           },
         })
         return
-      case 'run/read':
+      case 'run/read': {
+        const fixture = this.fixtureForRun(readRunID(message.params))
+        if (fixture == null) {
+          this.replyError(socket, message.id, {
+            code: -32602,
+            message: 'run not found',
+          })
+          return
+        }
+
         this.reply(socket, message.id, {
-          runId: LIVE_RUN_ID,
+          runId: fixture.projection.runId,
           asOfSeq: this.lastSeq,
           payload: {
-            run: this.state.projection,
+            run: fixture.projection,
           },
         })
         return
-      case 'run/tree/read':
+      }
+      case 'run/tree/read': {
+        const fixture = this.fixtureForRun(readRunID(message.params))
+        if (fixture == null) {
+          this.replyError(socket, message.id, {
+            code: -32602,
+            message: 'run not found',
+          })
+          return
+        }
+
         this.reply(socket, message.id, {
-          runId: LIVE_RUN_ID,
+          runId: fixture.projection.runId,
           asOfSeq: this.lastSeq,
-          payload: this.state.tree,
+          payload: fixture.tree,
         })
         return
-      case 'run/steps/list':
+      }
+      case 'run/steps/list': {
+        const fixture = this.fixtureForRun(readRunID(message.params))
+        if (fixture == null) {
+          this.replyError(socket, message.id, {
+            code: -32602,
+            message: 'run not found',
+          })
+          return
+        }
+
         this.reply(socket, message.id, {
-          runId: LIVE_RUN_ID,
+          runId: fixture.projection.runId,
           asOfSeq: this.lastSeq,
           payload: {
-            steps: this.state.steps,
+            steps: fixture.steps,
           },
         })
         return
-      case 'run/events/read':
+      }
+      case 'run/events/read': {
+        const fixture = this.fixtureForRun(readRunID(message.params))
+        if (fixture == null) {
+          this.replyError(socket, message.id, {
+            code: -32602,
+            message: 'run not found',
+          })
+          return
+        }
+
         this.reply(socket, message.id, {
-          runId: LIVE_RUN_ID,
+          runId: fixture.projection.runId,
           payload: {
-            firstSeq: this.state.events[0]?.seq,
-            lastSeq: this.state.events.at(-1)?.seq,
-            events: this.state.events,
+            firstSeq: fixture.events[0]?.seq,
+            lastSeq: fixture.events.at(-1)?.seq,
+            events: fixture.events,
           },
         })
         return
-      case 'run/subscribe':
+      }
+      case 'run/subscribe': {
+        const fixture = this.fixtureForRun(readRunID(message.params))
+        if (fixture == null) {
+          this.replyError(socket, message.id, {
+            code: -32602,
+            message: 'run not found',
+          })
+          return
+        }
+
         this.reply(socket, message.id, {
-          runId: LIVE_RUN_ID,
+          runId: fixture.projection.runId,
           snapshotAsOfSeq: this.lastSeq,
           payload: {
             snapshot: {
-              run: this.state.projection,
-              tree: this.state.tree,
-              activeNodeId: this.state.projection.nodes[0]?.nodeId,
-              activeStepId: this.state.steps[0]?.stepId,
-              terminal: this.state.projection.state === 'completed',
+              run: fixture.projection,
+              tree: fixture.tree,
+              activeNodeId: fixture.projection.nodes[0]?.nodeId,
+              activeStepId: fixture.steps[0]?.stepId,
+              terminal: fixture.projection.state === 'completed',
             },
             replayEvents: [],
-            terminal: this.state.projection.state === 'completed',
+            terminal: fixture.projection.state === 'completed',
           },
         })
         return
+      }
+      case 'run/start': {
+        const runConfigYaml = readRunConfigYAML(message.params)
+        const metadata = runConfigYaml == null ? null : parseRunConfigMetadataFromYaml(runConfigYaml)
+        if (metadata == null) {
+          this.replyError(socket, message.id, {
+            code: -32602,
+            message: 'invalid run config yaml',
+            data: {
+              error: 'invalid run config yaml',
+            },
+          })
+          return
+        }
+
+        const runId = `019d2000-0000-7000-8000-${String(this.nextStartedRunOrdinal).padStart(12, '0')}`
+        this.nextStartedRunOrdinal += 1
+        this.latestStartedRunID = runId
+
+        const fixture = createStartedRunFixture(runId, metadata.name, metadata.maxDepth)
+        this.runFixtures.set(runId, fixture)
+        this.runsRevision += 1
+        this.lastSeq += 1
+
+        this.reply(socket, message.id, {
+          runId,
+          asOfSeq: this.lastSeq,
+          payload: {
+            run: fixture.projection,
+          },
+        })
+
+        this.broadcast({
+          jsonrpc: '2.0',
+          method: 'run/started',
+          params: {
+            runId,
+            seq: this.lastSeq,
+            payload: {
+              run: fixture.projection,
+            },
+          },
+        })
+        this.broadcast({
+          jsonrpc: '2.0',
+          method: 'runs/changed',
+          params: {
+            revision: this.runsRevision,
+            payload: {
+              kind: 'upsert',
+              run: fixture.runSummary,
+            },
+          },
+        })
+        return
+      }
       case 'run/unsubscribe':
         this.reply(socket, message.id, {
-          runId: LIVE_RUN_ID,
           payload: {
             unsubscribed: true,
           },
@@ -287,11 +499,9 @@ export class MockSigilAppServer {
         })
         return
       default:
-        this.reply(socket, message.id, {
-          error: {
-            code: -32601,
-            message: `unknown method ${message.method}`,
-          },
+        this.replyError(socket, message.id, {
+          code: -32601,
+          message: `unknown method ${message.method}`,
         })
     }
   }
@@ -305,6 +515,19 @@ export class MockSigilAppServer {
         jsonrpc: '2.0',
         id,
         result,
+      }),
+    )
+  }
+
+  private replyError(socket: WebSocket, id: string, error: JsonRpcError) {
+    if (socket.readyState !== 1) {
+      return
+    }
+    socket.send(
+      JSON.stringify({
+        jsonrpc: '2.0',
+        id,
+        error,
       }),
     )
   }

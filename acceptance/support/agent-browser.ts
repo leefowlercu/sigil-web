@@ -113,6 +113,10 @@ export class AgentBrowserSession {
     return Number.parseInt((await this.run(['get', 'count', selector])).trim(), 10)
   }
 
+  async getAttr(selector: string, name: string): Promise<string> {
+    return (await this.run(['get', 'attr', selector, name])).trim()
+  }
+
   async getText(selector: string): Promise<string> {
     return (await this.run(['get', 'text', selector])).trim()
   }
@@ -128,6 +132,10 @@ export class AgentBrowserSession {
   async open(url: string) {
     await this.run(['open', url])
     await this.run(['wait', '--load', 'networkidle'])
+  }
+
+  async select(selector: string, value: string) {
+    await this.run(['select', selector, value])
   }
 
   async screenshot(path: string) {

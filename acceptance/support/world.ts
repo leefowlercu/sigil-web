@@ -7,6 +7,7 @@ import { ensureWebApp } from './web-app'
 export class SigilWebWorld extends World {
   artifactDir = ''
   browser!: AgentBrowserSession
+  rememberedRunName: string | null = null
   mockServer: MockSigilAppServer | null = null
 
   constructor(options: IWorldOptions) {

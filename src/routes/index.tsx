@@ -4,6 +4,7 @@ import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router'
 import { Button } from '#/components/ui/button'
 import { AgentContextPane } from '#/features/agents-workspace/agent-context-pane'
 import { AgentsPane } from '#/features/agents-workspace/agents-pane'
+import { NewRunDialog } from '#/features/agents-workspace/new-run-dialog'
 import { RunDetailPane } from '#/features/agents-workspace/run-detail-pane'
 import { RunsPane } from '#/features/agents-workspace/runs-pane'
 import type { AgentInstance } from '#/lib/demo-data'
@@ -33,8 +34,9 @@ function IndexRoute() {
 
   const selectedAgentId = resolveSelectedAgentId(search.agent, agents)
   const selectedAgent = agents.find((agent) => agent.id === selectedAgentId)
-  const agentRuns = useAgentRuns(selectedAgentId)
+  const { runs: agentRuns, startRun } = useAgentRuns(selectedAgentId)
 
+  const [isNewRunDialogOpen, setIsNewRunDialogOpen] = useState(false)
   const [selectedRunId, setSelectedRunId] = useState<string | null>(null)
 
   const activeRunId =
@@ -44,6 +46,10 @@ function IndexRoute() {
 
   useEffect(() => {
     setSelectedRunId(null)
+  }, [selectedAgentId])
+
+  useEffect(() => {
+    setIsNewRunDialogOpen(false)
   }, [selectedAgentId])
 
   useEffect(() => {
@@ -79,6 +85,12 @@ function IndexRoute() {
     })
   }
 
+  async function handleRunStart(runConfigYaml: string) {
+    const runId = await startRun(runConfigYaml)
+    setSelectedRunId(runId)
+    setIsNewRunDialogOpen(false)
+  }
+
   return (
     <main data-testid="agents-workspace" className="workspace-route">
       <input data-testid="agent-search-param" type="hidden" readOnly value={selectedAgentId} />
@@ -105,6 +117,7 @@ function IndexRoute() {
                   variant="workspace"
                   size="toolbar"
                   className="uppercase"
+                  onClick={() => setIsNewRunDialogOpen(true)}
                 >
                   New Run
                   <Plus className="size-3" />
@@ -113,6 +126,16 @@ function IndexRoute() {
             />
           </div>
         )}
+
+        {selectedAgent ? (
+          <NewRunDialog
+            agent={selectedAgent}
+            canSubmit={selectedAgent.connectionState === 'ready'}
+            open={isNewRunDialogOpen}
+            onOpenChange={setIsNewRunDialogOpen}
+            onSubmit={handleRunStart}
+          />
+        ) : null}
 
         <div data-testid="agents-workspace-scroll-region" className="flex flex-1 overflow-hidden">
           <RunsPane runs={agentRuns} activeRunId={activeRunId} onSelectRun={setSelectedRunId} />

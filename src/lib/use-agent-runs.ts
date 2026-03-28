@@ -1,7 +1,15 @@
-import { useEffect, useReducer, useSyncExternalStore } from 'react'
-import type { RunSummaryView } from '#/lib/protocol'
-import { getAgentSession, getAgentSessionSnapshot, listAllRuns, subscribeAgentSessionStore } from './appserver/store'
-import { getRunsForAgent } from './data'
+import { useCallback, useEffect, useReducer, useSyncExternalStore } from 'react'
+import type { RunDetailView } from '#/lib/demo-data'
+import type { RunProjectionView, RunSummaryView } from '#/lib/protocol'
+import {
+  getAgentSession,
+  getAgentSessionSnapshot,
+  listAllRuns,
+  runSummaryFromProjection,
+  subscribeAgentSessionStore,
+} from './appserver/store'
+import { getRunsForAgent, recordDemoStartedRun } from './data'
+import { parseRunConfigMetadataFromYaml } from './run-config'
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                             */
@@ -21,6 +29,11 @@ export type AgentRunsAction =
 
 export type AgentRunsState = {
   runs: RunSummaryView[]
+}
+
+export type AgentRunsHandle = {
+  runs: RunSummaryView[]
+  startRun: (runConfigYaml: string) => Promise<string>
 }
 
 /* ------------------------------------------------------------------ */
@@ -108,11 +121,59 @@ function shouldRequestCleanupUnsubscribe(args: {
   return snapshot.initialized && snapshot.connectionID === args.connectionID
 }
 
+export function createDemoStartedRun(runConfigYaml: string): { detail: RunDetailView; run: RunSummaryView } {
+  const metadata = parseRunConfigMetadataFromYaml(runConfigYaml)
+  if (metadata == null) {
+    throw new Error('invalid run config yaml')
+  }
+
+  const queuedAt = new Date().toISOString()
+  const runId = `demo-${crypto.randomUUID()}`
+  const rootNodeId = `${runId}-root`
+  const projection: RunProjectionView = {
+    runId,
+    name: metadata.name,
+    state: 'running',
+    runDir: `/.sigil/demo/runs/${runId}`,
+    eventsPath: `/.sigil/demo/runs/${runId}/events.jsonl`,
+    source: 'app-server.demo',
+    queuedAt,
+    startedAt: queuedAt,
+    executor: 'demo',
+    maxDepth: metadata.maxDepth,
+    pidStatus: 'current',
+    stopRequested: false,
+    nodeCount: 1,
+    stepCount: 0,
+    actionCount: 0,
+    subcallCount: 0,
+    nodes: [
+      {
+        nodeId: rootNodeId,
+        depth: 0,
+        role: 'root',
+        state: 'running',
+        startedAt: queuedAt,
+        stepCount: 0,
+      },
+    ],
+  }
+
+  return {
+    detail: {
+      projection,
+      events: [],
+      steps: [],
+    },
+    run: runSummaryFromProjection(projection),
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /*  Hook                                                               */
 /* ------------------------------------------------------------------ */
 
-export function useAgentRuns(agentId: string): RunSummaryView[] {
+export function useAgentRuns(agentId: string): AgentRunsHandle {
   const isDemoMode = import.meta.env.VITE_DATA_SOURCE === 'demo'
   const [state, dispatch] = useReducer(agentRunsReducer, initialState)
   const sessionSnapshot = useSyncExternalStore(
@@ -246,6 +307,12 @@ export function useAgentRuns(agentId: string): RunSummaryView[] {
             terminal: notification.params.payload.terminal,
           })
           break
+        case 'run/started':
+          dispatch({
+            type: 'RUN_UPSERTED',
+            run: runSummaryFromProjection(notification.params.payload.run),
+          })
+          break
         default:
           break
       }
@@ -271,7 +338,44 @@ export function useAgentRuns(agentId: string): RunSummaryView[] {
     }
   }, [agentId, isDemoMode, sessionSnapshot?.connectionID])
 
-  return state.runs
+  const startRun = useCallback(
+    async (runConfigYaml: string) => {
+      if (!agentId) {
+        throw new Error('No agent is selected.')
+      }
+
+      if (isDemoMode) {
+        const startedRun = createDemoStartedRun(runConfigYaml)
+        recordDemoStartedRun(agentId, startedRun.run, startedRun.detail)
+        dispatch({
+          type: 'RUN_UPSERTED',
+          run: startedRun.run,
+        })
+        return startedRun.run.runId
+      }
+
+      const session = getAgentSession(agentId)
+      if (session == null) {
+        throw new Error('Agent session is unavailable.')
+      }
+
+      const result = await session.request('run/start', {
+        runConfigYaml,
+      })
+      const run = runSummaryFromProjection(result.payload.run)
+      dispatch({
+        type: 'RUN_UPSERTED',
+        run,
+      })
+      return result.runId
+    },
+    [agentId, isDemoMode],
+  )
+
+  return {
+    runs: state.runs,
+    startRun,
+  }
 }
 
 function normalizeRunSummary(run: RunSummaryView): RunSummaryView {

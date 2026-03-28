@@ -42,3 +42,24 @@ Feature: Sigil-web live app-server session contracts
     Then the visible fleet card count is 1
     And the selected agent name is "live-agent"
     And a warning toast says "Agent with ID \"live-agent\" is already connected. Duplicate Agent ID connections are not supported."
+
+  Scenario: Starts a new run from the root workspace and selects it after the live app-server accepts the run config
+    Given sigil-web is running in live mode
+    When the user connects the mock live agent endpoint
+    Then the live agent named "live-agent" becomes ready
+    When the user starts a new run named "workspace-run" from the form
+    Then the selected agent workspace shows the most recently started live run named "workspace-run" as "running"
+
+  Scenario: Surfaces live app-server invalid-run-config errors inline without closing the dialog
+    Given sigil-web is running in live mode
+    When the user connects the mock live agent endpoint
+    Then the live agent named "live-agent" becomes ready
+    When the user opens the new run dialog
+    And the user opens the new run YAML tab
+    And the user replaces the new run YAML with:
+      """
+      this is not valid yaml
+      """
+    And the user submits the new run dialog
+    Then the new run inline error says "invalid run config yaml"
+    And the new run dialog is visible

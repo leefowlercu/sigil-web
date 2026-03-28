@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { RunSummaryView } from '#/lib/protocol'
-import { agentRunsReducer, initialState } from './use-agent-runs'
+import { agentRunsReducer, createDemoStartedRun, initialState } from './use-agent-runs'
 
 function buildRun(overrides: Partial<RunSummaryView> & Pick<RunSummaryView, 'runId' | 'name'>): RunSummaryView {
   return {
@@ -68,5 +68,46 @@ describe('agentRunsReducer', () => {
     expect(nextState.runs[0]?.terminalAt).toBe('2026-03-26T18:10:00.000Z')
 
     vi.useRealTimers()
+  })
+
+  it('upserts a newly started run ahead of older runs', () => {
+    const older = buildRun({
+      runId: 'older',
+      name: 'older',
+      queuedAt: '2026-03-26T18:00:00.000Z',
+    })
+    const nextState = agentRunsReducer(
+      {
+        runs: [older],
+      },
+      {
+        type: 'RUN_UPSERTED',
+        run: buildRun({
+          runId: 'newer',
+          name: 'newer',
+          queuedAt: '2026-03-26T18:05:00.000Z',
+          state: 'running',
+        }),
+      },
+    )
+
+    expect(nextState.runs.map((run) => run.runId)).toEqual(['newer', 'older'])
+  })
+})
+
+describe('createDemoStartedRun', () => {
+  it('creates a running summary and detail from submitted yaml', () => {
+    const startedRun = createDemoStartedRun(
+      'name: workspace-run\nprompt: hello\ncontext: world\nrlm:\n  max_depth: 4\n',
+    )
+
+    expect(startedRun.run.name).toBe('workspace-run')
+    expect(startedRun.run.state).toBe('running')
+    expect(startedRun.detail.projection.maxDepth).toBe(4)
+    expect(startedRun.detail.projection.nodes).toHaveLength(1)
+  })
+
+  it('rejects invalid yaml', () => {
+    expect(() => createDemoStartedRun('prompt: hello\ncontext: world\n')).toThrow('invalid run config yaml')
   })
 })

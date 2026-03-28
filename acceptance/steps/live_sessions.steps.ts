@@ -60,6 +60,43 @@ When('the user removes the live agent session', async function (this: SigilWebWo
   await this.browser.click('[title="Remove agent"]')
 })
 
+When('the user starts a new run named {string} from the form', async function (this: SigilWebWorld, runName: string) {
+  const mockServer = await this.ensureMockServer()
+  await this.browser.click('[data-testid="new-run-button"]')
+  await this.browser.click('[data-testid="new-run-customize-name-button"]')
+  await this.browser.fill('[data-testid="new-run-input-name"]', runName)
+  await this.browser.fill('[data-testid="new-run-textarea-prompt"]', 'Summarize the live run workspace state.')
+  await this.browser.fill(
+    '[data-testid="new-run-textarea-context"]',
+    '# External Context\nUse the latest live workspace snapshot.',
+  )
+  await this.browser.click('[data-testid="new-run-submit-button"]')
+  await waitForCondition(
+    async () => mockServer.latestStartedRunId() != null,
+    'Timed out waiting for the mock app-server to record a started run id',
+  )
+  await waitForCondition(
+    async () => (await this.browser.getCount('[data-testid="new-run-dialog"]')) === 0,
+    'Timed out waiting for the new run dialog to close after submit',
+  )
+})
+
+Then(
+  'the selected agent workspace shows the most recently started live run named {string} as {string}',
+  async function (this: SigilWebWorld, expectedName: string, expectedState: string) {
+    const mockServer = await this.ensureMockServer()
+    const runId = mockServer.latestStartedRunId()
+    assert.ok(runId, 'expected the mock app-server to record a started run id')
+
+    const normalizedState = expectedState.toLowerCase()
+    const label = normalizedState.charAt(0).toUpperCase() + normalizedState.slice(1)
+    await waitForSelectorText(this.browser, `[data-testid="run-item-${runId}"]`, label)
+    await this.browser.click('[data-testid="run-detail-tab-meta"]')
+    await waitForSelectorText(this.browser, '[data-testid="run-detail-meta-panel"]', expectedName)
+    await waitForSelectorText(this.browser, '[data-testid="run-detail-meta-panel"]', normalizedState)
+  },
+)
+
 Then(
   'the fleet no longer shows the live agent named {string}',
   async function (this: SigilWebWorld, agentName: string) {
