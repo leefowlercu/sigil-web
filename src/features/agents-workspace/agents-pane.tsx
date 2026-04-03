@@ -61,7 +61,9 @@ function AgentCard({
               {agent.server.instanceName}
             </span>
           </div>
-          <span className="truncate pl-4 font-mono text-xs font-medium text-muted-foreground">{agent.endpoint}</span>
+          <span className="mt-0.5 truncate pl-4 font-mono text-xs font-medium text-muted-foreground">
+            {agent.endpoint}
+          </span>
         </div>
 
         {/* Right: action buttons stacked */}
