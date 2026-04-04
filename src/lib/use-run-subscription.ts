@@ -188,12 +188,12 @@ function payloadString(value: unknown): string | undefined {
 }
 
 export function deriveRunSubscriptionActions(event: EventEnvelopeView): RunSubscriptionAction[] {
-  const stepId = payloadString(event.payload.stepId)
+  const stepId = payloadString(event.payload.step_id)
   switch (event.type) {
     case 'node.step.started': {
       const nodeId = event.nodeId
-      const schemaId = payloadString(event.payload.schemaId)
-      const stepIndex = payloadNumber(event.payload.stepIndex)
+      const schemaId = payloadString(event.payload.schema_id)
+      const stepIndex = payloadNumber(event.payload.step_index)
       if (!stepId || !nodeId || !schemaId || stepIndex == null) {
         return []
       }
@@ -215,7 +215,7 @@ export function deriveRunSubscriptionActions(event: EventEnvelopeView): RunSubsc
       ]
     }
     case 'node.step.completed': {
-      const durationMs = payloadNumber(event.payload.durationMs)
+      const durationMs = payloadNumber(event.payload.duration_ms)
       if (!stepId || durationMs == null) {
         return []
       }

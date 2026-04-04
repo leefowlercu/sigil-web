@@ -59,7 +59,8 @@ export async function waitForUrlSuffix(browser: AgentBrowserSession, expectedSuf
   await waitForCondition(
     async () => {
       try {
-        return (await browser.getUrl()).endsWith(expectedSuffix)
+        const url = new URL(await browser.getUrl())
+        return url.pathname.endsWith(expectedSuffix)
       } catch {
         return false
       }

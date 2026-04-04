@@ -101,7 +101,7 @@ export function RunDetailPane({ agentId, runId }: { agentId: string; runId: stri
             </TabsTrigger>
           </TabsList>
           <Button asChild variant="workspace" size="toolbar" className="ml-auto uppercase">
-            <Link data-testid="open-run-detail" to="/runs/$runId" params={{ runId }}>
+            <Link data-testid="open-run-detail" to="/runs/$runId" params={{ runId }} search={{ agent: agentId }}>
               Open Detail
               <ArrowUpRight className="size-3" />
             </Link>

@@ -29,9 +29,9 @@ describe('run subscription helpers', () => {
       type: 'node.step.started',
       nodeId: 'node-1',
       payload: {
-        stepId: 'step-1',
-        stepIndex: 1,
-        schemaId: 'sigil.rlm.response.v1',
+        step_id: 'step-1',
+        step_index: 1,
+        schema_id: 'sigil.rlm.response.v1',
       },
     })
     const completed = buildEvent({
@@ -40,8 +40,8 @@ describe('run subscription helpers', () => {
       ts: '2026-03-26T18:00:35.000Z',
       type: 'node.step.completed',
       payload: {
-        stepId: 'step-1',
-        durationMs: 30000,
+        step_id: 'step-1',
+        duration_ms: 30000,
         decision: 'final',
       },
     })
@@ -88,9 +88,9 @@ describe('run subscription helpers', () => {
       type: 'node.step.started',
       nodeId: 'node-1',
       payload: {
-        stepId: 'step-1',
-        stepIndex: 1,
-        schemaId: 'sigil.rlm.response.v1',
+        step_id: 'step-1',
+        step_index: 1,
+        schema_id: 'sigil.rlm.response.v1',
       },
     })
 

@@ -520,8 +520,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'run-start-templated',
           source: 'cli.run.start',
-          appConfigPath: './examples/run-start-templated/sigil.yaml',
-          runConfigPath: './examples/run-start-templated/sigil-run.yaml',
+          app_config_path: './examples/run-start-templated/sigil.yaml',
+          run_config_path: './examples/run-start-templated/sigil-run.yaml',
         },
       },
       {
@@ -533,7 +533,7 @@ const demoDetails: Record<string, RunDetailView> = {
         type: 'run.running',
         causationId: '019d1766-9f94-79f6-a812-4ad464028136',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
-        payload: { executor: 'rlm', maxDepth: 3 },
+        payload: { executor: 'rlm', max_depth: 3 },
       },
       {
         eventId: '019d1766-9fa1-7071-a2e4-09d09eeb4f77',
@@ -545,7 +545,7 @@ const demoDetails: Record<string, RunDetailView> = {
         nodeId: '019d1766-9f9a-77cc-8cf6-e31a3f0606ea',
         causationId: '019d1766-9f9a-77d0-b5a5-89a76f574e90',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
-        payload: { depth: 0, parentNodeId: null, role: 'root', attempt: 1 },
+        payload: { depth: 0, parent_node_id: null, role: 'root', attempt: 1 },
       },
       {
         eventId: '019d1766-9fb5-7b94-ac39-299e5606a382',
@@ -558,9 +558,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fa1-7071-a2e4-09d09eeb4f77',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
-          stepIndex: 1,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
+          step_index: 1,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -574,9 +574,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fb5-7b94-ac39-299e5606a382',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
+          step_id: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/step/019d1766-9fb5-7b85-aa8f-2cd027a04178/turn-user.json',
         },
       },
@@ -591,14 +591,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fba-7d32-891f-5479fef52fc3',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
+          step_id: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/step/019d1766-9fb5-7b85-aa8f-2cd027a04178/turn-model.json',
-          inputTokens: 4087,
-          outputTokens: 1207,
-          totalTokens: 5294,
-          reasoningTokens: 482,
+          input_tokens: 4087,
+          output_tokens: 1207,
+          total_tokens: 5294,
+          reasoning_tokens: 482,
         },
       },
       {
@@ -612,13 +612,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-eab1-7700-a4cc-b318d4e5d398',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 4,
-          actionRef:
+          duration_ms: 4,
+          action_ref:
             'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/step/019d1766-9fb5-7b85-aa8f-2cd027a04178/action-1.json',
         },
       },
@@ -633,17 +633,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-eac8-7cb5-9f60-e3d8e4acb534',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
+          step_id: '019d1766-9fb5-7b85-aa8f-2cd027a04178',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 19224,
+          action_count: 1,
+          duration_ms: 19224,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4087,
-              outputTokens: 1207,
-              totalTokens: 5294,
-              reasoningTokens: 482,
+              input_tokens: 4087,
+              output_tokens: 1207,
+              total_tokens: 5294,
+              reasoning_tokens: 482,
               knownTotalCostMicrousd: 18203,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -659,10 +659,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -681,10 +681,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4087,
-              outputTokens: 1207,
-              totalTokens: 5294,
-              reasoningTokens: 482,
+              input_tokens: 4087,
+              output_tokens: 1207,
+              total_tokens: 5294,
+              reasoning_tokens: 482,
               knownTotalCostMicrousd: 18203,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -699,7 +699,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/step/019d1766-9fb5-7b85-aa8f-2cd027a04178/accounting.json',
         },
       },
@@ -714,9 +714,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-eace-72e2-a4fd-a00e398cea60',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-ead2-7a39-ab04-38a4f91bf30a',
-          stepIndex: 2,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1766-ead2-7a39-ab04-38a4f91bf30a',
+          step_index: 2,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -730,9 +730,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-ead2-7a3d-9911-fd2dac270d43',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-ead2-7a39-ab04-38a4f91bf30a',
+          step_id: '019d1766-ead2-7a39-ab04-38a4f91bf30a',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/step/019d1766-ead2-7a39-ab04-38a4f91bf30a/turn-user.json',
         },
       },
@@ -747,14 +747,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-ead6-77f7-8b75-cc39478313b9',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-ead2-7a39-ab04-38a4f91bf30a',
+          step_id: '019d1766-ead2-7a39-ab04-38a4f91bf30a',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/step/019d1766-ead2-7a39-ab04-38a4f91bf30a/turn-model.json',
-          inputTokens: 4553,
-          outputTokens: 358,
-          totalTokens: 4911,
-          reasoningTokens: 185,
+          input_tokens: 4553,
+          output_tokens: 358,
+          total_tokens: 4911,
+          reasoning_tokens: 185,
         },
       },
       {
@@ -768,17 +768,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-0234-75b1-88bf-3801d266625e',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          stepId: '019d1766-ead2-7a39-ab04-38a4f91bf30a',
+          step_id: '019d1766-ead2-7a39-ab04-38a4f91bf30a',
           decision: 'final',
-          actionCount: 0,
-          durationMs: 5991,
+          action_count: 0,
+          duration_ms: 5991,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4553,
-              outputTokens: 358,
-              totalTokens: 4911,
-              reasoningTokens: 185,
+              input_tokens: 4553,
+              output_tokens: 358,
+              total_tokens: 4911,
+              reasoning_tokens: 185,
               knownTotalCostMicrousd: 7133,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -794,10 +794,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -816,10 +816,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4553,
-              outputTokens: 358,
-              totalTokens: 4911,
-              reasoningTokens: 185,
+              input_tokens: 4553,
+              output_tokens: 358,
+              total_tokens: 4911,
+              reasoning_tokens: 185,
               knownTotalCostMicrousd: 7133,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -834,7 +834,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/step/019d1766-ead2-7a39-ab04-38a4f91bf30a/accounting.json',
         },
       },
@@ -850,15 +850,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
           status: 'completed',
-          durationMs: 25246,
-          resultRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
+          duration_ms: 25246,
+          result_ref: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 8640,
-              outputTokens: 1565,
-              totalTokens: 10205,
-              reasoningTokens: 667,
+              input_tokens: 8640,
+              output_tokens: 1565,
+              total_tokens: 10205,
+              reasoning_tokens: 667,
               knownTotalCostMicrousd: 25336,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -874,10 +874,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -896,10 +896,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 8640,
-              outputTokens: 1565,
-              totalTokens: 10205,
-              reasoningTokens: 667,
+              input_tokens: 8640,
+              output_tokens: 1565,
+              total_tokens: 10205,
+              reasoning_tokens: 667,
               knownTotalCostMicrousd: 25336,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -914,7 +914,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/accounting.json',
+          accounting_ref: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/accounting.json',
         },
       },
       {
@@ -928,15 +928,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
           status: 'completed',
-          durationMs: 25258,
-          finalAnswerRef: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
+          duration_ms: 25258,
+          final_answer_ref: 'run-artifact://node/019d1766-9f9a-77cc-8cf6-e31a3f0606ea/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 8640,
-              outputTokens: 1565,
-              totalTokens: 10205,
-              reasoningTokens: 667,
+              input_tokens: 8640,
+              output_tokens: 1565,
+              total_tokens: 10205,
+              reasoning_tokens: 667,
               knownTotalCostMicrousd: 25336,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -952,10 +952,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -974,10 +974,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 8640,
-              outputTokens: 1565,
-              totalTokens: 10205,
-              reasoningTokens: 667,
+              input_tokens: 8640,
+              output_tokens: 1565,
+              total_tokens: 10205,
+              reasoning_tokens: 667,
               knownTotalCostMicrousd: 25336,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -992,7 +992,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://run/accounting.json',
+          accounting_ref: 'run-artifact://run/accounting.json',
         },
       },
     ],
@@ -1070,8 +1070,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'run-start-templated',
           source: 'cli.run.start',
-          appConfigPath: './examples/run-start-templated/sigil.yaml',
-          runConfigPath: './examples/run-start-templated/sigil-run.yaml',
+          app_config_path: './examples/run-start-templated/sigil.yaml',
+          run_config_path: './examples/run-start-templated/sigil-run.yaml',
         },
       },
       {
@@ -1083,7 +1083,7 @@ const demoDetails: Record<string, RunDetailView> = {
         type: 'run.running',
         causationId: '019d1767-0269-7557-b1c9-14284e43ec00',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
-        payload: { executor: 'rlm', maxDepth: 3 },
+        payload: { executor: 'rlm', max_depth: 3 },
       },
       {
         eventId: '019d1767-0271-752c-b0e7-e2825aa509e6',
@@ -1095,7 +1095,7 @@ const demoDetails: Record<string, RunDetailView> = {
         nodeId: '019d1767-026e-7606-abad-f5d9b3fb793d',
         causationId: '019d1767-026e-760a-9df4-83d3b97ef92a',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
-        payload: { depth: 0, parentNodeId: null, role: 'root', attempt: 1 },
+        payload: { depth: 0, parent_node_id: null, role: 'root', attempt: 1 },
       },
       {
         eventId: '019d1767-0278-753f-a1c4-05ca15ec1cf2',
@@ -1108,9 +1108,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-0271-752c-b0e7-e2825aa509e6',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-0278-7537-9e7f-86c25962a4fb',
-          stepIndex: 1,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-0278-7537-9e7f-86c25962a4fb',
+          step_index: 1,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -1124,9 +1124,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-0278-753f-a1c4-05ca15ec1cf2',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-0278-7537-9e7f-86c25962a4fb',
+          step_id: '019d1767-0278-7537-9e7f-86c25962a4fb',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/step/019d1767-0278-7537-9e7f-86c25962a4fb/turn-user.json',
         },
       },
@@ -1141,14 +1141,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-027b-7b69-8375-0b747ada610d',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-0278-7537-9e7f-86c25962a4fb',
+          step_id: '019d1767-0278-7537-9e7f-86c25962a4fb',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/step/019d1767-0278-7537-9e7f-86c25962a4fb/turn-model.json',
-          inputTokens: 4084,
-          outputTokens: 545,
-          totalTokens: 4629,
-          reasoningTokens: 144,
+          input_tokens: 4084,
+          output_tokens: 545,
+          total_tokens: 4629,
+          reasoning_tokens: 144,
         },
       },
       {
@@ -1162,13 +1162,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-26c3-7f2a-ae07-bc33e2ec0726',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-0278-7537-9e7f-86c25962a4fb',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1767-0278-7537-9e7f-86c25962a4fb',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 3,
-          actionRef:
+          duration_ms: 3,
+          action_ref:
             'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/step/019d1767-0278-7537-9e7f-86c25962a4fb/action-1.json',
         },
       },
@@ -1183,17 +1183,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-26da-7412-8a8d-fa5251e3b8eb',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-0278-7537-9e7f-86c25962a4fb',
+          step_id: '019d1767-0278-7537-9e7f-86c25962a4fb',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 9319,
+          action_count: 1,
+          duration_ms: 9319,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4084,
-              outputTokens: 545,
-              totalTokens: 4629,
-              reasoningTokens: 144,
+              input_tokens: 4084,
+              output_tokens: 545,
+              total_tokens: 4629,
+              reasoning_tokens: 144,
               knownTotalCostMicrousd: 8729,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1209,10 +1209,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -1231,10 +1231,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4084,
-              outputTokens: 545,
-              totalTokens: 4629,
-              reasoningTokens: 144,
+              input_tokens: 4084,
+              output_tokens: 545,
+              total_tokens: 4629,
+              reasoning_tokens: 144,
               knownTotalCostMicrousd: 8729,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1249,7 +1249,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/step/019d1767-0278-7537-9e7f-86c25962a4fb/accounting.json',
         },
       },
@@ -1264,9 +1264,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-26df-7756-916b-673a10d168de',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-26e4-7115-8083-4c91e570802b',
-          stepIndex: 2,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-26e4-7115-8083-4c91e570802b',
+          step_index: 2,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -1280,9 +1280,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-26e4-711d-88e0-d6c4c1ebd3c7',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-26e4-7115-8083-4c91e570802b',
+          step_id: '019d1767-26e4-7115-8083-4c91e570802b',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/step/019d1767-26e4-7115-8083-4c91e570802b/turn-user.json',
         },
       },
@@ -1297,14 +1297,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-26e9-79fe-b82c-4ed376859527',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-26e4-7115-8083-4c91e570802b',
+          step_id: '019d1767-26e4-7115-8083-4c91e570802b',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/step/019d1767-26e4-7115-8083-4c91e570802b/turn-model.json',
-          inputTokens: 4723,
-          outputTokens: 306,
-          totalTokens: 5029,
-          reasoningTokens: 126,
+          input_tokens: 4723,
+          output_tokens: 306,
+          total_tokens: 5029,
+          reasoning_tokens: 126,
         },
       },
       {
@@ -1318,17 +1318,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-40dc-7493-9901-7663983cc00a',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          stepId: '019d1767-26e4-7115-8083-4c91e570802b',
+          step_id: '019d1767-26e4-7115-8083-4c91e570802b',
           decision: 'final',
-          actionCount: 0,
-          durationMs: 6652,
+          action_count: 0,
+          duration_ms: 6652,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4723,
-              outputTokens: 306,
-              totalTokens: 5029,
-              reasoningTokens: 126,
+              input_tokens: 4723,
+              output_tokens: 306,
+              total_tokens: 5029,
+              reasoning_tokens: 126,
               knownTotalCostMicrousd: 6501,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1344,10 +1344,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -1366,10 +1366,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4723,
-              outputTokens: 306,
-              totalTokens: 5029,
-              reasoningTokens: 126,
+              input_tokens: 4723,
+              output_tokens: 306,
+              total_tokens: 5029,
+              reasoning_tokens: 126,
               knownTotalCostMicrousd: 6501,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1384,7 +1384,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/step/019d1767-26e4-7115-8083-4c91e570802b/accounting.json',
         },
       },
@@ -1400,15 +1400,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
           status: 'completed',
-          durationMs: 15990,
-          resultRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
+          duration_ms: 15990,
+          result_ref: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 8807,
-              outputTokens: 851,
-              totalTokens: 9658,
-              reasoningTokens: 270,
+              input_tokens: 8807,
+              output_tokens: 851,
+              total_tokens: 9658,
+              reasoning_tokens: 270,
               knownTotalCostMicrousd: 15230,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1424,10 +1424,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -1446,10 +1446,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 8807,
-              outputTokens: 851,
-              totalTokens: 9658,
-              reasoningTokens: 270,
+              input_tokens: 8807,
+              output_tokens: 851,
+              total_tokens: 9658,
+              reasoning_tokens: 270,
               knownTotalCostMicrousd: 15230,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1464,7 +1464,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/accounting.json',
+          accounting_ref: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/accounting.json',
         },
       },
       {
@@ -1478,15 +1478,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
           status: 'completed',
-          durationMs: 15999,
-          finalAnswerRef: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
+          duration_ms: 15999,
+          final_answer_ref: 'run-artifact://node/019d1767-026e-7606-abad-f5d9b3fb793d/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 8807,
-              outputTokens: 851,
-              totalTokens: 9658,
-              reasoningTokens: 270,
+              input_tokens: 8807,
+              output_tokens: 851,
+              total_tokens: 9658,
+              reasoning_tokens: 270,
               knownTotalCostMicrousd: 15230,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1502,10 +1502,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -1524,10 +1524,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 8807,
-              outputTokens: 851,
-              totalTokens: 9658,
-              reasoningTokens: 270,
+              input_tokens: 8807,
+              output_tokens: 851,
+              total_tokens: 9658,
+              reasoning_tokens: 270,
               knownTotalCostMicrousd: 15230,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1542,7 +1542,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://run/accounting.json',
+          accounting_ref: 'run-artifact://run/accounting.json',
         },
       },
     ],
@@ -1652,8 +1652,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'run-start-templated',
           source: 'cli.run.start',
-          appConfigPath: './examples/run-start-templated/sigil.yaml',
-          runConfigPath: './examples/run-start-templated/sigil-run.yaml',
+          app_config_path: './examples/run-start-templated/sigil.yaml',
+          run_config_path: './examples/run-start-templated/sigil-run.yaml',
         },
       },
       {
@@ -1665,7 +1665,7 @@ const demoDetails: Record<string, RunDetailView> = {
         type: 'run.running',
         causationId: '019d1767-410f-7cc5-8b87-4aa5fcb4ea83',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
-        payload: { executor: 'rlm', maxDepth: 3 },
+        payload: { executor: 'rlm', max_depth: 3 },
       },
       {
         eventId: '019d1767-4117-743a-a192-2584b1f4a65f',
@@ -1677,7 +1677,7 @@ const demoDetails: Record<string, RunDetailView> = {
         nodeId: '019d1767-4114-745d-bcf3-9724a3410236',
         causationId: '019d1767-4114-7461-b271-cf3fbf5f8d27',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
-        payload: { depth: 0, parentNodeId: null, role: 'root', attempt: 1 },
+        payload: { depth: 0, parent_node_id: null, role: 'root', attempt: 1 },
       },
       {
         eventId: '019d1767-411c-7de6-83f9-ce08de8bf11c',
@@ -1690,9 +1690,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-4117-743a-a192-2584b1f4a65f',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
-          stepIndex: 1,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
+          step_index: 1,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -1706,9 +1706,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-411c-7de6-83f9-ce08de8bf11c',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
+          step_id: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-411c-7de2-abc1-f84c1fef9ad1/turn-user.json',
         },
       },
@@ -1723,14 +1723,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-4120-7c8e-b4b6-31efea99b8df',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
+          step_id: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-411c-7de2-abc1-f84c1fef9ad1/turn-model.json',
-          inputTokens: 4083,
-          outputTokens: 796,
-          totalTokens: 4879,
-          reasoningTokens: 235,
+          input_tokens: 4083,
+          output_tokens: 796,
+          total_tokens: 4879,
+          reasoning_tokens: 235,
         },
       },
       {
@@ -1744,13 +1744,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-86ed-7d42-9768-3fcfcb6f70a8',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 1,
-          actionRef:
+          duration_ms: 1,
+          action_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-411c-7de2-abc1-f84c1fef9ad1/action-1.json',
         },
       },
@@ -1765,17 +1765,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-8704-71cc-b963-1bcd9f77660a',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
+          step_id: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 17899,
+          action_count: 1,
+          duration_ms: 17899,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4083,
-              outputTokens: 796,
-              totalTokens: 4879,
-              reasoningTokens: 235,
+              input_tokens: 4083,
+              output_tokens: 796,
+              total_tokens: 4879,
+              reasoning_tokens: 235,
               knownTotalCostMicrousd: 12241,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1791,10 +1791,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -1813,10 +1813,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4083,
-              outputTokens: 796,
-              totalTokens: 4879,
-              reasoningTokens: 235,
+              input_tokens: 4083,
+              output_tokens: 796,
+              total_tokens: 4879,
+              reasoning_tokens: 235,
               knownTotalCostMicrousd: 12241,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1831,7 +1831,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-411c-7de2-abc1-f84c1fef9ad1/accounting.json',
         },
       },
@@ -1846,9 +1846,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-8708-748f-8ff2-e7d18304950d',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-870c-700b-9818-15f8bb186dba',
-          stepIndex: 2,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-870c-700b-9818-15f8bb186dba',
+          step_index: 2,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -1862,9 +1862,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-870c-700f-8a97-dc639032481f',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-870c-700b-9818-15f8bb186dba',
+          step_id: '019d1767-870c-700b-9818-15f8bb186dba',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-870c-700b-9818-15f8bb186dba/turn-user.json',
         },
       },
@@ -1879,14 +1879,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-8710-74ce-ae7f-c13dc7bb8f5f',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-870c-700b-9818-15f8bb186dba',
+          step_id: '019d1767-870c-700b-9818-15f8bb186dba',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-870c-700b-9818-15f8bb186dba/turn-model.json',
-          inputTokens: 4683,
-          outputTokens: 2339,
-          totalTokens: 7022,
-          reasoningTokens: 1477,
+          input_tokens: 4683,
+          output_tokens: 2339,
+          total_tokens: 7022,
+          reasoning_tokens: 1477,
         },
       },
       {
@@ -1900,16 +1900,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-1298-7d0b-a5eb-f09bf4111dfe',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-870c-700b-9818-15f8bb186dba',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1767-870c-700b-9818-15f8bb186dba',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-870c-700b-9818-15f8bb186dba/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:5: constant definition loop',
+          error_code: 'repl_execution_compile',
+          error_message:
+            'repl_execution_compile: repl execution failed at compile stage: 2:5: constant definition loop',
         },
       },
       {
@@ -1923,17 +1924,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-12a0-7186-9a54-8380ffbc8395',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1767-870c-700b-9818-15f8bb186dba',
+          step_id: '019d1767-870c-700b-9818-15f8bb186dba',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 35737,
+          action_count: 1,
+          duration_ms: 35737,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4683,
-              outputTokens: 2339,
-              totalTokens: 7022,
-              reasoningTokens: 1477,
+              input_tokens: 4683,
+              output_tokens: 2339,
+              total_tokens: 7022,
+              reasoning_tokens: 1477,
               knownTotalCostMicrousd: 34893,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1949,10 +1950,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -1971,10 +1972,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4683,
-              outputTokens: 2339,
-              totalTokens: 7022,
-              reasoningTokens: 1477,
+              input_tokens: 4683,
+              output_tokens: 2339,
+              total_tokens: 7022,
+              reasoning_tokens: 1477,
               knownTotalCostMicrousd: 34893,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -1989,7 +1990,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-870c-700b-9818-15f8bb186dba/accounting.json',
         },
       },
@@ -2004,9 +2005,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-12a5-7524-99b2-2f21894d7219',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-12a9-7557-b01d-ac74a3e52712',
-          stepIndex: 3,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1768-12a9-7557-b01d-ac74a3e52712',
+          step_index: 3,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -2020,9 +2021,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-12a9-755f-ac33-95b942d5ce64',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-12a9-7557-b01d-ac74a3e52712',
+          step_id: '019d1768-12a9-7557-b01d-ac74a3e52712',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1768-12a9-7557-b01d-ac74a3e52712/turn-user.json',
         },
       },
@@ -2037,14 +2038,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-12ae-7e82-a7f3-37ac6ffe8419',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-12a9-7557-b01d-ac74a3e52712',
+          step_id: '019d1768-12a9-7557-b01d-ac74a3e52712',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1768-12a9-7557-b01d-ac74a3e52712/turn-model.json',
-          inputTokens: 4230,
-          outputTokens: 1071,
-          totalTokens: 5301,
-          reasoningTokens: 530,
+          input_tokens: 4230,
+          output_tokens: 1071,
+          total_tokens: 5301,
+          reasoning_tokens: 530,
         },
       },
       {
@@ -2058,13 +2059,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-5740-7e0d-b6cb-256434345c5b',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-12a9-7557-b01d-ac74a3e52712',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1768-12a9-7557-b01d-ac74a3e52712',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 13,
-          actionRef:
+          duration_ms: 13,
+          action_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1768-12a9-7557-b01d-ac74a3e52712/action-1.json',
         },
       },
@@ -2079,17 +2080,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-5753-7315-b447-ee17762c8469',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-12a9-7557-b01d-ac74a3e52712',
+          step_id: '019d1768-12a9-7557-b01d-ac74a3e52712',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 17582,
+          action_count: 1,
+          duration_ms: 17582,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4230,
-              outputTokens: 1071,
-              totalTokens: 5301,
-              reasoningTokens: 530,
+              input_tokens: 4230,
+              output_tokens: 1071,
+              total_tokens: 5301,
+              reasoning_tokens: 530,
               knownTotalCostMicrousd: 17961,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2105,10 +2106,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -2127,10 +2128,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4230,
-              outputTokens: 1071,
-              totalTokens: 5301,
-              reasoningTokens: 530,
+              input_tokens: 4230,
+              output_tokens: 1071,
+              total_tokens: 5301,
+              reasoning_tokens: 530,
               knownTotalCostMicrousd: 17961,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2145,7 +2146,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1768-12a9-7557-b01d-ac74a3e52712/accounting.json',
         },
       },
@@ -2160,9 +2161,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-5757-7e48-a771-9a8002907e9c',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-575b-738e-9366-f385d3839c6e',
-          stepIndex: 4,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1768-575b-738e-9366-f385d3839c6e',
+          step_index: 4,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -2176,9 +2177,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-575b-73a1-bd07-b9c3ab82a9ed',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-575b-738e-9366-f385d3839c6e',
+          step_id: '019d1768-575b-738e-9366-f385d3839c6e',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1768-575b-738e-9366-f385d3839c6e/turn-user.json',
         },
       },
@@ -2193,14 +2194,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-575f-7870-90e0-995f8abe6606',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-575b-738e-9366-f385d3839c6e',
+          step_id: '019d1768-575b-738e-9366-f385d3839c6e',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1768-575b-738e-9366-f385d3839c6e/turn-model.json',
-          inputTokens: 4482,
-          outputTokens: 459,
-          totalTokens: 4941,
-          reasoningTokens: 282,
+          input_tokens: 4482,
+          output_tokens: 459,
+          total_tokens: 4941,
+          reasoning_tokens: 282,
         },
       },
       {
@@ -2214,17 +2215,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-74d9-733c-881f-51e02a54c966',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          stepId: '019d1768-575b-738e-9366-f385d3839c6e',
+          step_id: '019d1768-575b-738e-9366-f385d3839c6e',
           decision: 'final',
-          actionCount: 0,
-          durationMs: 7556,
+          action_count: 0,
+          duration_ms: 7556,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4482,
-              outputTokens: 459,
-              totalTokens: 4941,
-              reasoningTokens: 282,
+              input_tokens: 4482,
+              output_tokens: 459,
+              total_tokens: 4941,
+              reasoning_tokens: 282,
               knownTotalCostMicrousd: 8423,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2240,10 +2241,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -2262,10 +2263,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4482,
-              outputTokens: 459,
-              totalTokens: 4941,
-              reasoningTokens: 282,
+              input_tokens: 4482,
+              output_tokens: 459,
+              total_tokens: 4941,
+              reasoning_tokens: 282,
               knownTotalCostMicrousd: 8423,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2280,7 +2281,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1768-575b-738e-9366-f385d3839c6e/accounting.json',
         },
       },
@@ -2296,15 +2297,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
           status: 'completed',
-          durationMs: 78797,
-          resultRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
+          duration_ms: 78797,
+          result_ref: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 17478,
-              outputTokens: 4665,
-              totalTokens: 22143,
-              reasoningTokens: 2524,
+              input_tokens: 17478,
+              output_tokens: 4665,
+              total_tokens: 22143,
+              reasoning_tokens: 2524,
               knownTotalCostMicrousd: 73518,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2320,10 +2321,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -2342,10 +2343,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 17478,
-              outputTokens: 4665,
-              totalTokens: 22143,
-              reasoningTokens: 2524,
+              input_tokens: 17478,
+              output_tokens: 4665,
+              total_tokens: 22143,
+              reasoning_tokens: 2524,
               knownTotalCostMicrousd: 73518,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2360,7 +2361,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/accounting.json',
+          accounting_ref: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/accounting.json',
         },
       },
       {
@@ -2374,15 +2375,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
           status: 'completed',
-          durationMs: 78806,
-          finalAnswerRef: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
+          duration_ms: 78806,
+          final_answer_ref: 'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 17478,
-              outputTokens: 4665,
-              totalTokens: 22143,
-              reasoningTokens: 2524,
+              input_tokens: 17478,
+              output_tokens: 4665,
+              total_tokens: 22143,
+              reasoning_tokens: 2524,
               knownTotalCostMicrousd: 73518,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2398,10 +2399,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -2420,10 +2421,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 17478,
-              outputTokens: 4665,
-              totalTokens: 22143,
-              reasoningTokens: 2524,
+              input_tokens: 17478,
+              output_tokens: 4665,
+              total_tokens: 22143,
+              reasoning_tokens: 2524,
               knownTotalCostMicrousd: 73518,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2438,7 +2439,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://run/accounting.json',
+          accounting_ref: 'run-artifact://run/accounting.json',
         },
       },
     ],
@@ -2532,8 +2533,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'mrcr-2needle',
           source: 'cli.run.start',
-          appConfigPath: './examples/run-start-mrcr-2needle/sigil.yaml',
-          runConfigPath: './examples/run-start-mrcr-2needle/sigil-run.yaml',
+          app_config_path: './examples/run-start-mrcr-2needle/sigil.yaml',
+          run_config_path: './examples/run-start-mrcr-2needle/sigil-run.yaml',
         },
       },
       {
@@ -2545,7 +2546,7 @@ const demoDetails: Record<string, RunDetailView> = {
         type: 'run.running',
         causationId: '019d1766-9f94-7a16-af1c-127c527ef08d',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
-        payload: { executor: 'rlm', maxDepth: 4 },
+        payload: { executor: 'rlm', max_depth: 4 },
       },
       {
         eventId: '019d1766-9fa4-7261-a1ce-545ab8516cc0',
@@ -2557,7 +2558,7 @@ const demoDetails: Record<string, RunDetailView> = {
         nodeId: '019d1766-9f9d-773f-82e0-1159e477f415',
         causationId: '019d1766-9f9d-7740-9211-e020ebe0e45f',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
-        payload: { depth: 0, parentNodeId: null, role: 'root', attempt: 1 },
+        payload: { depth: 0, parent_node_id: null, role: 'root', attempt: 1 },
       },
       {
         eventId: '019d1766-9fba-7874-86ac-62bc33cf37db',
@@ -2570,9 +2571,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fa4-7261-a1ce-545ab8516cc0',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-9fba-7868-a957-2472f7128d1e',
-          stepIndex: 1,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1766-9fba-7868-a957-2472f7128d1e',
+          step_index: 1,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -2586,9 +2587,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fba-7874-86ac-62bc33cf37db',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-9fba-7868-a957-2472f7128d1e',
+          step_id: '019d1766-9fba-7868-a957-2472f7128d1e',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1766-9fba-7868-a957-2472f7128d1e/turn-user.json',
         },
       },
@@ -2603,14 +2604,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fc8-71e4-a284-31c60d637350',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-9fba-7868-a957-2472f7128d1e',
+          step_id: '019d1766-9fba-7868-a957-2472f7128d1e',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1766-9fba-7868-a957-2472f7128d1e/turn-model.json',
-          inputTokens: 4163,
-          outputTokens: 464,
-          totalTokens: 4627,
-          reasoningTokens: 102,
+          input_tokens: 4163,
+          output_tokens: 464,
+          total_tokens: 4627,
+          reasoning_tokens: 102,
         },
       },
       {
@@ -2624,13 +2625,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-c361-785c-af78-1cfd836d900a',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-9fba-7868-a957-2472f7128d1e',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1766-9fba-7868-a957-2472f7128d1e',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 7,
-          actionRef:
+          duration_ms: 7,
+          action_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1766-9fba-7868-a957-2472f7128d1e/action-1.json',
         },
       },
@@ -2645,17 +2646,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-c386-7c0d-8b5a-fb3623986355',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-9fba-7868-a957-2472f7128d1e',
+          step_id: '019d1766-9fba-7868-a957-2472f7128d1e',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 9171,
+          action_count: 1,
+          duration_ms: 9171,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4163,
-              outputTokens: 464,
-              totalTokens: 4627,
-              reasoningTokens: 102,
+              input_tokens: 4163,
+              output_tokens: 464,
+              total_tokens: 4627,
+              reasoning_tokens: 102,
               knownTotalCostMicrousd: 13781,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2671,10 +2672,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -2693,10 +2694,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4163,
-              outputTokens: 464,
-              totalTokens: 4627,
-              reasoningTokens: 102,
+              input_tokens: 4163,
+              output_tokens: 464,
+              total_tokens: 4627,
+              reasoning_tokens: 102,
               knownTotalCostMicrousd: 13781,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2711,7 +2712,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1766-9fba-7868-a957-2472f7128d1e/accounting.json',
         },
       },
@@ -2726,9 +2727,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-c38d-7a25-a3f6-60d22b3401b3',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-c392-78fc-b972-b5768892f75b',
-          stepIndex: 2,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1766-c392-78fc-b972-b5768892f75b',
+          step_index: 2,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -2742,9 +2743,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-c392-7900-83c9-43a3b406c7c8',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-c392-78fc-b972-b5768892f75b',
+          step_id: '019d1766-c392-78fc-b972-b5768892f75b',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1766-c392-78fc-b972-b5768892f75b/turn-user.json',
         },
       },
@@ -2759,14 +2760,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-c397-7e3c-81a5-b4f9f89416b9',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-c392-78fc-b972-b5768892f75b',
+          step_id: '019d1766-c392-78fc-b972-b5768892f75b',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1766-c392-78fc-b972-b5768892f75b/turn-model.json',
-          inputTokens: 4320,
-          outputTokens: 1334,
-          totalTokens: 5654,
-          reasoningTokens: 341,
+          input_tokens: 4320,
+          output_tokens: 1334,
+          total_tokens: 5654,
+          reasoning_tokens: 341,
         },
       },
       {
@@ -2780,13 +2781,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-0621-7290-b9a8-4f93631279b3',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-c392-78fc-b972-b5768892f75b',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1766-c392-78fc-b972-b5768892f75b',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 9,
-          actionRef:
+          duration_ms: 9,
+          action_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1766-c392-78fc-b972-b5768892f75b/action-1.json',
         },
       },
@@ -2801,17 +2802,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-0631-70bf-ba3d-25498f6b889a',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1766-c392-78fc-b972-b5768892f75b',
+          step_id: '019d1766-c392-78fc-b972-b5768892f75b',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 17059,
+          action_count: 1,
+          duration_ms: 17059,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4320,
-              outputTokens: 1334,
-              totalTokens: 5654,
-              reasoningTokens: 341,
+              input_tokens: 4320,
+              output_tokens: 1334,
+              total_tokens: 5654,
+              reasoning_tokens: 341,
               knownTotalCostMicrousd: 20188,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2827,10 +2828,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -2849,10 +2850,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4320,
-              outputTokens: 1334,
-              totalTokens: 5654,
-              reasoningTokens: 341,
+              input_tokens: 4320,
+              output_tokens: 1334,
+              total_tokens: 5654,
+              reasoning_tokens: 341,
               knownTotalCostMicrousd: 20188,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2867,7 +2868,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1766-c392-78fc-b972-b5768892f75b/accounting.json',
         },
       },
@@ -2882,9 +2883,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-0635-7a21-8052-5060b29f65d0',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1767-063a-73b9-be4b-71e4a9621990',
-          stepIndex: 3,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-063a-73b9-be4b-71e4a9621990',
+          step_index: 3,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -2898,9 +2899,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-063a-73c0-a3e7-d2f69fd8c689',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1767-063a-73b9-be4b-71e4a9621990',
+          step_id: '019d1767-063a-73b9-be4b-71e4a9621990',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1767-063a-73b9-be4b-71e4a9621990/turn-user.json',
         },
       },
@@ -2915,14 +2916,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-063f-71f7-8e33-e7482e7cc5ee',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1767-063a-73b9-be4b-71e4a9621990',
+          step_id: '019d1767-063a-73b9-be4b-71e4a9621990',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1767-063a-73b9-be4b-71e4a9621990/turn-model.json',
-          inputTokens: 4929,
-          outputTokens: 1230,
-          totalTokens: 6159,
-          reasoningTokens: 173,
+          input_tokens: 4929,
+          output_tokens: 1230,
+          total_tokens: 6159,
+          reasoning_tokens: 173,
         },
       },
       {
@@ -2936,17 +2937,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-4b69-7641-b2e5-f45da86476c6',
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
-          stepId: '019d1767-063a-73b9-be4b-71e4a9621990',
+          step_id: '019d1767-063a-73b9-be4b-71e4a9621990',
           decision: 'final',
-          actionCount: 0,
-          durationMs: 17717,
+          action_count: 0,
+          duration_ms: 17717,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4929,
-              outputTokens: 1230,
-              totalTokens: 6159,
-              reasoningTokens: 173,
+              input_tokens: 4929,
+              output_tokens: 1230,
+              total_tokens: 6159,
+              reasoning_tokens: 173,
               knownTotalCostMicrousd: 19797,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -2962,10 +2963,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -2984,10 +2985,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4929,
-              outputTokens: 1230,
-              totalTokens: 6159,
-              reasoningTokens: 173,
+              input_tokens: 4929,
+              output_tokens: 1230,
+              total_tokens: 6159,
+              reasoning_tokens: 173,
               knownTotalCostMicrousd: 19797,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3002,7 +3003,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/step/019d1767-063a-73b9-be4b-71e4a9621990/accounting.json',
         },
       },
@@ -3018,15 +3019,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
           status: 'completed',
-          durationMs: 43984,
-          resultRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
+          duration_ms: 43984,
+          result_ref: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 13412,
-              outputTokens: 3028,
-              totalTokens: 16440,
-              reasoningTokens: 616,
+              input_tokens: 13412,
+              output_tokens: 3028,
+              total_tokens: 16440,
+              reasoning_tokens: 616,
               knownTotalCostMicrousd: 53766,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3042,10 +3043,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -3064,10 +3065,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 13412,
-              outputTokens: 3028,
-              totalTokens: 16440,
-              reasoningTokens: 616,
+              input_tokens: 13412,
+              output_tokens: 3028,
+              total_tokens: 16440,
+              reasoning_tokens: 616,
               knownTotalCostMicrousd: 53766,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3082,7 +3083,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/accounting.json',
+          accounting_ref: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/accounting.json',
         },
       },
       {
@@ -3096,15 +3097,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1766-9f94-71f4-bc7f-0a6726b7d5f8',
         payload: {
           status: 'completed',
-          durationMs: 43996,
-          finalAnswerRef: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
+          duration_ms: 43996,
+          final_answer_ref: 'run-artifact://node/019d1766-9f9d-773f-82e0-1159e477f415/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 13412,
-              outputTokens: 3028,
-              totalTokens: 16440,
-              reasoningTokens: 616,
+              input_tokens: 13412,
+              output_tokens: 3028,
+              total_tokens: 16440,
+              reasoning_tokens: 616,
               knownTotalCostMicrousd: 53766,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3120,10 +3121,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -3142,10 +3143,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 13412,
-              outputTokens: 3028,
-              totalTokens: 16440,
-              reasoningTokens: 616,
+              input_tokens: 13412,
+              output_tokens: 3028,
+              total_tokens: 16440,
+              reasoning_tokens: 616,
               knownTotalCostMicrousd: 53766,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3160,7 +3161,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://run/accounting.json',
+          accounting_ref: 'run-artifact://run/accounting.json',
         },
       },
     ],
@@ -3622,8 +3623,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'mrcr-2needle',
           source: 'cli.run.start',
-          appConfigPath: './examples/run-start-mrcr-2needle/sigil.yaml',
-          runConfigPath: './examples/run-start-mrcr-2needle/sigil-run.yaml',
+          app_config_path: './examples/run-start-mrcr-2needle/sigil.yaml',
+          run_config_path: './examples/run-start-mrcr-2needle/sigil-run.yaml',
         },
       },
       {
@@ -3635,7 +3636,7 @@ const demoDetails: Record<string, RunDetailView> = {
         type: 'run.running',
         causationId: '019d1767-4ba2-78be-bc9d-a903c0b70b0c',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
-        payload: { executor: 'rlm', maxDepth: 4 },
+        payload: { executor: 'rlm', max_depth: 4 },
       },
       {
         eventId: '019d1767-4ba9-72b7-9169-d0b2d4a16ae6',
@@ -3647,7 +3648,7 @@ const demoDetails: Record<string, RunDetailView> = {
         nodeId: '019d1767-4ba6-74b7-86d4-55d283ff1d6c',
         causationId: '019d1767-4ba6-74b8-8e2c-530fc6a50c7f',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
-        payload: { depth: 0, parentNodeId: null, role: 'root', attempt: 1 },
+        payload: { depth: 0, parent_node_id: null, role: 'root', attempt: 1 },
       },
       {
         eventId: '019d1767-4bb0-7182-917d-f400236a35db',
@@ -3660,9 +3661,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-4ba9-72b7-9169-d0b2d4a16ae6',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-4bb0-717e-9542-923a94fee7b0',
-          stepIndex: 1,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-4bb0-717e-9542-923a94fee7b0',
+          step_index: 1,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -3676,9 +3677,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-4bb0-7182-917d-f400236a35db',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-4bb0-717e-9542-923a94fee7b0',
+          step_id: '019d1767-4bb0-717e-9542-923a94fee7b0',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-4bb0-717e-9542-923a94fee7b0/turn-user.json',
         },
       },
@@ -3693,14 +3694,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-4bb4-775a-a9a1-0b4a0e3b22be',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-4bb0-717e-9542-923a94fee7b0',
+          step_id: '019d1767-4bb0-717e-9542-923a94fee7b0',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-4bb0-717e-9542-923a94fee7b0/turn-model.json',
-          inputTokens: 4165,
-          outputTokens: 583,
-          totalTokens: 4748,
-          reasoningTokens: 126,
+          input_tokens: 4165,
+          output_tokens: 583,
+          total_tokens: 4748,
+          reasoning_tokens: 126,
         },
       },
       {
@@ -3714,13 +3715,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-7e31-786c-b427-b82a3f2cf17c',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-4bb0-717e-9542-923a94fee7b0',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1767-4bb0-717e-9542-923a94fee7b0',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 7,
-          actionRef:
+          duration_ms: 7,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-4bb0-717e-9542-923a94fee7b0/action-1.json',
         },
       },
@@ -3735,17 +3736,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-7e54-7dda-a69d-23cef4489b53',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-4bb0-717e-9542-923a94fee7b0',
+          step_id: '019d1767-4bb0-717e-9542-923a94fee7b0',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 12968,
+          action_count: 1,
+          duration_ms: 12968,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4165,
-              outputTokens: 583,
-              totalTokens: 4748,
-              reasoningTokens: 126,
+              input_tokens: 4165,
+              output_tokens: 583,
+              total_tokens: 4748,
+              reasoning_tokens: 126,
               knownTotalCostMicrousd: 15450,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3761,10 +3762,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -3783,10 +3784,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4165,
-              outputTokens: 583,
-              totalTokens: 4748,
-              reasoningTokens: 126,
+              input_tokens: 4165,
+              output_tokens: 583,
+              total_tokens: 4748,
+              reasoning_tokens: 126,
               knownTotalCostMicrousd: 15450,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3801,7 +3802,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-4bb0-717e-9542-923a94fee7b0/accounting.json',
         },
       },
@@ -3816,9 +3817,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-7e59-7080-91fd-6e2ca25d4551',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
-          stepIndex: 2,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
+          step_index: 2,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -3832,9 +3833,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-7e5c-7c0a-a9a9-d087f1e5f153',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
+          step_id: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-7e5c-7c06-9661-f9caae4c8f66/turn-user.json',
         },
       },
@@ -3849,14 +3850,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-7e62-7c21-8e1d-002b41d4a86a',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
+          step_id: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-7e5c-7c06-9661-f9caae4c8f66/turn-model.json',
-          inputTokens: 4319,
-          outputTokens: 945,
-          totalTokens: 5264,
-          reasoningTokens: 259,
+          input_tokens: 4319,
+          output_tokens: 945,
+          total_tokens: 5264,
+          reasoning_tokens: 259,
         },
       },
       {
@@ -3870,16 +3871,16 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-b293-762a-9b27-ae9c0ac5cb16',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-7e5c-7c06-9661-f9caae4c8f66/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage:
+          error_code: 'repl_execution_compile',
+          error_message:
             'repl_execution_compile: repl execution failed at compile stage: 1:28: constant definition loop',
         },
       },
@@ -3894,17 +3895,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-b298-7b0c-a94f-2b6b9f1b893c',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
+          step_id: '019d1767-7e5c-7c06-9661-f9caae4c8f66',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 13375,
+          action_count: 1,
+          duration_ms: 13375,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4319,
-              outputTokens: 945,
-              totalTokens: 5264,
-              reasoningTokens: 259,
+              input_tokens: 4319,
+              output_tokens: 945,
+              total_tokens: 5264,
+              reasoning_tokens: 259,
               knownTotalCostMicrousd: 14740,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3920,10 +3921,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -3942,10 +3943,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4319,
-              outputTokens: 945,
-              totalTokens: 5264,
-              reasoningTokens: 259,
+              input_tokens: 4319,
+              output_tokens: 945,
+              total_tokens: 5264,
+              reasoning_tokens: 259,
               knownTotalCostMicrousd: 14740,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -3960,7 +3961,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-7e5c-7c06-9661-f9caae4c8f66/accounting.json',
         },
       },
@@ -3975,9 +3976,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-b29c-7b1b-b2c2-042fb2f266dd',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-b29f-7c6f-a714-45cacc42be20',
-          stepIndex: 3,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-b29f-7c6f-a714-45cacc42be20',
+          step_index: 3,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -3991,9 +3992,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-b29f-7c77-b9a9-4ea790ed2652',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-b29f-7c6f-a714-45cacc42be20',
+          step_id: '019d1767-b29f-7c6f-a714-45cacc42be20',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-b29f-7c6f-a714-45cacc42be20/turn-user.json',
         },
       },
@@ -4008,14 +4009,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-b2a4-72d6-a8d3-5ffc8e0f5c68',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-b29f-7c6f-a714-45cacc42be20',
+          step_id: '019d1767-b29f-7c6f-a714-45cacc42be20',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-b29f-7c6f-a714-45cacc42be20/turn-model.json',
-          inputTokens: 4321,
-          outputTokens: 1115,
-          totalTokens: 5436,
-          reasoningTokens: 375,
+          input_tokens: 4321,
+          output_tokens: 1115,
+          total_tokens: 5436,
+          reasoning_tokens: 375,
         },
       },
       {
@@ -4029,13 +4030,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-f1b1-7670-8cb3-8038b9b495e0',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-b29f-7c6f-a714-45cacc42be20',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1767-b29f-7c6f-a714-45cacc42be20',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 14,
-          actionRef:
+          duration_ms: 14,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-b29f-7c6f-a714-45cacc42be20/action-1.json',
         },
       },
@@ -4050,17 +4051,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-f1c8-7079-91fb-92105df02a3a',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-b29f-7c6f-a714-45cacc42be20',
+          step_id: '019d1767-b29f-7c6f-a714-45cacc42be20',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 16173,
+          action_count: 1,
+          duration_ms: 16173,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4321,
-              outputTokens: 1115,
-              totalTokens: 5436,
-              reasoningTokens: 375,
+              input_tokens: 4321,
+              output_tokens: 1115,
+              total_tokens: 5436,
+              reasoning_tokens: 375,
               knownTotalCostMicrousd: 17123,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4076,10 +4077,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -4098,10 +4099,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4321,
-              outputTokens: 1115,
-              totalTokens: 5436,
-              reasoningTokens: 375,
+              input_tokens: 4321,
+              output_tokens: 1115,
+              total_tokens: 5436,
+              reasoning_tokens: 375,
               knownTotalCostMicrousd: 17123,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4116,7 +4117,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-b29f-7c6f-a714-45cacc42be20/accounting.json',
         },
       },
@@ -4131,9 +4132,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-f1cd-7bf6-8dd8-c7957c77887a',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
-          stepIndex: 4,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
+          step_index: 4,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -4147,9 +4148,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-f1d2-7be2-9102-c33ae6ec6676',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
+          step_id: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-f1d2-7bdf-9061-dda5b43f6fab/turn-user.json',
         },
       },
@@ -4164,14 +4165,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-f1da-72ce-9fdf-4fc8afa1761e',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
+          step_id: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-f1d2-7bdf-9061-dda5b43f6fab/turn-model.json',
-          inputTokens: 4433,
-          outputTokens: 1232,
-          totalTokens: 5665,
-          reasoningTokens: 745,
+          input_tokens: 4433,
+          output_tokens: 1232,
+          total_tokens: 5665,
+          reasoning_tokens: 745,
         },
       },
       {
@@ -4185,13 +4186,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-4567-7157-8b45-03734ff3227c',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 8,
-          actionRef:
+          duration_ms: 8,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-f1d2-7bdf-9061-dda5b43f6fab/action-1.json',
         },
       },
@@ -4206,17 +4207,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-4576-7c7b-baef-29be049cd3b4',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
+          step_id: '019d1767-f1d2-7bdf-9061-dda5b43f6fab',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 21416,
+          action_count: 1,
+          duration_ms: 21416,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4433,
-              outputTokens: 1232,
-              totalTokens: 5665,
-              reasoningTokens: 745,
+              input_tokens: 4433,
+              output_tokens: 1232,
+              total_tokens: 5665,
+              reasoning_tokens: 745,
               knownTotalCostMicrousd: 18957,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4232,10 +4233,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -4254,10 +4255,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4433,
-              outputTokens: 1232,
-              totalTokens: 5665,
-              reasoningTokens: 745,
+              input_tokens: 4433,
+              output_tokens: 1232,
+              total_tokens: 5665,
+              reasoning_tokens: 745,
               knownTotalCostMicrousd: 18957,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4272,7 +4273,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1767-f1d2-7bdf-9061-dda5b43f6fab/accounting.json',
         },
       },
@@ -4287,9 +4288,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-457b-7a41-946d-905afa6c15b0',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-457f-7a64-b4f9-5d62e7e22646',
-          stepIndex: 5,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1768-457f-7a64-b4f9-5d62e7e22646',
+          step_index: 5,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -4303,9 +4304,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-457f-7a68-8b46-093b55bd7157',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-457f-7a64-b4f9-5d62e7e22646',
+          step_id: '019d1768-457f-7a64-b4f9-5d62e7e22646',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-457f-7a64-b4f9-5d62e7e22646/turn-user.json',
         },
       },
@@ -4320,14 +4321,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-4585-7860-b430-3bd589952341',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-457f-7a64-b4f9-5d62e7e22646',
+          step_id: '019d1768-457f-7a64-b4f9-5d62e7e22646',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-457f-7a64-b4f9-5d62e7e22646/turn-model.json',
-          inputTokens: 4928,
-          outputTokens: 746,
-          totalTokens: 5674,
-          reasoningTokens: 403,
+          input_tokens: 4928,
+          output_tokens: 746,
+          total_tokens: 5674,
+          reasoning_tokens: 403,
         },
       },
       {
@@ -4341,16 +4342,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-7e4e-7a06-9586-2ea0e8f534bf',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-457f-7a64-b4f9-5d62e7e22646',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1768-457f-7a64-b4f9-5d62e7e22646',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-457f-7a64-b4f9-5d62e7e22646/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
+          error_code: 'repl_execution_compile',
+          error_message:
+            'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
         },
       },
       {
@@ -4364,17 +4366,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-7e53-784d-b1cf-9439bbe89f65',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-457f-7a64-b4f9-5d62e7e22646',
+          step_id: '019d1768-457f-7a64-b4f9-5d62e7e22646',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 14552,
+          action_count: 1,
+          duration_ms: 14552,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4928,
-              outputTokens: 746,
-              totalTokens: 5674,
-              reasoningTokens: 403,
+              input_tokens: 4928,
+              output_tokens: 746,
+              total_tokens: 5674,
+              reasoning_tokens: 403,
               knownTotalCostMicrousd: 13020,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4390,10 +4392,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -4412,10 +4414,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4928,
-              outputTokens: 746,
-              totalTokens: 5674,
-              reasoningTokens: 403,
+              input_tokens: 4928,
+              output_tokens: 746,
+              total_tokens: 5674,
+              reasoning_tokens: 403,
               knownTotalCostMicrousd: 13020,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4430,7 +4432,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-457f-7a64-b4f9-5d62e7e22646/accounting.json',
         },
       },
@@ -4445,9 +4447,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-7e58-74ed-a5f5-f42aaf2a1a67',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
-          stepIndex: 6,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
+          step_index: 6,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -4461,9 +4463,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-7e5c-7cae-8b82-5a54da3201ad',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
+          step_id: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-7e5c-7ca6-9d7d-c40d00a90a98/turn-user.json',
         },
       },
@@ -4478,14 +4480,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1768-7e61-7a96-a3b2-2bdf60726956',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
+          step_id: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-7e5c-7ca6-9d7d-c40d00a90a98/turn-model.json',
-          inputTokens: 4320,
-          outputTokens: 2021,
-          totalTokens: 6341,
-          reasoningTokens: 1187,
+          input_tokens: 4320,
+          output_tokens: 2021,
+          total_tokens: 6341,
+          reasoning_tokens: 1187,
         },
       },
       {
@@ -4499,13 +4501,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-0420-7616-b189-62d7e915c0ee',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-7e5c-7ca6-9d7d-c40d00a90a98/action-1.json',
         },
       },
@@ -4520,17 +4522,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-0426-7975-b0dd-02daffd9f14c',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
+          step_id: '019d1768-7e5c-7ca6-9d7d-c40d00a90a98',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 34253,
+          action_count: 1,
+          duration_ms: 34253,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4320,
-              outputTokens: 2021,
-              totalTokens: 6341,
-              reasoningTokens: 1187,
+              input_tokens: 4320,
+              output_tokens: 2021,
+              total_tokens: 6341,
+              reasoning_tokens: 1187,
               knownTotalCostMicrousd: 29806,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4546,10 +4548,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -4568,10 +4570,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4320,
-              outputTokens: 2021,
-              totalTokens: 6341,
-              reasoningTokens: 1187,
+              input_tokens: 4320,
+              output_tokens: 2021,
+              total_tokens: 6341,
+              reasoning_tokens: 1187,
               knownTotalCostMicrousd: 29806,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4586,7 +4588,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1768-7e5c-7ca6-9d7d-c40d00a90a98/accounting.json',
         },
       },
@@ -4601,9 +4603,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-042a-7c63-b5d2-2bd16033f24e',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-042e-72ab-acf0-fe18b100cab9',
-          stepIndex: 7,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1769-042e-72ab-acf0-fe18b100cab9',
+          step_index: 7,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -4617,9 +4619,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-042e-72b3-858b-0f91e2396551',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-042e-72ab-acf0-fe18b100cab9',
+          step_id: '019d1769-042e-72ab-acf0-fe18b100cab9',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-042e-72ab-acf0-fe18b100cab9/turn-user.json',
         },
       },
@@ -4634,14 +4636,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-0432-7923-91e6-8fbe6fc2f3ad',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-042e-72ab-acf0-fe18b100cab9',
+          step_id: '019d1769-042e-72ab-acf0-fe18b100cab9',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-042e-72ab-acf0-fe18b100cab9/turn-model.json',
-          inputTokens: 4279,
-          outputTokens: 1084,
-          totalTokens: 5363,
-          reasoningTokens: 365,
+          input_tokens: 4279,
+          output_tokens: 1084,
+          total_tokens: 5363,
+          reasoning_tokens: 365,
         },
       },
       {
@@ -4655,16 +4657,16 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-4fe2-70e2-88c2-540eb2744557',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-042e-72ab-acf0-fe18b100cab9',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1769-042e-72ab-acf0-fe18b100cab9',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 1,
-          actionRef:
+          duration_ms: 1,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-042e-72ab-acf0-fe18b100cab9/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage:
+          error_code: 'repl_execution_compile',
+          error_message:
             'repl_execution_compile: repl execution failed at compile stage: 58:5: undefined: secondAgreementAssistant',
         },
       },
@@ -4679,17 +4681,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-4fee-71dc-a6e2-b7f8be42e4f3',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-042e-72ab-acf0-fe18b100cab9',
+          step_id: '019d1769-042e-72ab-acf0-fe18b100cab9',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 19396,
+          action_count: 1,
+          duration_ms: 19396,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4279,
-              outputTokens: 1084,
-              totalTokens: 5363,
-              reasoningTokens: 365,
+              input_tokens: 4279,
+              output_tokens: 1084,
+              total_tokens: 5363,
+              reasoning_tokens: 365,
               knownTotalCostMicrousd: 16616,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4705,10 +4707,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -4727,10 +4729,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4279,
-              outputTokens: 1084,
-              totalTokens: 5363,
-              reasoningTokens: 365,
+              input_tokens: 4279,
+              output_tokens: 1084,
+              total_tokens: 5363,
+              reasoning_tokens: 365,
               knownTotalCostMicrousd: 16616,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4745,7 +4747,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-042e-72ab-acf0-fe18b100cab9/accounting.json',
         },
       },
@@ -4760,9 +4762,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-4ff2-7e7e-a7af-0ceee3810189',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-4ff7-75dc-b935-88ee0deed914',
-          stepIndex: 8,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1769-4ff7-75dc-b935-88ee0deed914',
+          step_index: 8,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -4776,9 +4778,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-4ff7-75e3-97dc-2881435b4a50',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-4ff7-75dc-b935-88ee0deed914',
+          step_id: '019d1769-4ff7-75dc-b935-88ee0deed914',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-4ff7-75dc-b935-88ee0deed914/turn-user.json',
         },
       },
@@ -4793,14 +4795,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-4fff-70c3-9f1a-cc07a5eef0bd',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-4ff7-75dc-b935-88ee0deed914',
+          step_id: '019d1769-4ff7-75dc-b935-88ee0deed914',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-4ff7-75dc-b935-88ee0deed914/turn-model.json',
-          inputTokens: 4326,
-          outputTokens: 1370,
-          totalTokens: 5696,
-          reasoningTokens: 703,
+          input_tokens: 4326,
+          output_tokens: 1370,
+          total_tokens: 5696,
+          reasoning_tokens: 703,
         },
       },
       {
@@ -4814,13 +4816,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-b0ed-768f-afef-5fa616ef29c2',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-4ff7-75dc-b935-88ee0deed914',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1769-4ff7-75dc-b935-88ee0deed914',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 11,
-          actionRef:
+          duration_ms: 11,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-4ff7-75dc-b935-88ee0deed914/action-1.json',
         },
       },
@@ -4835,17 +4837,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-b0fe-77e3-8c43-b263dcb3ccf6',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-4ff7-75dc-b935-88ee0deed914',
+          step_id: '019d1769-4ff7-75dc-b935-88ee0deed914',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 24843,
+          action_count: 1,
+          duration_ms: 24843,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4326,
-              outputTokens: 1370,
-              totalTokens: 5696,
-              reasoningTokens: 703,
+              input_tokens: 4326,
+              output_tokens: 1370,
+              total_tokens: 5696,
+              reasoning_tokens: 703,
               knownTotalCostMicrousd: 20702,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4861,10 +4863,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -4883,10 +4885,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4326,
-              outputTokens: 1370,
-              totalTokens: 5696,
-              reasoningTokens: 703,
+              input_tokens: 4326,
+              output_tokens: 1370,
+              total_tokens: 5696,
+              reasoning_tokens: 703,
               knownTotalCostMicrousd: 20702,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -4901,7 +4903,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-4ff7-75dc-b935-88ee0deed914/accounting.json',
         },
       },
@@ -4916,9 +4918,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-b103-741e-84c8-e5f266090b50',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-b107-78d1-8b8c-40a69e167eb3',
-          stepIndex: 9,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1769-b107-78d1-8b8c-40a69e167eb3',
+          step_index: 9,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -4932,9 +4934,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-b107-78d9-9764-ae7b05eae76d',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-b107-78d1-8b8c-40a69e167eb3',
+          step_id: '019d1769-b107-78d1-8b8c-40a69e167eb3',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-b107-78d1-8b8c-40a69e167eb3/turn-user.json',
         },
       },
@@ -4949,14 +4951,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-b10c-71d0-9e0d-027943cdc695',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-b107-78d1-8b8c-40a69e167eb3',
+          step_id: '019d1769-b107-78d1-8b8c-40a69e167eb3',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-b107-78d1-8b8c-40a69e167eb3/turn-model.json',
-          inputTokens: 4506,
-          outputTokens: 566,
-          totalTokens: 5072,
-          reasoningTokens: 250,
+          input_tokens: 4506,
+          output_tokens: 566,
+          total_tokens: 5072,
+          reasoning_tokens: 250,
         },
       },
       {
@@ -4970,16 +4972,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-eadb-7a87-9b2f-fa867a8a9244',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-b107-78d1-8b8c-40a69e167eb3',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1769-b107-78d1-8b8c-40a69e167eb3',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-b107-78d1-8b8c-40a69e167eb3/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
+          error_code: 'repl_execution_compile',
+          error_message:
+            'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
         },
       },
       {
@@ -4993,17 +4996,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-eae3-7674-ab8e-ec502923bab9',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-b107-78d1-8b8c-40a69e167eb3',
+          step_id: '019d1769-b107-78d1-8b8c-40a69e167eb3',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 14815,
+          action_count: 1,
+          duration_ms: 14815,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4506,
-              outputTokens: 566,
-              totalTokens: 5072,
-              reasoningTokens: 250,
+              input_tokens: 4506,
+              output_tokens: 566,
+              total_tokens: 5072,
+              reasoning_tokens: 250,
               knownTotalCostMicrousd: 9761,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5019,10 +5022,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -5041,10 +5044,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4506,
-              outputTokens: 566,
-              totalTokens: 5072,
-              reasoningTokens: 250,
+              input_tokens: 4506,
+              output_tokens: 566,
+              total_tokens: 5072,
+              reasoning_tokens: 250,
               knownTotalCostMicrousd: 9761,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5059,7 +5062,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-b107-78d1-8b8c-40a69e167eb3/accounting.json',
         },
       },
@@ -5074,9 +5077,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-eae6-7f2a-b298-909edce86802',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
-          stepIndex: 10,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
+          step_index: 10,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -5090,9 +5093,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-eaeb-76a7-9ca5-d079f48ce6bf',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
+          step_id: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-eaeb-769f-8565-ebe272d2e7c2/turn-user.json',
         },
       },
@@ -5107,14 +5110,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1769-eaf1-7071-8c1f-aba5968bf55e',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
+          step_id: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-eaeb-769f-8565-ebe272d2e7c2/turn-model.json',
-          inputTokens: 4319,
-          outputTokens: 1879,
-          totalTokens: 6198,
-          reasoningTokens: 1041,
+          input_tokens: 4319,
+          output_tokens: 1879,
+          total_tokens: 6198,
+          reasoning_tokens: 1041,
         },
       },
       {
@@ -5128,16 +5131,16 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-6566-768b-aa74-47b080e903e2',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 1,
-          actionRef:
+          duration_ms: 1,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-eaeb-769f-8565-ebe272d2e7c2/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage:
+          error_code: 'repl_execution_compile',
+          error_message:
             'repl_execution_compile: repl execution failed at compile stage: 69:1: undefined: targetSongAboutAgreementsAssistant',
         },
       },
@@ -5152,17 +5155,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-656f-743a-9b65-72ad035ae162',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
+          step_id: '019d1769-eaeb-769f-8565-ebe272d2e7c2',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 31368,
+          action_count: 1,
+          duration_ms: 31368,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4319,
-              outputTokens: 1879,
-              totalTokens: 6198,
-              reasoningTokens: 1041,
+              input_tokens: 4319,
+              output_tokens: 1879,
+              total_tokens: 6198,
+              reasoning_tokens: 1041,
               knownTotalCostMicrousd: 27816,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5178,10 +5181,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -5200,10 +5203,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4319,
-              outputTokens: 1879,
-              totalTokens: 6198,
-              reasoningTokens: 1041,
+              input_tokens: 4319,
+              output_tokens: 1879,
+              total_tokens: 6198,
+              reasoning_tokens: 1041,
               knownTotalCostMicrousd: 27816,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5218,7 +5221,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1769-eaeb-769f-8565-ebe272d2e7c2/accounting.json',
         },
       },
@@ -5233,9 +5236,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-6574-74a3-94a8-3bd8cfa2a8a2',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-6578-7985-a8f4-596d4eaf5975',
-          stepIndex: 11,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176a-6578-7985-a8f4-596d4eaf5975',
+          step_index: 11,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -5249,9 +5252,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-6578-7991-83d4-8d10e610aaf9',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-6578-7985-a8f4-596d4eaf5975',
+          step_id: '019d176a-6578-7985-a8f4-596d4eaf5975',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176a-6578-7985-a8f4-596d4eaf5975/turn-user.json',
         },
       },
@@ -5266,14 +5269,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-657d-7c83-8d61-7da2341fb8fe',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-6578-7985-a8f4-596d4eaf5975',
+          step_id: '019d176a-6578-7985-a8f4-596d4eaf5975',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176a-6578-7985-a8f4-596d4eaf5975/turn-model.json',
-          inputTokens: 4338,
-          outputTokens: 1938,
-          totalTokens: 6276,
-          reasoningTokens: 599,
+          input_tokens: 4338,
+          output_tokens: 1938,
+          total_tokens: 6276,
+          reasoning_tokens: 599,
         },
       },
       {
@@ -5287,13 +5290,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-ce27-75e7-ae30-7acdafd997a7',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-6578-7985-a8f4-596d4eaf5975',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176a-6578-7985-a8f4-596d4eaf5975',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 23,
-          actionRef:
+          duration_ms: 23,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176a-6578-7985-a8f4-596d4eaf5975/action-1.json',
         },
       },
@@ -5308,17 +5311,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-ce45-7849-a291-15d5c84dcbce',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-6578-7985-a8f4-596d4eaf5975',
+          step_id: '019d176a-6578-7985-a8f4-596d4eaf5975',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 26833,
+          action_count: 1,
+          duration_ms: 26833,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4338,
-              outputTokens: 1938,
-              totalTokens: 6276,
-              reasoningTokens: 599,
+              input_tokens: 4338,
+              output_tokens: 1938,
+              total_tokens: 6276,
+              reasoning_tokens: 599,
               knownTotalCostMicrousd: 28675,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5334,10 +5337,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -5356,10 +5359,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4338,
-              outputTokens: 1938,
-              totalTokens: 6276,
-              reasoningTokens: 599,
+              input_tokens: 4338,
+              output_tokens: 1938,
+              total_tokens: 6276,
+              reasoning_tokens: 599,
               knownTotalCostMicrousd: 28675,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5374,7 +5377,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176a-6578-7985-a8f4-596d4eaf5975/accounting.json',
         },
       },
@@ -5389,9 +5392,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-ce4a-7728-9068-f55238205a71',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
-          stepIndex: 12,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
+          step_index: 12,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -5405,9 +5408,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-ce4e-7639-b75b-eb0d59303222',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
+          step_id: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176a-ce4e-7635-b43e-7966bdd0ae96/turn-user.json',
         },
       },
@@ -5422,14 +5425,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176a-ce53-773f-880b-00611c17ba60',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
+          step_id: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176a-ce4e-7635-b43e-7966bdd0ae96/turn-model.json',
-          inputTokens: 4333,
-          outputTokens: 1388,
-          totalTokens: 5721,
-          reasoningTokens: 1054,
+          input_tokens: 4333,
+          output_tokens: 1388,
+          total_tokens: 5721,
+          reasoning_tokens: 1054,
         },
       },
       {
@@ -5443,16 +5446,16 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-2fef-777d-b471-b7f7be55e163',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176a-ce4e-7635-b43e-7966bdd0ae96/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage:
+          error_code: 'repl_execution_compile',
+          error_message:
             'repl_execution_compile: repl execution failed at compile stage: 18:5: undefined: agreementSong2',
         },
       },
@@ -5467,17 +5470,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-2ff5-711d-9f7a-f2e6802ae44e',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
+          step_id: '019d176a-ce4e-7635-b43e-7966bdd0ae96',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 25003,
+          action_count: 1,
+          duration_ms: 25003,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4333,
-              outputTokens: 1388,
-              totalTokens: 5721,
-              reasoningTokens: 1054,
+              input_tokens: 4333,
+              output_tokens: 1388,
+              total_tokens: 5721,
+              reasoning_tokens: 1054,
               knownTotalCostMicrousd: 20966,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5493,10 +5496,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -5515,10 +5518,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4333,
-              outputTokens: 1388,
-              totalTokens: 5721,
-              reasoningTokens: 1054,
+              input_tokens: 4333,
+              output_tokens: 1388,
+              total_tokens: 5721,
+              reasoning_tokens: 1054,
               knownTotalCostMicrousd: 20966,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5533,7 +5536,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176a-ce4e-7635-b43e-7966bdd0ae96/accounting.json',
         },
       },
@@ -5548,9 +5551,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-2ffa-74e5-8af4-03faf622ff89',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
-          stepIndex: 13,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
+          step_index: 13,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -5564,9 +5567,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-2ffd-7dac-8fce-a7b8fae7f598',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
+          step_id: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176b-2ffd-7da4-b1fc-0da30c7f1aa2/turn-user.json',
         },
       },
@@ -5581,14 +5584,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-3003-7274-bd47-d7a414fd3469',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
+          step_id: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176b-2ffd-7da4-b1fc-0da30c7f1aa2/turn-model.json',
-          inputTokens: 4327,
-          outputTokens: 2644,
-          totalTokens: 6971,
-          reasoningTokens: 817,
+          input_tokens: 4327,
+          output_tokens: 2644,
+          total_tokens: 6971,
+          reasoning_tokens: 817,
         },
       },
       {
@@ -5602,13 +5605,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-cc5c-7683-a4f8-ddbfa8c967e0',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 8,
-          actionRef:
+          duration_ms: 8,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176b-2ffd-7da4-b1fc-0da30c7f1aa2/action-1.json',
         },
       },
@@ -5623,17 +5626,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-cc68-7b79-837e-281cdf2f5f54',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
+          step_id: '019d176b-2ffd-7da4-b1fc-0da30c7f1aa2',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 40046,
+          action_count: 1,
+          duration_ms: 40046,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4327,
-              outputTokens: 2644,
-              totalTokens: 6971,
-              reasoningTokens: 817,
+              input_tokens: 4327,
+              output_tokens: 2644,
+              total_tokens: 6971,
+              reasoning_tokens: 817,
               knownTotalCostMicrousd: 38540,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5649,10 +5652,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -5671,10 +5674,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4327,
-              outputTokens: 2644,
-              totalTokens: 6971,
-              reasoningTokens: 817,
+              input_tokens: 4327,
+              output_tokens: 2644,
+              total_tokens: 6971,
+              reasoning_tokens: 817,
               knownTotalCostMicrousd: 38540,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5689,7 +5692,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176b-2ffd-7da4-b1fc-0da30c7f1aa2/accounting.json',
         },
       },
@@ -5704,9 +5707,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-cc6c-7a16-bc68-d6ff2f5a0576',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
-          stepIndex: 14,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
+          step_index: 14,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -5720,9 +5723,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-cc70-796e-8064-3f7d46c1d270',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
+          step_id: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176b-cc70-796a-9e3c-d5e08d9d0517/turn-user.json',
         },
       },
@@ -5737,14 +5740,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176b-cc74-7b5a-bc83-8597cca2ca2d',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
+          step_id: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176b-cc70-796a-9e3c-d5e08d9d0517/turn-model.json',
-          inputTokens: 4429,
-          outputTokens: 1260,
-          totalTokens: 5689,
-          reasoningTokens: 837,
+          input_tokens: 4429,
+          output_tokens: 1260,
+          total_tokens: 5689,
+          reasoning_tokens: 837,
         },
       },
       {
@@ -5758,13 +5761,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-222c-7bc7-823b-1bcf8fa3ff04',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176b-cc70-796a-9e3c-d5e08d9d0517/action-1.json',
         },
       },
@@ -5779,17 +5782,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-2233-7278-9a33-b8ea68712ffd',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
+          step_id: '019d176b-cc70-796a-9e3c-d5e08d9d0517',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 21959,
+          action_count: 1,
+          duration_ms: 21959,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4429,
-              outputTokens: 1260,
-              totalTokens: 5689,
-              reasoningTokens: 837,
+              input_tokens: 4429,
+              output_tokens: 1260,
+              total_tokens: 5689,
+              reasoning_tokens: 837,
               knownTotalCostMicrousd: 19342,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5805,10 +5808,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -5827,10 +5830,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4429,
-              outputTokens: 1260,
-              totalTokens: 5689,
-              reasoningTokens: 837,
+              input_tokens: 4429,
+              output_tokens: 1260,
+              total_tokens: 5689,
+              reasoning_tokens: 837,
               knownTotalCostMicrousd: 19342,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5845,7 +5848,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176b-cc70-796a-9e3c-d5e08d9d0517/accounting.json',
         },
       },
@@ -5860,9 +5863,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-2238-7392-9c6e-2203d15b30d1',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-223d-709c-846f-4b5937249f53',
-          stepIndex: 15,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176c-223d-709c-846f-4b5937249f53',
+          step_index: 15,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -5876,9 +5879,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-223d-70a0-82e2-310ad47e7e08',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-223d-709c-846f-4b5937249f53',
+          step_id: '019d176c-223d-709c-846f-4b5937249f53',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-223d-709c-846f-4b5937249f53/turn-user.json',
         },
       },
@@ -5893,14 +5896,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-2242-79c0-b504-9e8228a0e0f5',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-223d-709c-846f-4b5937249f53',
+          step_id: '019d176c-223d-709c-846f-4b5937249f53',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-223d-709c-846f-4b5937249f53/turn-model.json',
-          inputTokens: 4426,
-          outputTokens: 597,
-          totalTokens: 5023,
-          reasoningTokens: 232,
+          input_tokens: 4426,
+          output_tokens: 597,
+          total_tokens: 5023,
+          reasoning_tokens: 232,
         },
       },
       {
@@ -5914,16 +5917,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-4b37-7674-a022-e24bcc63d7b9',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-223d-709c-846f-4b5937249f53',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176c-223d-709c-846f-4b5937249f53',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-223d-709c-846f-4b5937249f53/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
+          error_code: 'repl_execution_compile',
+          error_message:
+            'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
         },
       },
       {
@@ -5937,17 +5941,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-4b3b-7ac1-862f-5941f0fd3dd9',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-223d-709c-846f-4b5937249f53',
+          step_id: '019d176c-223d-709c-846f-4b5937249f53',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 10500,
+          action_count: 1,
+          duration_ms: 10500,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4426,
-              outputTokens: 597,
-              totalTokens: 5023,
-              reasoningTokens: 232,
+              input_tokens: 4426,
+              output_tokens: 597,
+              total_tokens: 5023,
+              reasoning_tokens: 232,
               knownTotalCostMicrousd: 10055,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -5963,10 +5967,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -5985,10 +5989,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4426,
-              outputTokens: 597,
-              totalTokens: 5023,
-              reasoningTokens: 232,
+              input_tokens: 4426,
+              output_tokens: 597,
+              total_tokens: 5023,
+              reasoning_tokens: 232,
               knownTotalCostMicrousd: 10055,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6003,7 +6007,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-223d-709c-846f-4b5937249f53/accounting.json',
         },
       },
@@ -6018,9 +6022,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-4b41-73e8-bbe1-71ad97cbeaf4',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
-          stepIndex: 16,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
+          step_index: 16,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -6034,9 +6038,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-4b45-78d1-ab0a-44b3981e1bac',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
+          step_id: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-4b45-78ca-a0d3-49cf7e0b8cc5/turn-user.json',
         },
       },
@@ -6051,14 +6055,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-4b49-7186-8442-4b670738e52b',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
+          step_id: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-4b45-78ca-a0d3-49cf7e0b8cc5/turn-model.json',
-          inputTokens: 4317,
-          outputTokens: 1361,
-          totalTokens: 5678,
-          reasoningTokens: 483,
+          input_tokens: 4317,
+          output_tokens: 1361,
+          total_tokens: 5678,
+          reasoning_tokens: 483,
         },
       },
       {
@@ -6072,13 +6076,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-a0d7-7b62-8ed5-90bee4a28b1a',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-4b45-78ca-a0d3-49cf7e0b8cc5/action-1.json',
         },
       },
@@ -6093,17 +6097,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-a0dd-7a39-9de8-332db3971e59',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
+          step_id: '019d176c-4b45-78ca-a0d3-49cf7e0b8cc5',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 21916,
+          action_count: 1,
+          duration_ms: 21916,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4317,
-              outputTokens: 1361,
-              totalTokens: 5678,
-              reasoningTokens: 483,
+              input_tokens: 4317,
+              output_tokens: 1361,
+              total_tokens: 5678,
+              reasoning_tokens: 483,
               knownTotalCostMicrousd: 20560,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6119,10 +6123,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -6141,10 +6145,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4317,
-              outputTokens: 1361,
-              totalTokens: 5678,
-              reasoningTokens: 483,
+              input_tokens: 4317,
+              output_tokens: 1361,
+              total_tokens: 5678,
+              reasoning_tokens: 483,
               knownTotalCostMicrousd: 20560,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6159,7 +6163,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-4b45-78ca-a0d3-49cf7e0b8cc5/accounting.json',
         },
       },
@@ -6174,9 +6178,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-a0e2-75ff-9d0d-f6fc274c4d56',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-a0e6-7ebd-8561-6595059dbcda',
-          stepIndex: 17,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176c-a0e6-7ebd-8561-6595059dbcda',
+          step_index: 17,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -6190,9 +6194,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-a0e6-7ec5-b7e2-589f8bb24545',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-a0e6-7ebd-8561-6595059dbcda',
+          step_id: '019d176c-a0e6-7ebd-8561-6595059dbcda',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-a0e6-7ebd-8561-6595059dbcda/turn-user.json',
         },
       },
@@ -6207,14 +6211,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-a0eb-791f-b470-4d622d48987b',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-a0e6-7ebd-8561-6595059dbcda',
+          step_id: '019d176c-a0e6-7ebd-8561-6595059dbcda',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-a0e6-7ebd-8561-6595059dbcda/turn-model.json',
-          inputTokens: 4271,
-          outputTokens: 1022,
-          totalTokens: 5293,
-          reasoningTokens: 225,
+          input_tokens: 4271,
+          output_tokens: 1022,
+          total_tokens: 5293,
+          reasoning_tokens: 225,
         },
       },
       {
@@ -6228,13 +6232,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-da75-75ef-88fe-fa26279bd34d',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-a0e6-7ebd-8561-6595059dbcda',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176c-a0e6-7ebd-8561-6595059dbcda',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 29,
-          actionRef:
+          duration_ms: 29,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-a0e6-7ebd-8561-6595059dbcda/action-1.json',
         },
       },
@@ -6249,17 +6253,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-da97-7d27-8983-5592d915a9d0',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-a0e6-7ebd-8561-6595059dbcda',
+          step_id: '019d176c-a0e6-7ebd-8561-6595059dbcda',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 14773,
+          action_count: 1,
+          duration_ms: 14773,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4271,
-              outputTokens: 1022,
-              totalTokens: 5293,
-              reasoningTokens: 225,
+              input_tokens: 4271,
+              output_tokens: 1022,
+              total_tokens: 5293,
+              reasoning_tokens: 225,
               knownTotalCostMicrousd: 15734,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6275,10 +6279,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -6297,10 +6301,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4271,
-              outputTokens: 1022,
-              totalTokens: 5293,
-              reasoningTokens: 225,
+              input_tokens: 4271,
+              output_tokens: 1022,
+              total_tokens: 5293,
+              reasoning_tokens: 225,
               knownTotalCostMicrousd: 15734,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6315,7 +6319,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-a0e6-7ebd-8561-6595059dbcda/accounting.json',
         },
       },
@@ -6330,9 +6334,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-da9c-7d0b-a4c5-9dfe7da30d53',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-daa1-76f9-b1a9-28744129a4c8',
-          stepIndex: 18,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176c-daa1-76f9-b1a9-28744129a4c8',
+          step_index: 18,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -6346,9 +6350,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-daa1-76fd-ad12-35b5a3bbd9db',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-daa1-76f9-b1a9-28744129a4c8',
+          step_id: '019d176c-daa1-76f9-b1a9-28744129a4c8',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-daa1-76f9-b1a9-28744129a4c8/turn-user.json',
         },
       },
@@ -6363,14 +6367,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176c-daa5-7afc-855d-33dc44763135',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-daa1-76f9-b1a9-28744129a4c8',
+          step_id: '019d176c-daa1-76f9-b1a9-28744129a4c8',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-daa1-76f9-b1a9-28744129a4c8/turn-model.json',
-          inputTokens: 4301,
-          outputTokens: 2067,
-          totalTokens: 6368,
-          reasoningTokens: 443,
+          input_tokens: 4301,
+          output_tokens: 2067,
+          total_tokens: 6368,
+          reasoning_tokens: 443,
         },
       },
       {
@@ -6384,13 +6388,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-46b9-7914-9402-8849b6f64478',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-daa1-76f9-b1a9-28744129a4c8',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176c-daa1-76f9-b1a9-28744129a4c8',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 10,
-          actionRef:
+          duration_ms: 10,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-daa1-76f9-b1a9-28744129a4c8/action-1.json',
         },
       },
@@ -6405,17 +6409,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-46c9-77db-b008-b7b9072b4ed8',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176c-daa1-76f9-b1a9-28744129a4c8',
+          step_id: '019d176c-daa1-76f9-b1a9-28744129a4c8',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 27692,
+          action_count: 1,
+          duration_ms: 27692,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4301,
-              outputTokens: 2067,
-              totalTokens: 6368,
-              reasoningTokens: 443,
+              input_tokens: 4301,
+              output_tokens: 2067,
+              total_tokens: 6368,
+              reasoning_tokens: 443,
               knownTotalCostMicrousd: 30416,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6431,10 +6435,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -6453,10 +6457,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4301,
-              outputTokens: 2067,
-              totalTokens: 6368,
-              reasoningTokens: 443,
+              input_tokens: 4301,
+              output_tokens: 2067,
+              total_tokens: 6368,
+              reasoning_tokens: 443,
               knownTotalCostMicrousd: 30416,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6471,7 +6475,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176c-daa1-76f9-b1a9-28744129a4c8/accounting.json',
         },
       },
@@ -6486,9 +6490,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-46ce-75ff-9e26-7e45155e6f70',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
-          stepIndex: 19,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
+          step_index: 19,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -6502,9 +6506,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-46d3-7111-93ca-ee7cf1568f71',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
+          step_id: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-46d3-7109-ad6a-f7e1e53de67d/turn-user.json',
         },
       },
@@ -6519,14 +6523,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-46d7-77e3-adc1-216ecdcd3a37',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
+          step_id: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-46d3-7109-ad6a-f7e1e53de67d/turn-model.json',
-          inputTokens: 4271,
-          outputTokens: 2044,
-          totalTokens: 6315,
-          reasoningTokens: 352,
+          input_tokens: 4271,
+          output_tokens: 2044,
+          total_tokens: 6315,
+          reasoning_tokens: 352,
         },
       },
       {
@@ -6540,16 +6544,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-b46b-7480-bd97-e57a231e2e6d',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-46d3-7109-ad6a-f7e1e53de67d/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage: 'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
+          error_code: 'repl_execution_compile',
+          error_message:
+            'repl_execution_compile: repl execution failed at compile stage: 2:1: constant definition loop',
         },
       },
       {
@@ -6563,17 +6568,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-b470-7900-b636-b6e795b39aa6',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
+          step_id: '019d176d-46d3-7109-ad6a-f7e1e53de67d',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 28066,
+          action_count: 1,
+          duration_ms: 28066,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4271,
-              outputTokens: 2044,
-              totalTokens: 6315,
-              reasoningTokens: 352,
+              input_tokens: 4271,
+              output_tokens: 2044,
+              total_tokens: 6315,
+              reasoning_tokens: 352,
               knownTotalCostMicrousd: 30042,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6589,10 +6594,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -6611,10 +6616,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4271,
-              outputTokens: 2044,
-              totalTokens: 6315,
-              reasoningTokens: 352,
+              input_tokens: 4271,
+              output_tokens: 2044,
+              total_tokens: 6315,
+              reasoning_tokens: 352,
               knownTotalCostMicrousd: 30042,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6629,7 +6634,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-46d3-7109-ad6a-f7e1e53de67d/accounting.json',
         },
       },
@@ -6644,9 +6649,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-b475-7357-a021-a2896995ff0a',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-b479-78e9-b156-2fb5e9d46e78',
-          stepIndex: 20,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176d-b479-78e9-b156-2fb5e9d46e78',
+          step_index: 20,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -6660,9 +6665,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-b479-78f1-ba52-3d6524d17e22',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-b479-78e9-b156-2fb5e9d46e78',
+          step_id: '019d176d-b479-78e9-b156-2fb5e9d46e78',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-b479-78e9-b156-2fb5e9d46e78/turn-user.json',
         },
       },
@@ -6677,14 +6682,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176d-b47d-7ce8-8e2f-4f9c7e7aae60',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-b479-78e9-b156-2fb5e9d46e78',
+          step_id: '019d176d-b479-78e9-b156-2fb5e9d46e78',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-b479-78e9-b156-2fb5e9d46e78/turn-model.json',
-          inputTokens: 4319,
-          outputTokens: 1400,
-          totalTokens: 5719,
-          reasoningTokens: 828,
+          input_tokens: 4319,
+          output_tokens: 1400,
+          total_tokens: 5719,
+          reasoning_tokens: 828,
         },
       },
       {
@@ -6698,13 +6703,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-167a-7b9c-9b5c-97b6de40b4cd',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-b479-78e9-b156-2fb5e9d46e78',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176d-b479-78e9-b156-2fb5e9d46e78',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 10,
-          actionRef:
+          duration_ms: 10,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-b479-78e9-b156-2fb5e9d46e78/action-1.json',
         },
       },
@@ -6719,17 +6724,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-168b-7cec-b2bd-4b2e7d4c6f36',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176d-b479-78e9-b156-2fb5e9d46e78',
+          step_id: '019d176d-b479-78e9-b156-2fb5e9d46e78',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 25111,
+          action_count: 1,
+          duration_ms: 25111,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4319,
-              outputTokens: 1400,
-              totalTokens: 5719,
-              reasoningTokens: 828,
+              input_tokens: 4319,
+              output_tokens: 1400,
+              total_tokens: 5719,
+              reasoning_tokens: 828,
               knownTotalCostMicrousd: 21110,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6745,10 +6750,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -6767,10 +6772,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4319,
-              outputTokens: 1400,
-              totalTokens: 5719,
-              reasoningTokens: 828,
+              input_tokens: 4319,
+              output_tokens: 1400,
+              total_tokens: 5719,
+              reasoning_tokens: 828,
               knownTotalCostMicrousd: 21110,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6785,7 +6790,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176d-b479-78e9-b156-2fb5e9d46e78/accounting.json',
         },
       },
@@ -6800,9 +6805,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-1690-7d2b-868c-c8cd4c719b02',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-1695-73fb-8432-00ad4ed365fc',
-          stepIndex: 21,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176e-1695-73fb-8432-00ad4ed365fc',
+          step_index: 21,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -6816,9 +6821,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-1695-7403-b8ab-3d80369fe2dd',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-1695-73fb-8432-00ad4ed365fc',
+          step_id: '019d176e-1695-73fb-8432-00ad4ed365fc',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176e-1695-73fb-8432-00ad4ed365fc/turn-user.json',
         },
       },
@@ -6833,14 +6838,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-1699-7a93-8822-ff7e64c52d56',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-1695-73fb-8432-00ad4ed365fc',
+          step_id: '019d176e-1695-73fb-8432-00ad4ed365fc',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176e-1695-73fb-8432-00ad4ed365fc/turn-model.json',
-          inputTokens: 4436,
-          outputTokens: 1429,
-          totalTokens: 5865,
-          reasoningTokens: 631,
+          input_tokens: 4436,
+          output_tokens: 1429,
+          total_tokens: 5865,
+          reasoning_tokens: 631,
         },
       },
       {
@@ -6854,16 +6859,16 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-72d8-70af-90c8-b130282c64d6',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-1695-73fb-8432-00ad4ed365fc',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176e-1695-73fb-8432-00ad4ed365fc',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'failed',
-          durationMs: 0,
-          actionRef:
+          duration_ms: 0,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176e-1695-73fb-8432-00ad4ed365fc/action-1.json',
-          errorCode: 'repl_execution_compile',
-          errorMessage:
+          error_code: 'repl_execution_compile',
+          error_message:
             'repl_execution_compile: repl execution failed at compile stage: 36:1: undefined: extracted0723',
         },
       },
@@ -6878,17 +6883,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-72de-7ee0-aa01-c00be49d292e',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-1695-73fb-8432-00ad4ed365fc',
+          step_id: '019d176e-1695-73fb-8432-00ad4ed365fc',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 23631,
+          action_count: 1,
+          duration_ms: 23631,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4436,
-              outputTokens: 1429,
-              totalTokens: 5865,
-              reasoningTokens: 631,
+              input_tokens: 4436,
+              output_tokens: 1429,
+              total_tokens: 5865,
+              reasoning_tokens: 631,
               knownTotalCostMicrousd: 21721,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6904,10 +6909,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -6926,10 +6931,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4436,
-              outputTokens: 1429,
-              totalTokens: 5865,
-              reasoningTokens: 631,
+              input_tokens: 4436,
+              output_tokens: 1429,
+              total_tokens: 5865,
+              reasoning_tokens: 631,
               knownTotalCostMicrousd: 21721,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -6944,7 +6949,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176e-1695-73fb-8432-00ad4ed365fc/accounting.json',
         },
       },
@@ -6959,9 +6964,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-72e4-7b98-bf2d-6e3aada01456',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-72e9-7461-ac18-332b1c00e0d2',
-          stepIndex: 22,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176e-72e9-7461-ac18-332b1c00e0d2',
+          step_index: 22,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -6975,9 +6980,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-72e9-746c-bcb6-f8e2a578d023',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-72e9-7461-ac18-332b1c00e0d2',
+          step_id: '019d176e-72e9-7461-ac18-332b1c00e0d2',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176e-72e9-7461-ac18-332b1c00e0d2/turn-user.json',
         },
       },
@@ -6992,14 +6997,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176e-72ef-7318-ad02-840c633f3c93',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-72e9-7461-ac18-332b1c00e0d2',
+          step_id: '019d176e-72e9-7461-ac18-332b1c00e0d2',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176e-72e9-7461-ac18-332b1c00e0d2/turn-model.json',
-          inputTokens: 4328,
-          outputTokens: 2800,
-          totalTokens: 7128,
-          reasoningTokens: 478,
+          input_tokens: 4328,
+          output_tokens: 2800,
+          total_tokens: 7128,
+          reasoning_tokens: 478,
         },
       },
       {
@@ -7013,13 +7018,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-12fa-7079-bb63-773f5b4f8fbc',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-72e9-7461-ac18-332b1c00e0d2',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176e-72e9-7461-ac18-332b1c00e0d2',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 29,
-          actionRef:
+          duration_ms: 29,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176e-72e9-7461-ac18-332b1c00e0d2/action-1.json',
         },
       },
@@ -7034,17 +7039,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-131c-7e57-a0f7-037be7cb1dc8',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176e-72e9-7461-ac18-332b1c00e0d2',
+          step_id: '019d176e-72e9-7461-ac18-332b1c00e0d2',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 41016,
+          action_count: 1,
+          duration_ms: 41016,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4328,
-              outputTokens: 2800,
-              totalTokens: 7128,
-              reasoningTokens: 478,
+              input_tokens: 4328,
+              output_tokens: 2800,
+              total_tokens: 7128,
+              reasoning_tokens: 478,
               knownTotalCostMicrousd: 40726,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7060,10 +7065,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -7082,10 +7087,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4328,
-              outputTokens: 2800,
-              totalTokens: 7128,
-              reasoningTokens: 478,
+              input_tokens: 4328,
+              output_tokens: 2800,
+              total_tokens: 7128,
+              reasoning_tokens: 478,
               knownTotalCostMicrousd: 40726,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7100,7 +7105,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176e-72e9-7461-ac18-332b1c00e0d2/accounting.json',
         },
       },
@@ -7115,9 +7120,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-1321-77f3-9d77-9b781ba09962',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-1325-7660-9487-8ef5a9143956',
-          stepIndex: 23,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176f-1325-7660-9487-8ef5a9143956',
+          step_index: 23,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -7131,9 +7136,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-1325-7664-9c45-4e1bcf814f54',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-1325-7660-9487-8ef5a9143956',
+          step_id: '019d176f-1325-7660-9487-8ef5a9143956',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-1325-7660-9487-8ef5a9143956/turn-user.json',
         },
       },
@@ -7148,14 +7153,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-1329-794a-bf9d-f5584b21b187',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-1325-7660-9487-8ef5a9143956',
+          step_id: '019d176f-1325-7660-9487-8ef5a9143956',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-1325-7660-9487-8ef5a9143956/turn-model.json',
-          inputTokens: 4416,
-          outputTokens: 719,
-          totalTokens: 5135,
-          reasoningTokens: 420,
+          input_tokens: 4416,
+          output_tokens: 719,
+          total_tokens: 5135,
+          reasoning_tokens: 420,
         },
       },
       {
@@ -7169,13 +7174,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-44d2-7c3c-815f-4da2b6dbac97',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-1325-7660-9487-8ef5a9143956',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176f-1325-7660-9487-8ef5a9143956',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 2,
-          actionRef:
+          duration_ms: 2,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-1325-7660-9487-8ef5a9143956/action-1.json',
         },
       },
@@ -7190,17 +7195,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-44da-7465-922d-f78f2c77d7f2',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-1325-7660-9487-8ef5a9143956',
+          step_id: '019d176f-1325-7660-9487-8ef5a9143956',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 12729,
+          action_count: 1,
+          duration_ms: 12729,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4416,
-              outputTokens: 719,
-              totalTokens: 5135,
-              reasoningTokens: 420,
+              input_tokens: 4416,
+              output_tokens: 719,
+              total_tokens: 5135,
+              reasoning_tokens: 420,
               knownTotalCostMicrousd: 11746,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7216,10 +7221,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -7238,10 +7243,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4416,
-              outputTokens: 719,
-              totalTokens: 5135,
-              reasoningTokens: 420,
+              input_tokens: 4416,
+              output_tokens: 719,
+              total_tokens: 5135,
+              reasoning_tokens: 420,
               knownTotalCostMicrousd: 11746,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7256,7 +7261,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-1325-7660-9487-8ef5a9143956/accounting.json',
         },
       },
@@ -7271,9 +7276,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-44de-7914-8f41-9b13a7b2ae15',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-44e3-74ca-89e7-8f86da25926c',
-          stepIndex: 24,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176f-44e3-74ca-89e7-8f86da25926c',
+          step_index: 24,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -7287,9 +7292,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-44e3-74d6-9fce-0831da134dd5',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-44e3-74ca-89e7-8f86da25926c',
+          step_id: '019d176f-44e3-74ca-89e7-8f86da25926c',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-44e3-74ca-89e7-8f86da25926c/turn-user.json',
         },
       },
@@ -7304,14 +7309,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-44ea-701b-b75b-b97f11a84562',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-44e3-74ca-89e7-8f86da25926c',
+          step_id: '019d176f-44e3-74ca-89e7-8f86da25926c',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-44e3-74ca-89e7-8f86da25926c/turn-model.json',
-          inputTokens: 4908,
-          outputTokens: 904,
-          totalTokens: 5812,
-          reasoningTokens: 271,
+          input_tokens: 4908,
+          output_tokens: 904,
+          total_tokens: 5812,
+          reasoning_tokens: 271,
         },
       },
       {
@@ -7325,13 +7330,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-77f2-7236-b425-6c005644fd7a',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-44e3-74ca-89e7-8f86da25926c',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176f-44e3-74ca-89e7-8f86da25926c',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 9,
-          actionRef:
+          duration_ms: 9,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-44e3-74ca-89e7-8f86da25926c/action-1.json',
         },
       },
@@ -7346,17 +7351,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-7802-721e-b9b7-986dbffabacc',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-44e3-74ca-89e7-8f86da25926c',
+          step_id: '019d176f-44e3-74ca-89e7-8f86da25926c',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 13091,
+          action_count: 1,
+          duration_ms: 13091,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4908,
-              outputTokens: 904,
-              totalTokens: 5812,
-              reasoningTokens: 271,
+              input_tokens: 4908,
+              output_tokens: 904,
+              total_tokens: 5812,
+              reasoning_tokens: 271,
               knownTotalCostMicrousd: 15197,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7372,10 +7377,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -7394,10 +7399,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4908,
-              outputTokens: 904,
-              totalTokens: 5812,
-              reasoningTokens: 271,
+              input_tokens: 4908,
+              output_tokens: 904,
+              total_tokens: 5812,
+              reasoning_tokens: 271,
               knownTotalCostMicrousd: 15197,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7412,7 +7417,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-44e3-74ca-89e7-8f86da25926c/accounting.json',
         },
       },
@@ -7427,9 +7432,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-7807-73a9-94af-1b5676dbdfe4',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-780b-789b-bb3e-ca556765a5ba',
-          stepIndex: 25,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d176f-780b-789b-bb3e-ca556765a5ba',
+          step_index: 25,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -7443,9 +7448,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-780b-78a2-bd8b-3db5326da5c0',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-780b-789b-bb3e-ca556765a5ba',
+          step_id: '019d176f-780b-789b-bb3e-ca556765a5ba',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-780b-789b-bb3e-ca556765a5ba/turn-user.json',
         },
       },
@@ -7460,14 +7465,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d176f-7810-77ac-ae51-f7a733de720b',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-780b-789b-bb3e-ca556765a5ba',
+          step_id: '019d176f-780b-789b-bb3e-ca556765a5ba',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-780b-789b-bb3e-ca556765a5ba/turn-model.json',
-          inputTokens: 4418,
-          outputTokens: 2227,
-          totalTokens: 6645,
-          reasoningTokens: 1571,
+          input_tokens: 4418,
+          output_tokens: 2227,
+          total_tokens: 6645,
+          reasoning_tokens: 1571,
         },
       },
       {
@@ -7481,13 +7486,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-115f-7196-9080-b07ba7e349ef',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-780b-789b-bb3e-ca556765a5ba',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d176f-780b-789b-bb3e-ca556765a5ba',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 12,
-          actionRef:
+          duration_ms: 12,
+          action_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-780b-789b-bb3e-ca556765a5ba/action-1.json',
         },
       },
@@ -7502,17 +7507,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-1172-79a4-9368-38126ef3e9fe',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d176f-780b-789b-bb3e-ca556765a5ba',
+          step_id: '019d176f-780b-789b-bb3e-ca556765a5ba',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 39274,
+          action_count: 1,
+          duration_ms: 39274,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4418,
-              outputTokens: 2227,
-              totalTokens: 6645,
-              reasoningTokens: 1571,
+              input_tokens: 4418,
+              output_tokens: 2227,
+              total_tokens: 6645,
+              reasoning_tokens: 1571,
               knownTotalCostMicrousd: 32861,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7528,10 +7533,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -7550,10 +7555,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4418,
-              outputTokens: 2227,
-              totalTokens: 6645,
-              reasoningTokens: 1571,
+              input_tokens: 4418,
+              output_tokens: 2227,
+              total_tokens: 6645,
+              reasoning_tokens: 1571,
               knownTotalCostMicrousd: 32861,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7568,7 +7573,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d176f-780b-789b-bb3e-ca556765a5ba/accounting.json',
         },
       },
@@ -7583,9 +7588,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-1176-76ab-b1f4-ca79e1d386e6',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1770-117a-77d0-aae4-542874a20f70',
-          stepIndex: 26,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1770-117a-77d0-aae4-542874a20f70',
+          step_index: 26,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -7599,9 +7604,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-117a-77d7-9fd3-e58efb0378a9',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1770-117a-77d0-aae4-542874a20f70',
+          step_id: '019d1770-117a-77d0-aae4-542874a20f70',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1770-117a-77d0-aae4-542874a20f70/turn-user.json',
         },
       },
@@ -7616,14 +7621,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-1180-787f-b042-1a5572024e64',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1770-117a-77d0-aae4-542874a20f70',
+          step_id: '019d1770-117a-77d0-aae4-542874a20f70',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1770-117a-77d0-aae4-542874a20f70/turn-model.json',
-          inputTokens: 4925,
-          outputTokens: 986,
-          totalTokens: 5911,
-          reasoningTokens: 269,
+          input_tokens: 4925,
+          output_tokens: 986,
+          total_tokens: 5911,
+          reasoning_tokens: 269,
         },
       },
       {
@@ -7637,17 +7642,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-4023-742e-a747-54ab32c39917',
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
-          stepId: '019d1770-117a-77d0-aae4-542874a20f70',
+          step_id: '019d1770-117a-77d0-aae4-542874a20f70',
           decision: 'final',
-          actionCount: 0,
-          durationMs: 11951,
+          action_count: 0,
+          duration_ms: 11951,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4925,
-              outputTokens: 986,
-              totalTokens: 5911,
-              reasoningTokens: 269,
+              input_tokens: 4925,
+              output_tokens: 986,
+              total_tokens: 5911,
+              reasoning_tokens: 269,
               knownTotalCostMicrousd: 16374,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7663,10 +7668,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -7685,10 +7690,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4925,
-              outputTokens: 986,
-              totalTokens: 5911,
-              reasoningTokens: 269,
+              input_tokens: 4925,
+              output_tokens: 986,
+              total_tokens: 5911,
+              reasoning_tokens: 269,
               knownTotalCostMicrousd: 16374,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7703,7 +7708,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/step/019d1770-117a-77d0-aae4-542874a20f70/accounting.json',
         },
       },
@@ -7719,15 +7724,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
           status: 'completed',
-          durationMs: 586885,
-          resultRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
+          duration_ms: 586885,
+          result_ref: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 114679,
-              outputTokens: 36327,
-              totalTokens: 151006,
-              reasoningTokens: 14964,
+              input_tokens: 114679,
+              output_tokens: 36327,
+              total_tokens: 151006,
+              reasoning_tokens: 14964,
               knownTotalCostMicrousd: 558056,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7743,10 +7748,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -7765,10 +7770,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 114679,
-              outputTokens: 36327,
-              totalTokens: 151006,
-              reasoningTokens: 14964,
+              input_tokens: 114679,
+              output_tokens: 36327,
+              total_tokens: 151006,
+              reasoning_tokens: 14964,
               knownTotalCostMicrousd: 558056,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7783,7 +7788,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/accounting.json',
+          accounting_ref: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/accounting.json',
         },
       },
       {
@@ -7797,15 +7802,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1767-4ba2-71ff-96e6-e50807a3d03f',
         payload: {
           status: 'completed',
-          durationMs: 586893,
-          finalAnswerRef: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
+          duration_ms: 586893,
+          final_answer_ref: 'run-artifact://node/019d1767-4ba6-74b7-86d4-55d283ff1d6c/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 114679,
-              outputTokens: 36327,
-              totalTokens: 151006,
-              reasoningTokens: 14964,
+              input_tokens: 114679,
+              output_tokens: 36327,
+              total_tokens: 151006,
+              reasoning_tokens: 14964,
               knownTotalCostMicrousd: 558056,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7821,10 +7826,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -7843,10 +7848,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 114679,
-              outputTokens: 36327,
-              totalTokens: 151006,
-              reasoningTokens: 14964,
+              input_tokens: 114679,
+              output_tokens: 36327,
+              total_tokens: 151006,
+              reasoning_tokens: 14964,
               knownTotalCostMicrousd: 558056,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -7861,7 +7866,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://run/accounting.json',
+          accounting_ref: 'run-artifact://run/accounting.json',
         },
       },
     ],
@@ -7955,8 +7960,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'mrcr-4needle',
           source: 'cli.run.start',
-          appConfigPath: './examples/run-start-mrcr-4needle/sigil.yaml',
-          runConfigPath: './examples/run-start-mrcr-4needle/sigil-run.yaml',
+          app_config_path: './examples/run-start-mrcr-4needle/sigil.yaml',
+          run_config_path: './examples/run-start-mrcr-4needle/sigil-run.yaml',
         },
       },
       {
@@ -7968,7 +7973,7 @@ const demoDetails: Record<string, RunDetailView> = {
         type: 'run.running',
         causationId: '019d1766-9f94-7a06-b6f9-da6cef97d2ab',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
-        payload: { executor: 'rlm', maxDepth: 4 },
+        payload: { executor: 'rlm', max_depth: 4 },
       },
       {
         eventId: '019d1766-9fa8-715b-bd3a-840b16ca2055',
@@ -7980,7 +7985,7 @@ const demoDetails: Record<string, RunDetailView> = {
         nodeId: '019d1766-9f9d-7728-8314-a452acd42b47',
         causationId: '019d1766-9f9d-7729-8bf7-f11dcafa5655',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
-        payload: { depth: 0, parentNodeId: null, role: 'root', attempt: 1 },
+        payload: { depth: 0, parent_node_id: null, role: 'root', attempt: 1 },
       },
       {
         eventId: '019d1766-9fbb-7576-b8a1-347f66d4145f',
@@ -7993,9 +7998,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fa8-715b-bd3a-840b16ca2055',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-9fbb-756e-976c-75642ab7b688',
-          stepIndex: 1,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1766-9fbb-756e-976c-75642ab7b688',
+          step_index: 1,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -8009,9 +8014,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fbb-7576-b8a1-347f66d4145f',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-9fbb-756e-976c-75642ab7b688',
+          step_id: '019d1766-9fbb-756e-976c-75642ab7b688',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1766-9fbb-756e-976c-75642ab7b688/turn-user.json',
         },
       },
@@ -8026,14 +8031,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9fc8-7ae5-94d1-bcdce3725ec7',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-9fbb-756e-976c-75642ab7b688',
+          step_id: '019d1766-9fbb-756e-976c-75642ab7b688',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1766-9fbb-756e-976c-75642ab7b688/turn-model.json',
-          inputTokens: 4157,
-          outputTokens: 1429,
-          totalTokens: 5586,
-          reasoningTokens: 214,
+          input_tokens: 4157,
+          output_tokens: 1429,
+          total_tokens: 5586,
+          reasoning_tokens: 214,
         },
       },
       {
@@ -8047,13 +8052,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-e907-7084-a1d9-528ccf5376d8',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-9fbb-756e-976c-75642ab7b688',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1766-9fbb-756e-976c-75642ab7b688',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 6,
-          actionRef:
+          duration_ms: 6,
+          action_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1766-9fbb-756e-976c-75642ab7b688/action-1.json',
         },
       },
@@ -8068,17 +8073,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-e92a-75cc-9f96-3d955f5d1f08',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-9fbb-756e-976c-75642ab7b688',
+          step_id: '019d1766-9fbb-756e-976c-75642ab7b688',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 18802,
+          action_count: 1,
+          duration_ms: 18802,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4157,
-              outputTokens: 1429,
-              totalTokens: 5586,
-              reasoningTokens: 214,
+              input_tokens: 4157,
+              output_tokens: 1429,
+              total_tokens: 5586,
+              reasoning_tokens: 214,
               knownTotalCostMicrousd: 21232,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8094,10 +8099,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -8116,10 +8121,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4157,
-              outputTokens: 1429,
-              totalTokens: 5586,
-              reasoningTokens: 214,
+              input_tokens: 4157,
+              output_tokens: 1429,
+              total_tokens: 5586,
+              reasoning_tokens: 214,
               knownTotalCostMicrousd: 21232,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8134,7 +8139,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1766-9fbb-756e-976c-75642ab7b688/accounting.json',
         },
       },
@@ -8149,9 +8154,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-e92e-715f-b0f3-f3ece8e3ab8d',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-e932-7b7d-892b-65a95496e4f8',
-          stepIndex: 2,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1766-e932-7b7d-892b-65a95496e4f8',
+          step_index: 2,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -8165,9 +8170,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-e932-7b81-9e1d-0b440201ba10',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-e932-7b7d-892b-65a95496e4f8',
+          step_id: '019d1766-e932-7b7d-892b-65a95496e4f8',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1766-e932-7b7d-892b-65a95496e4f8/turn-user.json',
         },
       },
@@ -8182,14 +8187,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-e937-7324-a8ce-37fb3688692e',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-e932-7b7d-892b-65a95496e4f8',
+          step_id: '019d1766-e932-7b7d-892b-65a95496e4f8',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1766-e932-7b7d-892b-65a95496e4f8/turn-model.json',
-          inputTokens: 4682,
-          outputTokens: 1884,
-          totalTokens: 6566,
-          reasoningTokens: 1084,
+          input_tokens: 4682,
+          output_tokens: 1884,
+          total_tokens: 6566,
+          reasoning_tokens: 1084,
         },
       },
       {
@@ -8203,13 +8208,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-6fd4-7995-a38e-dd652b6233e8',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-e932-7b7d-892b-65a95496e4f8',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1766-e932-7b7d-892b-65a95496e4f8',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 14,
-          actionRef:
+          duration_ms: 14,
+          action_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1766-e932-7b7d-892b-65a95496e4f8/action-1.json',
         },
       },
@@ -8224,17 +8229,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-6fe9-7407-bb32-3892086ab11a',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1766-e932-7b7d-892b-65a95496e4f8',
+          step_id: '019d1766-e932-7b7d-892b-65a95496e4f8',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 34490,
+          action_count: 1,
+          duration_ms: 34490,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4682,
-              outputTokens: 1884,
-              totalTokens: 6566,
-              reasoningTokens: 1084,
+              input_tokens: 4682,
+              output_tokens: 1884,
+              total_tokens: 6566,
+              reasoning_tokens: 1084,
               knownTotalCostMicrousd: 28521,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8250,10 +8255,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -8272,10 +8277,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4682,
-              outputTokens: 1884,
-              totalTokens: 6566,
-              reasoningTokens: 1084,
+              input_tokens: 4682,
+              output_tokens: 1884,
+              total_tokens: 6566,
+              reasoning_tokens: 1084,
               knownTotalCostMicrousd: 28521,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8290,7 +8295,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1766-e932-7b7d-892b-65a95496e4f8/accounting.json',
         },
       },
@@ -8305,9 +8310,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-6fed-78ca-858e-f90edc7345f2',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1767-6ff4-7105-b4cb-da86b1e96e25',
-          stepIndex: 3,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1767-6ff4-7105-b4cb-da86b1e96e25',
+          step_index: 3,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -8321,9 +8326,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-6ff4-710d-ab5f-26a4d4be7d88',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1767-6ff4-7105-b4cb-da86b1e96e25',
+          step_id: '019d1767-6ff4-7105-b4cb-da86b1e96e25',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1767-6ff4-7105-b4cb-da86b1e96e25/turn-user.json',
         },
       },
@@ -8338,14 +8343,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-6ff7-7720-9547-9f337a6259c8',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1767-6ff4-7105-b4cb-da86b1e96e25',
+          step_id: '019d1767-6ff4-7105-b4cb-da86b1e96e25',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1767-6ff4-7105-b4cb-da86b1e96e25/turn-model.json',
-          inputTokens: 4756,
-          outputTokens: 865,
-          totalTokens: 5621,
-          reasoningTokens: 315,
+          input_tokens: 4756,
+          output_tokens: 865,
+          total_tokens: 5621,
+          reasoning_tokens: 315,
         },
       },
       {
@@ -8359,17 +8364,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-a897-71e0-968f-50cae84b6188',
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
-          stepId: '019d1767-6ff4-7105-b4cb-da86b1e96e25',
+          step_id: '019d1767-6ff4-7105-b4cb-da86b1e96e25',
           decision: 'final',
-          actionCount: 0,
-          durationMs: 14504,
+          action_count: 0,
+          duration_ms: 14504,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4756,
-              outputTokens: 865,
-              totalTokens: 5621,
-              reasoningTokens: 315,
+              input_tokens: 4756,
+              output_tokens: 865,
+              total_tokens: 5621,
+              reasoning_tokens: 315,
               knownTotalCostMicrousd: 14385,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8385,10 +8390,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -8407,10 +8412,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4756,
-              outputTokens: 865,
-              totalTokens: 5621,
-              reasoningTokens: 315,
+              input_tokens: 4756,
+              output_tokens: 865,
+              total_tokens: 5621,
+              reasoning_tokens: 315,
               knownTotalCostMicrousd: 14385,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8425,7 +8430,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/step/019d1767-6ff4-7105-b4cb-da86b1e96e25/accounting.json',
         },
       },
@@ -8441,15 +8446,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
           status: 'completed',
-          durationMs: 67835,
-          resultRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
+          duration_ms: 67835,
+          result_ref: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 13595,
-              outputTokens: 4178,
-              totalTokens: 17773,
-              reasoningTokens: 1613,
+              input_tokens: 13595,
+              output_tokens: 4178,
+              total_tokens: 17773,
+              reasoning_tokens: 1613,
               knownTotalCostMicrousd: 64138,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8465,10 +8470,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -8487,10 +8492,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 13595,
-              outputTokens: 4178,
-              totalTokens: 17773,
-              reasoningTokens: 1613,
+              input_tokens: 13595,
+              output_tokens: 4178,
+              total_tokens: 17773,
+              reasoning_tokens: 1613,
               knownTotalCostMicrousd: 64138,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8505,7 +8510,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/accounting.json',
+          accounting_ref: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/accounting.json',
         },
       },
       {
@@ -8519,15 +8524,15 @@ const demoDetails: Record<string, RunDetailView> = {
         correlationId: '019d1766-9f94-7138-827c-5226fc9d6144',
         payload: {
           status: 'completed',
-          durationMs: 67851,
-          finalAnswerRef: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
+          duration_ms: 67851,
+          final_answer_ref: 'run-artifact://node/019d1766-9f9d-7728-8314-a452acd42b47/final-answer.json',
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 13595,
-              outputTokens: 4178,
-              totalTokens: 17773,
-              reasoningTokens: 1613,
+              input_tokens: 13595,
+              output_tokens: 4178,
+              total_tokens: 17773,
+              reasoning_tokens: 1613,
               knownTotalCostMicrousd: 64138,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8543,10 +8548,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -8565,10 +8570,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 13595,
-              outputTokens: 4178,
-              totalTokens: 17773,
-              reasoningTokens: 1613,
+              input_tokens: 13595,
+              output_tokens: 4178,
+              total_tokens: 17773,
+              reasoning_tokens: 1613,
               knownTotalCostMicrousd: 64138,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8583,7 +8588,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://run/accounting.json',
+          accounting_ref: 'run-artifact://run/accounting.json',
         },
       },
     ],
@@ -8664,8 +8669,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'mrcr-4needle',
           source: 'cli.run.start',
-          appConfigPath: './examples/run-start-mrcr-4needle/sigil.yaml',
-          runConfigPath: './examples/run-start-mrcr-4needle/sigil-run.yaml',
+          app_config_path: './examples/run-start-mrcr-4needle/sigil.yaml',
+          run_config_path: './examples/run-start-mrcr-4needle/sigil-run.yaml',
         },
       },
       {
@@ -8677,7 +8682,7 @@ const demoDetails: Record<string, RunDetailView> = {
         type: 'run.running',
         causationId: '019d1770-4e3e-797d-b860-ebce92ee8098',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
-        payload: { executor: 'rlm', maxDepth: 4 },
+        payload: { executor: 'rlm', max_depth: 4 },
       },
       {
         eventId: '019d1770-4e46-7407-a1cc-2f8912cce6d3',
@@ -8689,7 +8694,7 @@ const demoDetails: Record<string, RunDetailView> = {
         nodeId: '019d1770-4e43-75f7-b899-e4dbf955a79b',
         causationId: '019d1770-4e43-7603-b67d-22388e5996ba',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
-        payload: { depth: 0, parentNodeId: null, role: 'root', attempt: 1 },
+        payload: { depth: 0, parent_node_id: null, role: 'root', attempt: 1 },
       },
       {
         eventId: '019d1770-4e4e-78fc-ae36-a319f46f5010',
@@ -8702,9 +8707,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-4e46-7407-a1cc-2f8912cce6d3',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
         payload: {
-          stepId: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
-          stepIndex: 1,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
+          step_index: 1,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -8718,9 +8723,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-4e4e-78fc-ae36-a319f46f5010',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
         payload: {
-          stepId: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
+          step_id: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1770-4e43-75f7-b899-e4dbf955a79b/step/019d1770-4e4e-78f8-9de8-fa89e3f2ee80/turn-user.json',
         },
       },
@@ -8735,14 +8740,14 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-4e52-7b2b-9a4e-326ce2d5e1c0',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
         payload: {
-          stepId: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
+          step_id: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
           role: 'model',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1770-4e43-75f7-b899-e4dbf955a79b/step/019d1770-4e4e-78f8-9de8-fa89e3f2ee80/turn-model.json',
-          inputTokens: 4158,
-          outputTokens: 1387,
-          totalTokens: 5545,
-          reasoningTokens: 291,
+          input_tokens: 4158,
+          output_tokens: 1387,
+          total_tokens: 5545,
+          reasoning_tokens: 291,
         },
       },
       {
@@ -8756,13 +8761,13 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-a268-70c7-acce-701ed1ee056f',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
         payload: {
-          stepId: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
-          actionIndex: 1,
-          actionType: 'repl_code',
+          step_id: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
+          action_index: 1,
+          action_type: 'repl_code',
           language: 'go',
           status: 'completed',
-          durationMs: 6,
-          actionRef:
+          duration_ms: 6,
+          action_ref:
             'run-artifact://node/019d1770-4e43-75f7-b899-e4dbf955a79b/step/019d1770-4e4e-78f8-9de8-fa89e3f2ee80/action-1.json',
         },
       },
@@ -8777,17 +8782,17 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-a28e-7d0b-87b3-0757beb6ae6b',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
         payload: {
-          stepId: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
+          step_id: '019d1770-4e4e-78f8-9de8-fa89e3f2ee80',
           decision: 'continue',
-          actionCount: 1,
-          durationMs: 21573,
+          action_count: 1,
+          duration_ms: 21573,
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4158,
-              outputTokens: 1387,
-              totalTokens: 5545,
-              reasoningTokens: 291,
+              input_tokens: 4158,
+              output_tokens: 1387,
+              total_tokens: 5545,
+              reasoning_tokens: 291,
               knownTotalCostMicrousd: 20646,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8803,10 +8808,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -8825,10 +8830,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4158,
-              outputTokens: 1387,
-              totalTokens: 5545,
-              reasoningTokens: 291,
+              input_tokens: 4158,
+              output_tokens: 1387,
+              total_tokens: 5545,
+              reasoning_tokens: 291,
               knownTotalCostMicrousd: 20646,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8843,7 +8848,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef:
+          accounting_ref:
             'run-artifact://node/019d1770-4e43-75f7-b899-e4dbf955a79b/step/019d1770-4e4e-78f8-9de8-fa89e3f2ee80/accounting.json',
         },
       },
@@ -8858,9 +8863,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-a294-76ae-94f1-a56aa747d9f6',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
         payload: {
-          stepId: '019d1770-a299-7232-87fc-0505f938beeb',
-          stepIndex: 2,
-          schemaId: 'sigil.rlm.response.v1',
+          step_id: '019d1770-a299-7232-87fc-0505f938beeb',
+          step_index: 2,
+          schema_id: 'sigil.rlm.response.v1',
         },
       },
       {
@@ -8874,9 +8879,9 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1770-a299-7236-b735-275fe80db067',
         correlationId: '019d1770-4e3e-7474-8d54-464b1e695147',
         payload: {
-          stepId: '019d1770-a299-7232-87fc-0505f938beeb',
+          step_id: '019d1770-a299-7232-87fc-0505f938beeb',
           role: 'user',
-          contentRef:
+          content_ref:
             'run-artifact://node/019d1770-4e43-75f7-b899-e4dbf955a79b/step/019d1770-a299-7232-87fc-0505f938beeb/turn-user.json',
         },
       },
@@ -8897,10 +8902,10 @@ const demoDetails: Record<string, RunDetailView> = {
           accounting: {
             modelTotal: {
               currency: 'usd',
-              inputTokens: 4158,
-              outputTokens: 1387,
-              totalTokens: 5545,
-              reasoningTokens: 291,
+              input_tokens: 4158,
+              output_tokens: 1387,
+              total_tokens: 5545,
+              reasoning_tokens: 291,
               knownTotalCostMicrousd: 20646,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8916,10 +8921,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             directSubcallsTotal: {
               currency: 'usd',
-              inputTokens: 0,
-              outputTokens: 0,
-              totalTokens: 0,
-              reasoningTokens: 0,
+              input_tokens: 0,
+              output_tokens: 0,
+              total_tokens: 0,
+              reasoning_tokens: 0,
               knownInputCostMicrousd: 0,
               knownOutputCostMicrousd: 0,
               knownReasoningCostMicrousd: 0,
@@ -8938,10 +8943,10 @@ const demoDetails: Record<string, RunDetailView> = {
             },
             treeTotal: {
               currency: 'usd',
-              inputTokens: 4158,
-              outputTokens: 1387,
-              totalTokens: 5545,
-              reasoningTokens: 291,
+              input_tokens: 4158,
+              output_tokens: 1387,
+              total_tokens: 5545,
+              reasoning_tokens: 291,
               knownTotalCostMicrousd: 20646,
               tokenSource: 'gateway_reported',
               tokenStatus: 'complete',
@@ -8956,7 +8961,7 @@ const demoDetails: Record<string, RunDetailView> = {
               missingCostItemCount: 0,
             },
           },
-          accountingRef: 'run-artifact://run/accounting.json',
+          accounting_ref: 'run-artifact://run/accounting.json',
         },
       },
     ],
