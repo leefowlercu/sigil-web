@@ -101,7 +101,17 @@ function findLastStepIndex(items: StepTreeItem[]): number {
 /*  Step card                                                          */
 /* ------------------------------------------------------------------ */
 
-function StepCard({ step, depth }: { step: RunStepSummaryView; depth: number }) {
+function StepCard({
+  step,
+  depth,
+  isSelected,
+  onSelect,
+}: {
+  step: RunStepSummaryView
+  depth: number
+  isSelected: boolean
+  onSelect: () => void
+}) {
   const state = step.state as RunState
   const isRunning = state === 'running'
   const elapsed = useElapsed(step.startedAt, isRunning)
@@ -109,10 +119,16 @@ function StepCard({ step, depth }: { step: RunStepSummaryView; depth: number }) 
   const timeLabel = elapsed ?? duration
 
   return (
-    <div
+    <button
+      type="button"
+      onClick={onSelect}
       data-testid={`steps-pane-step-${step.stepId}`}
       data-depth={depth}
-      className="flex w-64 shrink-0 flex-col gap-2.5 rounded-xl border border-(--line) p-3.5"
+      className={`flex w-64 shrink-0 cursor-pointer flex-col gap-2.5 rounded-xl border p-3.5 text-left transition-all ${
+        isSelected
+          ? 'border-(--sigil-accent-border) bg-(--sigil-accent-soft)'
+          : 'border-(--line) hover:border-border hover:bg-(--surface)'
+      }`}
     >
       <div className="flex items-center justify-between gap-2">
         <span className="text-sm leading-tight font-bold text-foreground">Step #{step.nodeStepIndex}</span>
@@ -134,7 +150,7 @@ function StepCard({ step, depth }: { step: RunStepSummaryView; depth: number }) 
           </span>
         )}
       </div>
-    </div>
+    </button>
   )
 }
 
@@ -142,7 +158,15 @@ function StepCard({ step, depth }: { step: RunStepSummaryView; depth: number }) 
 /*  Node segment                                                       */
 /* ------------------------------------------------------------------ */
 
-function NodeSegmentView({ segment }: { segment: StepTreeSegment }) {
+function NodeSegmentView({
+  segment,
+  selectedStepId,
+  onSelectStep,
+}: {
+  segment: StepTreeSegment
+  selectedStepId: string | null
+  onSelectStep: (stepId: string) => void
+}) {
   const lastStepIndex = findLastStepIndex(segment.items)
 
   return (
@@ -174,7 +198,16 @@ function NodeSegmentView({ segment }: { segment: StepTreeSegment }) {
             {/* Horizontal connector (steps only) */}
             {isStep && !isAfterLastStep && <div className="absolute top-1/2 left-0 h-px w-5 bg-(--line)" />}
             {/* Content */}
-            {isStep ? <StepCard step={item.step} depth={segment.depth} /> : <NodeSegmentView segment={item.segment} />}
+            {isStep ? (
+              <StepCard
+                step={item.step}
+                depth={segment.depth}
+                isSelected={item.step.stepId === selectedStepId}
+                onSelect={() => onSelectStep(item.step.stepId)}
+              />
+            ) : (
+              <NodeSegmentView segment={item.segment} selectedStepId={selectedStepId} onSelectStep={onSelectStep} />
+            )}
           </div>
         )
       })}
@@ -186,7 +219,17 @@ function NodeSegmentView({ segment }: { segment: StepTreeSegment }) {
 /*  Steps Pane                                                         */
 /* ------------------------------------------------------------------ */
 
-export function StepsPane({ steps, nodes }: { steps: RunStepSummaryView[]; nodes: RunNodeProjectionView[] }) {
+export function StepsPane({
+  steps,
+  nodes,
+  selectedStepId,
+  onSelectStep,
+}: {
+  steps: RunStepSummaryView[]
+  nodes: RunNodeProjectionView[]
+  selectedStepId: string | null
+  onSelectStep: (stepId: string) => void
+}) {
   const depthMap = useMemo(() => buildNodeDepthMap(nodes), [nodes])
   const tree = useMemo(() => buildStepTree(steps, depthMap), [steps, depthMap])
 
@@ -218,7 +261,12 @@ export function StepsPane({ steps, nodes }: { steps: RunStepSummaryView[]; nodes
       <ScrollArea className="min-h-0 flex-1">
         <div className="flex flex-col gap-3 p-3">
           {tree.map((segment) => (
-            <NodeSegmentView key={segment.nodeId} segment={segment} />
+            <NodeSegmentView
+              key={segment.nodeId}
+              segment={segment}
+              selectedStepId={selectedStepId}
+              onSelectStep={onSelectStep}
+            />
           ))}
 
           {steps.length === 0 && (

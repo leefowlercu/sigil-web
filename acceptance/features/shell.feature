@@ -12,6 +12,8 @@ Feature: Sigil-web shell and route surface contracts
     Then the page exposes the shared application shell
     And the standalone run-detail placeholder workspace is visible
 
-  Scenario: Exposes the standalone run-detail route as a placeholder workspace frame
-    Given the standalone run-detail route is open for run "019d1767-410f-7659-8f98-5657c78271de"
-    Then the standalone run-detail placeholder workspace is visible
+  Scenario: Renders the standalone run-detail workspace with the agent query parameter
+    Given the demo workspace is open
+    When the user selects run "019d1767-410f-7659-8f98-5657c78271de"
+    And the user opens the selected run detail route
+    Then the browser URL contains the agent query parameter

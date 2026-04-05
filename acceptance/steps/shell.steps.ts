@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { Given, Then } from '@cucumber/cucumber'
+import { waitForCondition } from '../support/assertions'
 import type { SigilWebWorld } from '../support/world'
 
 Given('the demo workspace is open', async function (this: SigilWebWorld) {
@@ -33,4 +34,11 @@ Then('the root agent workspace route is visible', async function (this: SigilWeb
 Then('the standalone run-detail placeholder workspace is visible', async function (this: SigilWebWorld) {
   await this.browser.waitForSelector('[data-testid="run-detail-workspace"]')
   await this.browser.waitForSelector('[data-testid="run-detail-workspace-scroll-region"]')
+})
+
+Then('the browser URL contains the agent query parameter', async function (this: SigilWebWorld) {
+  await waitForCondition(async () => {
+    const url = await this.browser.getUrl()
+    return url.includes('agent=')
+  }, 'Timed out waiting for URL to contain agent query parameter')
 })

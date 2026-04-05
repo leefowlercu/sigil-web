@@ -1,6 +1,14 @@
+import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
+import { Footprints } from 'lucide-react'
+import { ActionOutputPane, ActionOutputPaneEmpty } from '#/features/run-detail/action-output-pane'
+import { CodePane, CodePaneEmpty } from '#/features/run-detail/code-pane'
+import { StepContextPane } from '#/features/run-detail/step-context-pane'
 import { StepsPane } from '#/features/run-detail/steps-pane'
+import type { RunStepDetailView, RunStepSummaryView } from '#/lib/protocol'
+import { useRunArtifact } from '#/lib/use-run-artifact'
 import { useRunSubscription } from '#/lib/use-run-subscription'
+import { useStepDetail } from '#/lib/use-step-detail'
 
 type RunDetailSearch = {
   agent?: string
@@ -13,10 +21,97 @@ export const Route = createFileRoute('/runs/$runId')({
   component: RunDetailRoute,
 })
 
+function buildActionRefs(nodeId: string, stepId: string, actionCount: number): string[] {
+  const refs: string[] = []
+  for (let i = 1; i <= actionCount; i++) {
+    refs.push(`run-artifact://node/${nodeId}/step/${stepId}/action-${i}.json`)
+  }
+  return refs
+}
+
+function mergeStepDetail(detail: RunStepDetailView | null, summary: RunStepSummaryView): RunStepDetailView {
+  const actionRefs = buildActionRefs(summary.nodeId, summary.stepId, summary.actionCount)
+  if (detail) {
+    return {
+      ...detail,
+      state: summary.state,
+      durationMs: summary.durationMs ?? detail.durationMs,
+      completedAt: summary.completedAt ?? detail.completedAt,
+      decision: summary.decision ?? detail.decision,
+      actionCount: summary.actionCount,
+      actionRefs,
+    }
+  }
+  return { ...summary, actionRefs }
+}
+
+function StepEmptyState() {
+  return (
+    <div
+      data-testid="step-empty-state"
+      className="flex flex-1 flex-col items-center justify-center gap-2 text-muted-foreground"
+    >
+      <Footprints className="size-6 opacity-40" />
+      <span className="text-xs font-semibold">Select a step to view details.</span>
+    </div>
+  )
+}
+
+function StepInspection({
+  agentId,
+  runId,
+  stepSummary,
+}: {
+  agentId: string
+  runId: string
+  stepSummary: RunStepSummaryView
+}) {
+  const [actionIndex, setActionIndex] = useState(0)
+  const { step: fetchedStep } = useStepDetail(agentId, runId, stepSummary.nodeId, stepSummary.stepId)
+  const step = useMemo(() => mergeStepDetail(fetchedStep, stepSummary), [fetchedStep, stepSummary])
+
+  const actionRef = step.actionRefs?.[actionIndex]
+  const actionState = useRunArtifact(agentId, runId, actionRef)
+  const artifact = actionState.payload?.artifact as Record<string, unknown> | undefined
+
+  const hasActions = (step.actionRefs?.length ?? 0) > 0
+  const code = typeof artifact?.code === 'string' ? artifact.code : ''
+  const language = typeof artifact?.language === 'string' ? artifact.language : 'text'
+
+  return (
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+      <StepContextPane step={step} actionIndex={actionIndex} onActionIndexChange={setActionIndex} />
+
+      <div data-testid="step-inspection-panes" className="flex min-h-0 flex-1 overflow-hidden">
+        {hasActions && artifact ? (
+          <>
+            <CodePane code={code} language={language} />
+            <ActionOutputPane artifact={artifact} />
+          </>
+        ) : (
+          <>
+            <CodePaneEmpty />
+            <ActionOutputPaneEmpty />
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function RunDetailRoute() {
   const { runId } = Route.useParams()
   const { agent } = Route.useSearch()
-  const { status, projection, steps } = useRunSubscription(agent ?? '', runId)
+  const agentId = agent ?? ''
+  const { status, projection, steps } = useRunSubscription(agentId, runId)
+  const [selectedStepId, setSelectedStepId] = useState<string | null>(null)
+
+  // Auto-select first step when steps load
+  useEffect(() => {
+    if (selectedStepId == null && steps.length > 0) {
+      setSelectedStepId(steps[0].stepId)
+    }
+  }, [selectedStepId, steps])
 
   if (status === 'error') {
     return (
@@ -38,12 +133,26 @@ function RunDetailRoute() {
     )
   }
 
+  const selectedStep = steps.find((s) => s.stepId === selectedStepId)
+
   return (
     <main data-testid="run-detail-workspace" className="workspace-route">
-      <StepsPane steps={steps} nodes={projection.nodes} />
+      <StepsPane
+        steps={steps}
+        nodes={projection.nodes}
+        selectedStepId={selectedStepId}
+        onSelectStep={setSelectedStepId}
+      />
 
-      <div className="flex flex-1 flex-col overflow-hidden bg-(--workspace-bg)">
-        <section data-testid="run-detail-workspace-scroll-region" className="flex flex-1 overflow-hidden" />
+      <div
+        data-testid="run-detail-workspace-scroll-region"
+        className="flex flex-1 flex-col overflow-hidden bg-(--workspace-bg)"
+      >
+        {selectedStep ? (
+          <StepInspection agentId={agentId} runId={runId} stepSummary={selectedStep} />
+        ) : (
+          <StepEmptyState />
+        )}
       </div>
     </main>
   )

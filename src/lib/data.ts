@@ -1,5 +1,5 @@
 import type { AgentInstance, RunDetailView } from './demo-data'
-import type { RunArtifactReadPayload, RunSummaryView } from './protocol'
+import type { RunArtifactReadPayload, RunStepDetailView, RunSummaryView } from './protocol'
 import * as demo from './demo-data'
 
 const isDemoMode = import.meta.env.VITE_DATA_SOURCE === 'demo'
@@ -42,6 +42,10 @@ export function getRunSnapshot(runId: string): RunDetailView | undefined {
   }
 
   return demoStartedRunDetails.get(runId) ?? demo.getRunDetail(runId)
+}
+
+export function getStepDetail(runId: string, stepId: string): RunStepDetailView | undefined {
+  return isDemoMode ? demo.getStepDetail(runId, stepId) : undefined
 }
 
 export function getRunArtifact(runId: string, artifactRef: string): RunArtifactReadPayload | undefined {

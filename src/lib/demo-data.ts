@@ -4,6 +4,7 @@ import type {
   RunArtifactReadPayload,
   RunNodeProjectionView,
   RunProjectionView,
+  RunStepDetailView,
   RunStepSummaryView,
   RunSummaryView,
 } from './protocol'
@@ -8997,12 +8998,106 @@ function getDemoFinalAnswer(runId: string): string | undefined {
   }
 }
 
+/* ------------------------------------------------------------------ */
+/*  Step detail                                                        */
+/* ------------------------------------------------------------------ */
+
+function buildActionRefs(step: RunStepSummaryView): string[] {
+  const refs: string[] = []
+  for (let i = 1; i <= step.actionCount; i++) {
+    refs.push(`run-artifact://node/${step.nodeId}/step/${step.stepId}/action-${i}.json`)
+  }
+  return refs
+}
+
+export function getStepDetail(runId: string, stepId: string): RunStepDetailView | undefined {
+  const detail = demoDetails[runId]
+  if (!detail) return undefined
+  const step = detail.steps.find((s) => s.stepId === stepId)
+  if (!step) return undefined
+  return {
+    ...step,
+    actionRefs: buildActionRefs(step),
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Action artifacts                                                   */
+/* ------------------------------------------------------------------ */
+
+const demoActionArtifacts: Record<string, Record<string, unknown>> = {
+  'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-411c-7de2-abc1-f84c1fef9ad1/action-1.json': {
+    run_id: '019d1767-410f-7659-8f98-5657c78271de',
+    node_id: '019d1767-4114-745d-bcf3-9724a3410236',
+    step_id: '019d1767-411c-7de2-abc1-f84c1fef9ad1',
+    action_index: 1,
+    action_type: 'repl_code',
+    language: 'go',
+    status: 'completed',
+    code: 'package main\n\nimport (\n\t"fmt"\n\t"strings"\n)\n\nfunc main() {\n\tcorpus := getCorpus()\n\tfor i, chunk := range corpus {\n\t\tif strings.Contains(chunk, "SIGIL-NEEDLE") {\n\t\t\tfmt.Printf("found needle in chunk %d: %s\\n", i, chunk)\n\t\t}\n\t}\n}',
+    stdout:
+      'found needle in chunk 539: CHUNK-0539 | corpus=critical | topic=needle | token=SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719',
+    stderr: '',
+    duration_ms: 85,
+  },
+  'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1767-870c-700b-9818-15f8bb186dba/action-1.json': {
+    run_id: '019d1767-410f-7659-8f98-5657c78271de',
+    node_id: '019d1767-4114-745d-bcf3-9724a3410236',
+    step_id: '019d1767-870c-700b-9818-15f8bb186dba',
+    action_index: 1,
+    action_type: 'repl_code',
+    language: 'go',
+    status: 'completed',
+    code: 'package main\n\nimport (\n\t"fmt"\n\t"strings"\n)\n\nfunc main() {\n\tresult := extractToken("CHUNK-0539 | corpus=critical | topic=needle | token=SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719")\n\tfmt.Printf("token=%s; chunk=CHUNK-0539; evidence=%s\\n", result.Token, result.Evidence)\n}',
+    stdout:
+      'token=SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719; chunk=CHUNK-0539; evidence=CHUNK-0539 | corpus=critical | topic=needle | token=SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719',
+    stderr: '',
+    duration_ms: 62,
+  },
+  'run-artifact://node/019d1767-4114-745d-bcf3-9724a3410236/step/019d1768-12a9-7557-b01d-ac74a3e52712/action-1.json': {
+    run_id: '019d1767-410f-7659-8f98-5657c78271de',
+    node_id: '019d1767-4114-745d-bcf3-9724a3410236',
+    step_id: '019d1768-12a9-7557-b01d-ac74a3e52712',
+    action_index: 1,
+    action_type: 'repl_code',
+    language: 'go',
+    status: 'completed',
+    code: 'package main\n\nimport "fmt"\n\nfunc main() {\n\ttoken := "SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719"\n\tvalid := validateToken(token)\n\tfmt.Printf("token=%s; valid=%t\\n", token, valid)\n}',
+    stdout: 'token=SIGIL-NEEDLE-2026-03-03-ALPHA-OMEGA-7719; valid=true',
+    stderr: '',
+    duration_ms: 41,
+  },
+}
+
+/* ------------------------------------------------------------------ */
+/*  Artifact resolution                                                */
+/* ------------------------------------------------------------------ */
+
 function parseFinalAnswerNodeId(artifactRef: string): string | undefined {
   const match = /^run-artifact:\/\/node\/([^/]+)\/final-answer\.json$/.exec(artifactRef)
   return match?.[1]
 }
 
+function parseActionArtifactIdentity(
+  artifactRef: string,
+): { nodeId: string; stepId: string; actionIndex: number } | undefined {
+  const match = /^run-artifact:\/\/node\/([^/]+)\/step\/([^/]+)\/action-(\d+)\.json$/.exec(artifactRef)
+  if (!match) return undefined
+  return { nodeId: match[1], stepId: match[2], actionIndex: Number.parseInt(match[3], 10) }
+}
+
 export function getRunArtifact(runId: string, artifactRef: string): RunArtifactReadPayload | undefined {
+  const actionArtifact = demoActionArtifacts[artifactRef]
+  if (actionArtifact) {
+    const identity = parseActionArtifactIdentity(artifactRef)
+    return {
+      artifactRef,
+      artifactKind: 'action',
+      identity: identity ?? {},
+      artifact: actionArtifact,
+    }
+  }
+
   const detail = demoDetails[runId]
   if (detail?.projection.finalAnswerRef !== artifactRef) {
     return undefined
