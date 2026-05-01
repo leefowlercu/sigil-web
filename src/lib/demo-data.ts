@@ -237,7 +237,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     agentId: 'needle-search',
     run: {
       runId: '019d1766-9f94-7138-b433-2ff91272295c',
-      name: 'run-start-templated',
+      name: 'templated',
       state: 'completed',
       source: 'cli.run.start',
       queuedAt: '2026-03-22T21:14:54.740666Z',
@@ -253,7 +253,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     agentId: 'needle-search',
     run: {
       runId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
-      name: 'run-start-templated',
+      name: 'templated',
       state: 'completed',
       source: 'cli.run.start',
       queuedAt: '2026-03-22T21:15:20.041353Z',
@@ -269,7 +269,7 @@ const demoRunSummaries: AgentRunSummary[] = [
     agentId: 'needle-search',
     run: {
       runId: '019d1767-410f-7659-8f98-5657c78271de',
-      name: 'run-start-templated',
+      name: 'templated',
       state: 'completed',
       source: 'cli.run.start',
       queuedAt: '2026-03-22T21:15:36.07984Z',
@@ -451,14 +451,14 @@ const demoDetails: Record<string, RunDetailView> = {
   '019d1766-9f94-7138-b433-2ff91272295c': {
     projection: {
       runId: '019d1766-9f94-7138-b433-2ff91272295c',
-      name: 'run-start-templated',
+      name: 'templated',
       state: 'completed',
       runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-b433-2ff91272295c',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-b433-2ff91272295c/events.jsonl',
       source: 'cli.run.start',
-      appConfigPath: './examples/run-start-templated/sigil.yaml',
-      runConfigPath: './examples/run-start-templated/sigil-run.yaml',
+      appConfigPath: './examples/templated/sigil.yaml',
+      runConfigPath: './examples/templated/sigil-run.yaml',
       queuedAt: '2026-03-22T21:14:54.740666Z',
       startedAt: '2026-03-22T21:14:54.746512Z',
       terminalAt: '2026-03-22T21:15:20.004933Z',
@@ -519,10 +519,10 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1766-9f94-79f6-a812-4ad464028136',
         correlationId: '019d1766-9f94-7138-b433-2ff91272295c',
         payload: {
-          name: 'run-start-templated',
+          name: 'templated',
           source: 'cli.run.start',
-          app_config_path: './examples/run-start-templated/sigil.yaml',
-          run_config_path: './examples/run-start-templated/sigil-run.yaml',
+          app_config_path: './examples/templated/sigil.yaml',
+          run_config_path: './examples/templated/sigil-run.yaml',
         },
       },
       {
@@ -1001,14 +1001,14 @@ const demoDetails: Record<string, RunDetailView> = {
   '019d1767-0268-7d98-9ee7-05e4b04ed44c': {
     projection: {
       runId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
-      name: 'run-start-templated',
+      name: 'templated',
       state: 'completed',
       runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-0268-7d98-9ee7-05e4b04ed44c',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-0268-7d98-9ee7-05e4b04ed44c/events.jsonl',
       source: 'cli.run.start',
-      appConfigPath: './examples/run-start-templated/sigil.yaml',
-      runConfigPath: './examples/run-start-templated/sigil-run.yaml',
+      appConfigPath: './examples/templated/sigil.yaml',
+      runConfigPath: './examples/templated/sigil-run.yaml',
       queuedAt: '2026-03-22T21:15:20.041353Z',
       startedAt: '2026-03-22T21:15:20.046396Z',
       terminalAt: '2026-03-22T21:15:36.045787Z',
@@ -1069,10 +1069,10 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-0269-7557-b1c9-14284e43ec00',
         correlationId: '019d1767-0268-7d98-9ee7-05e4b04ed44c',
         payload: {
-          name: 'run-start-templated',
+          name: 'templated',
           source: 'cli.run.start',
-          app_config_path: './examples/run-start-templated/sigil.yaml',
-          run_config_path: './examples/run-start-templated/sigil-run.yaml',
+          app_config_path: './examples/templated/sigil.yaml',
+          run_config_path: './examples/templated/sigil-run.yaml',
         },
       },
       {
@@ -1551,14 +1551,14 @@ const demoDetails: Record<string, RunDetailView> = {
   '019d1767-410f-7659-8f98-5657c78271de': {
     projection: {
       runId: '019d1767-410f-7659-8f98-5657c78271de',
-      name: 'run-start-templated',
+      name: 'templated',
       state: 'completed',
       runDir: '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-410f-7659-8f98-5657c78271de',
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-410f-7659-8f98-5657c78271de/events.jsonl',
       source: 'cli.run.start',
-      appConfigPath: './examples/run-start-templated/sigil.yaml',
-      runConfigPath: './examples/run-start-templated/sigil-run.yaml',
+      appConfigPath: './examples/templated/sigil.yaml',
+      runConfigPath: './examples/templated/sigil-run.yaml',
       queuedAt: '2026-03-22T21:15:36.07984Z',
       startedAt: '2026-03-22T21:15:36.084287Z',
       terminalAt: '2026-03-22T21:16:54.890724Z',
@@ -1651,10 +1651,10 @@ const demoDetails: Record<string, RunDetailView> = {
         causationId: '019d1767-410f-7cc5-8b87-4aa5fcb4ea83',
         correlationId: '019d1767-410f-7659-8f98-5657c78271de',
         payload: {
-          name: 'run-start-templated',
+          name: 'templated',
           source: 'cli.run.start',
-          app_config_path: './examples/run-start-templated/sigil.yaml',
-          run_config_path: './examples/run-start-templated/sigil-run.yaml',
+          app_config_path: './examples/templated/sigil.yaml',
+          run_config_path: './examples/templated/sigil-run.yaml',
         },
       },
       {
@@ -2454,8 +2454,8 @@ const demoDetails: Record<string, RunDetailView> = {
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-71f4-bc7f-0a6726b7d5f8/events.jsonl',
       source: 'cli.run.start',
-      appConfigPath: './examples/run-start-mrcr-2needle/sigil.yaml',
-      runConfigPath: './examples/run-start-mrcr-2needle/sigil-run.yaml',
+      appConfigPath: './examples/mrcr-2needle/sigil.yaml',
+      runConfigPath: './examples/mrcr-2needle/sigil-run.yaml',
       queuedAt: '2026-03-22T21:14:54.740668Z',
       startedAt: '2026-03-22T21:14:54.749476Z',
       terminalAt: '2026-03-22T21:15:38.745963Z',
@@ -2534,8 +2534,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'mrcr-2needle',
           source: 'cli.run.start',
-          app_config_path: './examples/run-start-mrcr-2needle/sigil.yaml',
-          run_config_path: './examples/run-start-mrcr-2needle/sigil-run.yaml',
+          app_config_path: './examples/mrcr-2needle/sigil.yaml',
+          run_config_path: './examples/mrcr-2needle/sigil-run.yaml',
         },
       },
       {
@@ -3176,8 +3176,8 @@ const demoDetails: Record<string, RunDetailView> = {
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1767-4ba2-71ff-96e6-e50807a3d03f/events.jsonl',
       source: 'cli.run.start',
-      appConfigPath: './examples/run-start-mrcr-2needle/sigil.yaml',
-      runConfigPath: './examples/run-start-mrcr-2needle/sigil-run.yaml',
+      appConfigPath: './examples/mrcr-2needle/sigil.yaml',
+      runConfigPath: './examples/mrcr-2needle/sigil-run.yaml',
       queuedAt: '2026-03-22T21:15:38.786576Z',
       startedAt: '2026-03-22T21:15:38.79031Z',
       terminalAt: '2026-03-22T21:25:25.683978Z',
@@ -3624,8 +3624,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'mrcr-2needle',
           source: 'cli.run.start',
-          app_config_path: './examples/run-start-mrcr-2needle/sigil.yaml',
-          run_config_path: './examples/run-start-mrcr-2needle/sigil-run.yaml',
+          app_config_path: './examples/mrcr-2needle/sigil.yaml',
+          run_config_path: './examples/mrcr-2needle/sigil-run.yaml',
         },
       },
       {
@@ -7881,8 +7881,8 @@ const demoDetails: Record<string, RunDetailView> = {
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1766-9f94-7138-827c-5226fc9d6144/events.jsonl',
       source: 'cli.run.start',
-      appConfigPath: './examples/run-start-mrcr-4needle/sigil.yaml',
-      runConfigPath: './examples/run-start-mrcr-4needle/sigil-run.yaml',
+      appConfigPath: './examples/mrcr-4needle/sigil.yaml',
+      runConfigPath: './examples/mrcr-4needle/sigil-run.yaml',
       queuedAt: '2026-03-22T21:14:54.740668Z',
       startedAt: '2026-03-22T21:14:54.74947Z',
       terminalAt: '2026-03-22T21:16:02.600875Z',
@@ -7961,8 +7961,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'mrcr-4needle',
           source: 'cli.run.start',
-          app_config_path: './examples/run-start-mrcr-4needle/sigil.yaml',
-          run_config_path: './examples/run-start-mrcr-4needle/sigil-run.yaml',
+          app_config_path: './examples/mrcr-4needle/sigil.yaml',
+          run_config_path: './examples/mrcr-4needle/sigil-run.yaml',
         },
       },
       {
@@ -8603,8 +8603,8 @@ const demoDetails: Record<string, RunDetailView> = {
       eventsPath:
         '/Users/lee/Dev/project/project-sigil/sigil/.sigil/runs/019d1770-4e3e-7474-8d54-464b1e695147/events.jsonl',
       source: 'cli.run.start',
-      appConfigPath: './examples/run-start-mrcr-4needle/sigil.yaml',
-      runConfigPath: './examples/run-start-mrcr-4needle/sigil-run.yaml',
+      appConfigPath: './examples/mrcr-4needle/sigil.yaml',
+      runConfigPath: './examples/mrcr-4needle/sigil-run.yaml',
       queuedAt: '2026-03-22T21:25:29.278626Z',
       startedAt: '2026-03-22T21:25:29.283394Z',
       terminalAt: '2026-03-22T21:26:02.365406Z',
@@ -8670,8 +8670,8 @@ const demoDetails: Record<string, RunDetailView> = {
         payload: {
           name: 'mrcr-4needle',
           source: 'cli.run.start',
-          app_config_path: './examples/run-start-mrcr-4needle/sigil.yaml',
-          run_config_path: './examples/run-start-mrcr-4needle/sigil-run.yaml',
+          app_config_path: './examples/mrcr-4needle/sigil.yaml',
+          run_config_path: './examples/mrcr-4needle/sigil-run.yaml',
         },
       },
       {
@@ -8987,7 +8987,7 @@ export function getRunDetail(runId: string): RunDetailView | undefined {
 function getDemoFinalAnswer(runId: string): string | undefined {
   const detail = demoDetails[runId]
   switch (detail?.projection.name) {
-    case 'run-start-templated':
+    case 'templated':
       return templatedFinalAnswer
     case 'mrcr-2needle':
       return mrcr2NeedleFinalAnswer
