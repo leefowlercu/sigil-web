@@ -1,6 +1,6 @@
 Feature: Sigil-web standalone run-detail step inspection contracts
   The standalone run-detail page allows operators to select a step and inspect
-  its metadata, accounting, executed code, and action output.
+  its metadata, executed code, action output, and accounting.
 
   Scenario: Displays step detail in the right content area when a step is selected in the Steps Pane
     Given the standalone run-detail route is open for run "019d1767-410f-7659-8f98-5657c78271de"
@@ -11,7 +11,7 @@ Feature: Sigil-web standalone run-detail step inspection contracts
     Given the standalone run-detail route is open for a run with no steps
     Then the right content area displays an empty step-selection prompt
 
-  Scenario: Displays step metadata and accounting in the Step Context Pane
+  Scenario: Displays selected step metadata in the Step Context Pane
     Given the standalone run-detail route is open for run "019d1767-410f-7659-8f98-5657c78271de"
     When the operator selects a step in the Steps Pane
     Then the Step Context Pane displays the step number, node ID, status, and duration
@@ -49,3 +49,9 @@ Feature: Sigil-web standalone run-detail step inspection contracts
     Given the standalone run-detail route is open for an in-progress run
     When the selected step transitions from running to completed
     Then the Step Context Pane updates to reflect the completed status and final duration
+
+  Scenario: Displays run and selected-step accounting in the bottom drawer when available
+    Given the standalone run-detail route is open for run "019d1767-410f-7659-8f98-5657c78271de"
+    When the operator selects a step in the Steps Pane
+    Then the Accounting Drawer displays run-level totals and selected-step totals
+    And the Accounting Drawer content is contained in a scroll region

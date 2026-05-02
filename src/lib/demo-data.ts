@@ -9086,6 +9086,42 @@ function parseActionArtifactIdentity(
   return { nodeId: match[1], stepId: match[2], actionIndex: Number.parseInt(match[3], 10) }
 }
 
+function parseAccountingArtifactIdentity(artifactRef: string): { nodeId?: string; stepId?: string } | undefined {
+  if (artifactRef === 'run-artifact://run/accounting.json') return {}
+  const stepMatch = /^run-artifact:\/\/node\/([^/]+)\/step\/([^/]+)\/accounting\.json$/.exec(artifactRef)
+  if (stepMatch) return { nodeId: stepMatch[1], stepId: stepMatch[2] }
+  const nodeMatch = /^run-artifact:\/\/node\/([^/]+)\/accounting\.json$/.exec(artifactRef)
+  if (nodeMatch) return { nodeId: nodeMatch[1] }
+  return undefined
+}
+
+function getDemoAccountingArtifact(runId: string, artifactRef: string): Record<string, unknown> | undefined {
+  const detail = demoDetails[runId]
+  if (!detail) return undefined
+
+  for (const event of detail.events) {
+    const payload = event.payload as Record<string, unknown> | undefined
+    if (
+      payload?.accounting_ref !== artifactRef ||
+      typeof payload.accounting !== 'object' ||
+      payload.accounting == null
+    ) {
+      continue
+    }
+
+    const identity = parseAccountingArtifactIdentity(artifactRef)
+    if (identity == null) return undefined
+    return {
+      run_id: runId,
+      ...(identity.nodeId != null ? { node_id: identity.nodeId } : {}),
+      ...(identity.stepId != null ? { step_id: identity.stepId } : {}),
+      accounting: payload.accounting,
+    }
+  }
+
+  return undefined
+}
+
 export function getRunArtifact(runId: string, artifactRef: string): RunArtifactReadPayload | undefined {
   const actionArtifact = demoActionArtifacts[artifactRef]
   if (actionArtifact) {
@@ -9095,6 +9131,16 @@ export function getRunArtifact(runId: string, artifactRef: string): RunArtifactR
       artifactKind: 'action',
       identity: identity ?? {},
       artifact: actionArtifact,
+    }
+  }
+
+  const accountingArtifact = getDemoAccountingArtifact(runId, artifactRef)
+  if (accountingArtifact) {
+    return {
+      artifactRef,
+      artifactKind: 'accounting',
+      identity: parseAccountingArtifactIdentity(artifactRef) ?? {},
+      artifact: accountingArtifact,
     }
   }
 

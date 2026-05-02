@@ -6,6 +6,7 @@ import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 const tailwindStylesheetPath = fileURLToPath(new URL('./src/styles.css', import.meta.url))
+const enableTanStackDevtools = process.env.VITE_ENABLE_TANSTACK_DEVTOOLS === 'true'
 
 const config = defineConfig({
   staged: {
@@ -234,7 +235,7 @@ const config = defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
-  plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact()],
+  plugins: [...(enableTanStackDevtools ? [devtools()] : []), tailwindcss(), tanstackStart(), viteReact()],
 })
 
 export default config

@@ -70,6 +70,28 @@ Then(
   },
 )
 
+Then('the Accounting Drawer displays run-level totals and selected-step totals', async function (this: SigilWebWorld) {
+  await this.browser.waitForSelector('[data-testid="accounting-drawer"]')
+  await waitForCondition(
+    async () => {
+      const text = await this.browser.getText('[data-testid="accounting-drawer"]')
+      const normalized = text.toLowerCase()
+      return (
+        normalized.includes('accounting') &&
+        normalized.includes('run total') &&
+        normalized.includes('selected step') &&
+        normalized.includes('tree total')
+      )
+    },
+    'Timed out waiting for accounting drawer totals to appear',
+    15_000,
+  )
+})
+
+Then('the Accounting Drawer content is contained in a scroll region', async function (this: SigilWebWorld) {
+  await this.browser.waitForSelector('[data-testid="accounting-drawer-scroll-region"]')
+})
+
 Then(
   'the Step Context Pane displays a pagination control showing the current action index and total action count',
   async function (this: SigilWebWorld) {

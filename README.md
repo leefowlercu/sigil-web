@@ -37,6 +37,8 @@ Siĝil app-server when it runs in WebSocket mode.
   scenario by title in a visible browser window for visual review
 - `pnpm test:acceptance:review -- "Scenario name"`: run one acceptance
   scenario by title in a visible browser window with small review pauses
+- `VITE_ENABLE_TANSTACK_DEVTOOLS=true pnpm dev`: opt into the TanStack
+  Devtools launcher during local development
 
 ## Route Surface
 

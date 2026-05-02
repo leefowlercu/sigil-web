@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { Footprints } from 'lucide-react'
+import { AccountingDrawer } from '#/features/run-detail/accounting-drawer'
 import { ActionOutputPane, ActionOutputPaneEmpty } from '#/features/run-detail/action-output-pane'
 import { CodePane, CodePaneEmpty } from '#/features/run-detail/code-pane'
 import { StepContextPane } from '#/features/run-detail/step-context-pane'
 import { StepsPane } from '#/features/run-detail/steps-pane'
-import type { RunStepDetailView, RunStepSummaryView } from '#/lib/protocol'
+import type { RunProjectionView, RunStepDetailView, RunStepSummaryView } from '#/lib/protocol'
 import { useRunArtifact } from '#/lib/use-run-artifact'
 import { useRunSubscription } from '#/lib/use-run-subscription'
 import { useStepDetail } from '#/lib/use-step-detail'
@@ -59,10 +60,12 @@ function StepEmptyState() {
 
 function StepInspection({
   agentId,
+  projection,
   runId,
   stepSummary,
 }: {
   agentId: string
+  projection: RunProjectionView
   runId: string
   stepSummary: RunStepSummaryView
 }) {
@@ -72,6 +75,8 @@ function StepInspection({
 
   const actionRef = step.actionRefs?.[actionIndex]
   const actionState = useRunArtifact(agentId, runId, actionRef)
+  const runAccountingState = useRunArtifact(agentId, runId, projection.accountingRef)
+  const stepAccountingState = useRunArtifact(agentId, runId, step.accountingRef)
   const artifact = actionState.payload?.artifact as Record<string, unknown> | undefined
 
   const hasActions = (step.actionRefs?.length ?? 0) > 0
@@ -82,18 +87,30 @@ function StepInspection({
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       <StepContextPane step={step} actionIndex={actionIndex} onActionIndexChange={setActionIndex} />
 
-      <div data-testid="step-inspection-panes" className="flex min-h-0 flex-1 overflow-hidden">
-        {hasActions && artifact ? (
-          <>
-            <CodePane code={code} language={language} />
-            <ActionOutputPane artifact={artifact} />
-          </>
-        ) : (
-          <>
-            <CodePaneEmpty />
-            <ActionOutputPaneEmpty />
-          </>
-        )}
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <div data-testid="step-inspection-panes" className="flex min-h-0 flex-1 overflow-hidden">
+          {hasActions && artifact ? (
+            <>
+              <CodePane code={code} language={language} />
+              <ActionOutputPane artifact={artifact} />
+            </>
+          ) : (
+            <>
+              <CodePaneEmpty />
+              <ActionOutputPaneEmpty />
+            </>
+          )}
+        </div>
+        <AccountingDrawer
+          runAccounting={{
+            status: runAccountingState.status,
+            artifact: runAccountingState.payload?.artifact as Record<string, unknown> | undefined,
+          }}
+          stepAccounting={{
+            status: stepAccountingState.status,
+            artifact: stepAccountingState.payload?.artifact as Record<string, unknown> | undefined,
+          }}
+        />
       </div>
     </div>
   )
@@ -149,7 +166,7 @@ function RunDetailRoute() {
         className="flex flex-1 flex-col overflow-hidden bg-(--workspace-bg)"
       >
         {selectedStep ? (
-          <StepInspection agentId={agentId} runId={runId} stepSummary={selectedStep} />
+          <StepInspection agentId={agentId} projection={projection} runId={runId} stepSummary={selectedStep} />
         ) : (
           <StepEmptyState />
         )}
